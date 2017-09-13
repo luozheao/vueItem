@@ -1,3 +1,10 @@
+<style>
+  #app {
+    font-family: Helvetica, sans-serif;
+    text-align: center;
+  }
+</style>
+
 <template>
   <div id="app">
     <h1>{{ msg }}</h1>
@@ -11,11 +18,14 @@
 export default {
   data () {
     return {
-        msg: 'Want something new?'
+        msg: 'Want something new????'
     }
   },
 
   methods: {
+    test(){
+        alert(1);
+    },
     startHacking () {
       this.$notify({
         title: 'Shhh',
@@ -27,9 +37,4 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  font-family: Helvetica, sans-serif;
-  text-align: center;
-}
-</style>
+
