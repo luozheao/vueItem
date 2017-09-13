@@ -11,7 +11,6 @@
 export default {
   data () {
     return {
-
         msg: 'Want something new?'
     }
   },
