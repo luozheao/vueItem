@@ -27,8 +27,12 @@ module.exports = (options = {}) => ({
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader']
+        use: ['style-loader', 'css-loader','postcss-loader']
       },
+        {
+            test: /\.less$/,
+            loader: "style-loader!css-loader!less-loader",
+        },
       {
         test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)(\?.+)?$/,
         use: [{
