@@ -21,12 +21,12 @@
 <template>
     <div>
         <div class="box">
-            <p class="title">区域信息列表</p>
+            <p class="title">区域管理员列表</p>
             <div class="bodyBox">
                 <el-row>
                     <el-col :span="24">
-                        <el-button type="primary" @click="dialogFormVisible = true">添加区域信息</el-button>
-                        <el-dialog title="添加区域信息" :visible.sync="dialogFormVisible">
+                        <el-button type="primary" @click="dialogFormVisible = true">添加区域管理员</el-button>
+                        <el-dialog title="添加区域管理员" :visible.sync="dialogFormVisible">
                             <el-form :model="form">
                                 <el-form-item label="所属项目" :label-width="formLabelWidth">
                                     <el-select v-model="form.region" placeholder="请选择所属项目">
@@ -46,11 +46,19 @@
                                 <el-button type="primary" @click="addarea">确 定</el-button>
                             </div>
                         </el-dialog>
+                        <el-select v-model="areaValue" placeholder="请选择区域">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.areaValue"
+                                    :label="item.areaLabel"
+                                    :value="item.areaValue">
+                            </el-option>
+                        </el-select>
                         <el-input style="display: inline-block;width:300px;"
-                                placeholder="区域名称"
-                                icon="search"
-                                v-model="inputSearch"
-                                :on-icon-click="inputSearchClick">
+                                  placeholder="区域名称"
+                                  icon="search"
+                                  v-model="inputSearch"
+                                  :on-icon-click="inputSearchClick">
                         </el-input>
                     </el-col>
                 </el-row>
@@ -60,14 +68,29 @@
                         border
                         style="width: 100% ;margin-top: 10px;">
                     <el-table-column
-                            prop="areaName"
-                            label="区域名称"
-                            >
+                            prop="adminName"
+                            label="管理员名字"
+                    >
+                    </el-table-column>
+                    <el-table-column
+                            prop="adminNum"
+                            label="管理账号"
+                    >
+                    </el-table-column>
+                    <el-table-column
+                            prop="isTure"
+                            label="是否开启"
+                    >
+                    </el-table-column>
+                    <el-table-column
+                            prop="hasViewModel"
+                            label="查看权限"
+                    >
                     </el-table-column>
                     <el-table-column
                             prop="createTime"
                             label="创建时间"
-                            >
+                    >
                     </el-table-column>
                     <el-table-column
                             label="操作">
@@ -101,7 +124,10 @@
                 currentPageNum:1,
                 dialogFormVisible:false,
                 tableData: [{
-                    areaName: '',
+                    adminName: '',
+                    adminNum:'',
+                    isTure:'',
+                    hasViewModel:'',
                     createTime: '',
                     doning: ''
                 }],
@@ -109,23 +135,28 @@
                     region:'',
                     name:'',
                     desc:''
-                }
+                },
+                options:[{
+                    areaValue: '',
+                    areaLabel: ''
+                }]
             }
         },
         methods: {
             init(){
                 this.tableData=[{
-                    areaName: '客房',
+                    adminName: '客房',
+                    adminNum:'123456',
+                    isTure:'是',
+                    hasViewModel:'有',
                     createTime: '2017/7/5 14:06:28',
-                },{
-                    areaName: '客房',
-                    createTime: '2017/7/5 14:06:28',
-                },{
-                    areaName: '客房',
-                    createTime: '2017/7/5 14:06:28',
-                },{
-                    areaName: '客房',
-                    createTime: '2017/7/5 14:06:28',
+                }];
+                this.options= [{
+                    areaValue: '选项1',
+                    areaLabel: '黄金糕'
+                }, {
+                    areaValue: '选项2',
+                    areaLabel: '双皮奶'
                 }]
             },
             inputSearchClick(val){
@@ -151,6 +182,11 @@
         created() {
             this.init();
         },
+        mounted() {
+            this.$nextTick(function () {
+
+            })
+        }
 
     }
 </script>
