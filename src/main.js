@@ -3,16 +3,18 @@ import ElementUI from 'element-ui'
 import VueRouter from 'vue-router'
 import 'element-ui/lib/theme-default/index.css'
 import App from './App.vue'
-import Info from './info.vue'
+import peopleCenter from './components/peopleCenter.vue'
+
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 
 const routes = [
     {
-        path: '/test',
-        component: Info,
-    }
+        path: '/peopleCenter',
+        component: peopleCenter,
+    },
+
 ]
 const router = new VueRouter({
     routes

@@ -120,7 +120,7 @@
             <!--左侧栏-->
             <el-col id="leftMenu" :span="3">
                 <el-menu default-active="2" class="el-menu-vertical-demo" @open="" @close="" theme="dark">
-                    <el-menu-item index="2">个人中心</el-menu-item>
+                    <el-menu-item index="2"><router-link to="/peopleCenter">个人中心</router-link></el-menu-item>
                     <el-menu-item index="3">区域信息管理</el-menu-item>
                     <el-menu-item index="3">区域管理员管理</el-menu-item>
                     <el-menu-item index="3">领导账号管理</el-menu-item>
@@ -132,7 +132,7 @@
             </el-col>
             <!--主内容-->
             <el-col :span="21">
-
+               <router-view></router-view>
             </el-col>
         </el-row>
 
