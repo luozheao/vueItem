@@ -116,6 +116,7 @@
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     beforeClose: (action, instance, done) => {
+
                         if (action === 'confirm') {
                              done();
                         } else {
@@ -123,7 +124,7 @@
                         }
                     }
                 }).then(action => {
-
+                      console.log(action);
                 });
             },
         }
