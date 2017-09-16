@@ -58,7 +58,7 @@
                         :data="tableData"
                         max-height="250"
                         border
-                        style="width: 100% ;margin-top: 10px;">
+                        style="margin-top: 10px;">
                     <el-table-column
                             prop="areaName"
                             label="区域名称"

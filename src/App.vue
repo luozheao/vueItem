@@ -85,18 +85,12 @@
             min-width: 100px;
             height: 40px;
             line-height: 40px;
-            a{
-                color: white;
-                display:block;
-                &:hover{
-                    text-decoration: none;
-                }
-            }
+
             border-bottom: 1px solid #5c5c5c;
             &:hover{
                 background: #303030;
             }
-            &.is-active{background: #4b8df8;}
+            &.is-active{background: #4b8df8;color:white;}
         }
         .gray{
             color:#bdbdbd;
@@ -154,11 +148,17 @@
             </el-row>
         </div>
             <!--左侧栏-->
-            <div id="leftMenu" :span="3">
-                <el-menu default-active="1" class="el-menu-vertical-demo" @open="" @close="" theme="dark">
-                    <el-menu-item index="1"><router-link to="/peopleCenter">个人中心</router-link></el-menu-item>
-                    <el-menu-item index="2"><router-link to="/areaMsgList">区域信息管理</router-link></el-menu-item>
-                    <el-menu-item index="3"><router-link to="/areaPeopleManage">区域管理员管理</router-link></el-menu-item>
+            <div id="leftMenu"  >
+                <el-menu :default-active="defaultActive"
+                         class="el-menu-vertical-demo"
+                         @open=""
+                         @close=""
+                         theme="dark"
+                         :router="true"
+                >
+                    <el-menu-item index="peopleCenter">个人中心</el-menu-item>
+                    <el-menu-item index="areaMsgList">区域信息管理</el-menu-item>
+                    <el-menu-item index="areaPeopleManage">区域管理员管理</el-menu-item>
                     <el-menu-item index="4">领导账号管理</el-menu-item>
                     <el-menu-item index="5">调查问卷</el-menu-item>
                     <el-menu-item index="6">投诉处理进程</el-menu-item>
@@ -184,7 +184,7 @@
     export default {
         data() {
             return {
-
+                defaultActive:''
             }
         },
         methods: {
@@ -194,6 +194,10 @@
         components: {
 
         },
+        created(){
+           let path=this.$route.path.slice(1);
+           this.defaultActive=path?path:'peopleCenter';
+        }
     }
 </script>
 
