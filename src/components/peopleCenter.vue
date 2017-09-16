@@ -3,13 +3,11 @@
   list-style-type:none;
  }
 .box{
- width:100%;
- height:100%;
  border:1px solid #7a95ff;
 }
  .title{
   font-size:20px;
-  background-color: #7a95ff;
+  background-color: #4b8df8 !important;
   padding:10px;
   color: #fff;
   margin:0px;
