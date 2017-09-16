@@ -13,6 +13,10 @@ Vue.use(VueRouter)
 
 const routes = [
     {
+        path: '/',
+        component: peopleCenter,
+    },
+    {
         path: '/peopleCenter',
         component: peopleCenter,
     },

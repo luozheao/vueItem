@@ -1,4 +1,4 @@
-<style type="text/less" scoped>
+<style  type="text/less" scoped>
     ul{
         list-style-type:none;
     }
@@ -116,7 +116,6 @@
 
 <script type="es6">
     export default {
-//        props: ['param', 'data'],
         data() {
             return  {
                 inputSearch:'',
@@ -139,7 +138,8 @@
                 options:[{
                     areaValue: '',
                     areaLabel: ''
-                }]
+                }],
+                areaValue:'',//
             }
         },
         methods: {
