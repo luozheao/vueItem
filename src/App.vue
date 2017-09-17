@@ -195,6 +195,8 @@
 
         },
         created(){
+
+            //test
            let path=this.$route.path.slice(1);
            this.defaultActive=path?path:'peopleCenter';
         }
