@@ -163,7 +163,7 @@
                     <el-menu-item index="5">调查问卷</el-menu-item>
                     <el-menu-item index="6">投诉处理进程</el-menu-item>
                     <el-menu-item index="7">问卷分数统计排行</el-menu-item>
-                    <el-menu-item index="8">区域位置设置</el-menu-item>
+                    <el-menu-item index="areaPositionSet">区域位置设置</el-menu-item>
                 </el-menu>
             </div>
             <!--主内容-->
