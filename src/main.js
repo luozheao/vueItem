@@ -7,6 +7,7 @@ import peopleCenter from './components/peopleCenter.vue'
 import areaMsgList from './components/areaMsgList.vue'
 import areaPeopleManage from './components/areaPeopleManage.vue'
 import areaPositionSet from './components/areaPositionSet.vue'
+import Luozheao from './components/luozheao.vue'
 import questionScoreList from './components/questionScoreList.vue'
 
 
@@ -38,7 +39,10 @@ const routes = [
         path: '/questionScoreList',
         component: questionScoreList,
     },
-
+    {
+        path: '/luozheao',
+        component: Luozheao,
+    },
 ]
 const router = new VueRouter({
     routes
