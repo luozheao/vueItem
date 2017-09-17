@@ -7,6 +7,7 @@ import peopleCenter from './components/peopleCenter.vue'
 import areaMsgList from './components/areaMsgList.vue'
 import areaPeopleManage from './components/areaPeopleManage.vue'
 import areaPositionSet from './components/areaPositionSet.vue'
+import questionScoreList from './components/questionScoreList.vue'
 
 
 Vue.use(ElementUI)
@@ -32,6 +33,10 @@ const routes = [
     {
         path: '/areaPositionSet',
         component: areaPositionSet,
+    },,
+    {
+        path: '/questionScoreList',
+        component: questionScoreList,
     },
 
 ]
