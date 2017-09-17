@@ -29,5 +29,4 @@ npm run dev
 ``` bash
 # build for production with minification
 npm run build
-```
-xieyangkan
+测试测试
