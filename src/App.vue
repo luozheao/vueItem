@@ -164,6 +164,7 @@
                     <el-menu-item index="6">投诉处理进程</el-menu-item>
                     <el-menu-item index="7">问卷分数统计排行</el-menu-item>
                     <el-menu-item index="areaPositionSet">区域位置设置</el-menu-item>
+                    <el-menu-item index="luozheao">luozheao测试页面</el-menu-item>
                 </el-menu>
             </div>
             <!--主内容-->
@@ -196,7 +197,7 @@
         },
         created(){
 
-            //test
+            //test123
            let path=this.$route.path.slice(1);
            this.defaultActive=path?path:'peopleCenter';
         }
