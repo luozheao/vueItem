@@ -9,6 +9,7 @@ import areaPeopleManage from './components/areaPeopleManage.vue'
 import areaPositionSet from './components/areaPositionSet.vue'
 import Luozheao from './components/luozheao.vue'
 import questionScoreList from './components/questionScoreList.vue'
+import complaintHandling from './components/complaintHandling.vue'
 
 
 Vue.use(ElementUI)
@@ -34,10 +35,14 @@ const routes = [
     {
         path: '/areaPositionSet',
         component: areaPositionSet,
-    },,
+    },
     {
         path: '/questionScoreList',
         component: questionScoreList,
+    },
+    {
+        path: '/complaintHandling',
+        component: complaintHandling,
     },
     {
         path: '/luozheao',
