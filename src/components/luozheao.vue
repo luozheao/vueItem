@@ -68,6 +68,33 @@
         },
         created() {
             this.init();
+            console.time("aaaa");
+            class A{
+                constructor(name){
+                    this.name=name;
+                }
+                sayName(){
+                    console.log(this.name);
+                }
+            }
+
+            class B extends A{
+                constructor(name){
+                    super(name)
+                }
+                get age(){
+                    return this._age
+                }
+                set age(age){
+                    this._age=age+10;
+                }
+            }
+            var b=new B('luojie');
+            b.age=10;
+
+            console.log(b.age);
+
+            console.timeEnd("aaaa");
         },
         components: {
 
