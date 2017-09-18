@@ -159,7 +159,7 @@
                     <el-menu-item index="peopleCenter">个人中心</el-menu-item>
                     <el-menu-item index="areaMsgList">区域信息管理</el-menu-item>
                     <el-menu-item index="areaPeopleManage">区域管理员管理</el-menu-item>
-                    <el-menu-item index="4">领导账号管理</el-menu-item>
+                    <el-menu-item index="leaderAccountNum">领导账号管理</el-menu-item>
                     <el-menu-item index="5">调查问卷</el-menu-item>
                     <el-menu-item index="complaintHandling">投诉处理进程</el-menu-item>
                     <el-menu-item index="questionScoreList">问卷分数统计排行</el-menu-item>
