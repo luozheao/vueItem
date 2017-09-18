@@ -23,7 +23,31 @@
         <div class="box">
             <p class="title">区域问卷分数统计排行</p>
             <div class="bodyBox">
-
+                <el-select v-model="areaValue" placeholder="请选择区域">
+                    <el-option
+                            v-for="item in areaOptions"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                    </el-option>
+                </el-select>
+                <el-select v-model="listValue" placeholder="请选择排行方式">
+                    <el-option
+                            v-for="item in listOptions"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                    </el-option>
+                </el-select>
+                <el-date-picker
+                        v-model="dateValue"
+                        type="daterange"
+                        align="right"
+                        placeholder="选择日期范围"
+                        :picker-options="pickerOptions2">
+                </el-date-picker>
+                <el-button type="primary" @click="searchList">查询</el-button>
+                <el-button type="primary" @click="installList" style="margin-left: 5px;">导出</el-button>
                 <el-table
                         :data="tableData"
                         max-height="250"
@@ -71,13 +95,44 @@
 //        props: ['param', 'data'],
         data() {
             return  {
+                areaValue:'',
+                listValue:'',
+                dateValue:'',
+                areaOptions:[],
                 currentPageNum:1,
                 tableData: [{
                     queationName: '',
                     queationNum: '',
                     queationListNum:'',
                     doning: ''
+                }],
+            pickerOptions2: {
+                shortcuts: [{
+                    text: '最近一周',
+                    onClick(picker) {
+                        const end = new Date();
+                        const start = new Date();
+                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                        picker.$emit('pick', [start, end]);
+                    }
+                }, {
+                    text: '最近一个月',
+                    onClick(picker) {
+                        const end = new Date();
+                        const start = new Date();
+                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                        picker.$emit('pick', [start, end]);
+                    }
+                }, {
+                    text: '最近三个月',
+                    onClick(picker) {
+                        const end = new Date();
+                        const start = new Date();
+                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                        picker.$emit('pick', [start, end]);
+                    }
                 }]
+            },
             }
         },
         methods: {
@@ -86,6 +141,17 @@
                     queationName: '客房问卷',
                     queationNum: '100',
                     queationListNum:'1',
+                }];
+                this.areaOptions=[{
+                    label:'客房',
+                    value:'0'
+                }];
+                this.listOptions=[{
+                    label:'总分排行',
+                    value:'0'
+                },{
+                    label:'平均分排行',
+                    value:'1'
                 }]
             },
             deleteLi(val){
@@ -99,6 +165,12 @@
             },
             handleCurrentChange(val) {
                 console.log(`当前页: ${val}`);
+            },
+            searchList(){
+                console.log('1');
+            },
+            installList(){
+                console.log('2');
             }
         },
         created() {
