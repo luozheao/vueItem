@@ -46,13 +46,13 @@
                                 <div class="sub-title titleFont">(如输入：01--50或01桌--50桌，可以批量生成编号。)最多生成100个编号(一个编号对应一个二维码)</div>
                                 </el-col>
                                 <el-col :span="6">
-                                    <el-input v-model="stater" placeholder="开始"></el-input>
+                                    <el-input v-model.number.trim="stater" placeholder="开始"></el-input>
                                 </el-col>
                                 <el-col :span="2">
                                     --
                                 </el-col>
                                 <el-col :span="6">
-                                    <el-input v-model="ender" placeholder="结束"></el-input>
+                                    <el-input v-model.number.trim="ender" placeholder="结束"></el-input>
                                 </el-col>
                                 <el-col :span="6">
                                     <el-button type="primary" @click="getNum">生成编号</el-button>
