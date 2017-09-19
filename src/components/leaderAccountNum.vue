@@ -26,25 +26,59 @@
                 <el-row>
                     <el-col :span="24">
                         <el-button type="primary" @click="dialogFormVisible = true">添加领导账号</el-button>
-                        <el-dialog title="添加领导账号" :visible.sync="dialogFormVisible">
+                        <el-dialog title="添加领导账号" :visible.sync="dialogFormVisible" size="large">
                             <el-form :model="form">
-                                <el-form-item label="所属项目" :label-width="formLabelWidth">
-                                    <el-select v-model="form.region" placeholder="请选择所属项目">
-                                        <el-option label="区域一" value="shanghai"></el-option>
-                                        <el-option label="区域二" value="beijing"></el-option>
-                                    </el-select>
-                                </el-form-item>
-                                <el-form-item label="区域名称" :label-width="formLabelWidth">
-                                    <el-input v-model="form.name" auto-complete="off"></el-input>
-                                </el-form-item>
-                                <el-form-item label="区域备注" :label-width="formLabelWidth">
-                                    <el-input type="textarea" v-model="form.desc"></el-input>
-                                </el-form-item>
+                                <el-row>
+                                <el-col :span="12">
+                                    <el-form-item label="所属项目">
+                                        <el-select v-model="form.region" placeholder="请选择所属项目" style="width: 400px">
+                                            <el-option label="一" value="shanghai"></el-option>
+                                            <el-option label="二" value="beijing"></el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                    <el-form-item label="所属区域">
+                                        <el-select v-model="form.area" placeholder="请选择所属区域" style="width: 400px">
+                                            <el-option label="区域一" value="shanghai"></el-option>
+                                            <el-option label="区域二" value="beijing"></el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                    <el-form-item label="绑定号码">
+                                        <el-row>
+                                            <el-col :span="14">
+                                                <el-input v-model="form.bindPhoneNum" style="width: 320px"></el-input>
+                                                <div style="font-size: 12px;color: red;">请将该号码发给对应的区域领导，在微信里绑定即可！</div>
+                                            </el-col>
+                                            <el-col :span="3">
+                                                <el-button type="primary" @click="getNum">生成</el-button>
+                                            </el-col>
+                                        </el-row>
+                                    </el-form-item>
+                                    <el-form-item label="领导姓名">
+                                        <el-input v-model="form.name" style="width: 400px"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="领导手机">
+                                        <el-input v-model="form.phoneNum" style="width: 400px"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-col :span="12">
+                                        <img :src="erweima" style="width:78%">
+                                        <div style="font-size: 12px;color: red;">
+                                            注意：首先领导用手机微信关注服务号或者查找添加 “扫码点评”微信公众号，并绑定刚生成的绑定号码就能在有投诉的时候接收到微信提醒。
+                                        </div>
+                                    </el-col>
+                                    <el-col :span="12">
+                                        <img :src="weixin" style="width:70%">
+                                    </el-col>
+                                </el-col>
+                                    </el-row>
                             </el-form>
-                            <div slot="footer" class="dialog-footer">
-                                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                                <el-button type="primary" @click="addarea">确 定</el-button>
-                            </div>
+
+                                    <div slot="footer" class="dialog-footer">
+                                        <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                        <el-button type="primary" @click="addarea">确 定</el-button>
+                                    </div>
+
                         </el-dialog>
                         <el-select v-model="areaValue" placeholder="请选择区域">
                             <el-option
@@ -83,9 +117,11 @@
                     >
                     </el-table-column>
                     <el-table-column
-                            prop="img"
                             label="二维码"
                     >
+                        <template scope="scope">
+                            <img :src="scope.row.img" style="width:100%;height: 100%"/>
+                        </template>
                     </el-table-column>
                     <el-table-column
                             prop="isSend"
@@ -130,10 +166,10 @@
                     >
                     </el-table-column>
                     <el-table-column
-                            label="操作">
+                            label="操作" style="padding: 0;">
                         <template scope="scope">
                             <el-button type="danger" size="mini" @click="deleteLi(scope)">删除</el-button>
-                            <el-button type="info" size="mini" @click="changeLi(scope)">修改</el-button>
+                            <el-button type="info" size="mini" @click="changeLi(scope)" style="margin: 0">修改</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -156,8 +192,9 @@
         data() {
             return  {
                 inputSearch:'',
-                formLabelWidth:'120px',
                 currentPageNum:1,
+                erweima:'src/images/smdpfwh.jpg',
+                weixin:'src/images/tsxxt.jpg',
                 dialogFormVisible:false,
                 tableData: [{
                     name:'',
@@ -173,8 +210,10 @@
                 }],
                 form:{
                     region:'',
+                    area:'',
+                    bindPhoneNum:'',
                     name:'',
-                    desc:''
+                    phoneNum:''
                 },
                 options:[{
                     areaValue: '',
@@ -189,7 +228,7 @@
                     name:'陈展活',
                     phoneNum:'18688258888',
                     bindPhoneNum:'1505532313',
-                    img:'',
+                    img:'src/images/erweima.png',
                     isSend:'',
                     isBind:'',
                     isCommentMsg:'',
@@ -223,6 +262,21 @@
             addarea(){
                 this.dialogFormVisible = false
                 console.log('加多一行')
+            },
+            isSendFn(){
+
+            },
+            isBindFn(){
+
+            },
+            isCommentMsgFn(){
+
+            },
+            isStatistics(){
+
+            },
+            getNum(){
+
             }
         },
         created() {
