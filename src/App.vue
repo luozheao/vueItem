@@ -80,12 +80,19 @@
         background: #3d3d3d;
         &>.el-menu{border-radius: 0;}
         .el-menu--dark{background: #3d3d3d;}
+        .el-menu--dark .el-submenu .el-menu{
+            background: #3d3d3d;
+            font-size:12px;
+            li{
+                color:#bdbdbd;
+            }
+        }
         .el-menu-item,
         .el-submenu__title{
             min-width: 100px;
             height: 40px;
             line-height: 40px;
-
+            color:white;
             border-bottom: 1px solid #5c5c5c;
             &:hover{
                 background: #303030;
@@ -95,6 +102,7 @@
         .gray{
             color:#bdbdbd;
         }
+        .el-menu-item-group__title{padding-top:0; }
     }
     .back{
         &:hover{
@@ -160,7 +168,13 @@
                     <el-menu-item index="areaMsgList">区域信息管理</el-menu-item>
                     <el-menu-item index="areaPeopleManage">区域管理员管理</el-menu-item>
                     <el-menu-item index="leaderAccountNum">领导账号管理</el-menu-item>
-                    <el-menu-item index="questionnaireList">调查问卷</el-menu-item>
+                    <el-submenu >
+                        <template slot="title">调查问卷</template>
+                        <el-menu-item-group >
+                            <el-menu-item index="questionnaireListManager">问卷管理</el-menu-item>
+                            <el-menu-item index="questionnaireListMerge">合并问卷管理</el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
                     <el-menu-item index="complaintHandling">投诉处理进程</el-menu-item>
                     <el-menu-item index="questionScoreList">问卷分数统计排行</el-menu-item>
                     <el-menu-item index="areaPositionSet">区域位置设置</el-menu-item>
