@@ -45,12 +45,13 @@ const routes = [
     },
     {
         path: '/questionnaireListManager',
-        component: questionnaireListManager,
+        component:questionnaireListManager,
     },
     {
         path: '/questionnaireListMerge',
         component: questionnaireListMerge,
     },
+
     {
         path: '/questionScoreList',
         component: questionScoreList,

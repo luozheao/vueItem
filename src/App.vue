@@ -168,7 +168,9 @@
                     <el-menu-item index="areaMsgList">区域信息管理</el-menu-item>
                     <el-menu-item index="areaPeopleManage">区域管理员管理</el-menu-item>
                     <el-menu-item index="leaderAccountNum">领导账号管理</el-menu-item>
-                    <el-submenu >
+                    <el-submenu
+                             index="questionnaireList"
+                             >
                         <template slot="title">调查问卷</template>
                         <el-menu-item-group >
                             <el-menu-item index="questionnaireListManager">问卷管理</el-menu-item>
@@ -199,7 +201,8 @@
     export default {
         data() {
             return {
-                defaultActive:''
+                defaultActive:'',
+                defaultOpeneds:[],
             }
         },
         methods: {
