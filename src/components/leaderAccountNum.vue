@@ -1,7 +1,16 @@
-<style  type="text/less" scoped>
+<style lang="less" type="text/less">
+    #test{
+        .el-table .cell{
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    }
+</style>
+<style  lang="less" type="text/less" scoped>
     ul{
         list-style-type:none;
     }
+
     .box{
         border:1px solid #7a95ff;
     }
@@ -19,7 +28,7 @@
 </style>
 
 <template>
-    <div>
+    <div id="test">
         <div class="box">
             <p class="title">领导账号列表</p>
             <div class="bodyBox">
@@ -166,8 +175,8 @@
                     >
                     </el-table-column>
                     <el-table-column
-                            label="操作" style="padding: 0;">
-                        <template scope="scope">
+                         label="操作" style="padding: 0;">
+                        <template  scope="scope">
                             <el-button type="danger" size="mini" @click="deleteLi(scope)">删除</el-button>
                             <el-button type="info" size="mini" @click="changeLi(scope)" style="margin: 0">修改</el-button>
                         </template>
