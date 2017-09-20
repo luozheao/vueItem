@@ -10,6 +10,7 @@ import areaPositionSet from './components/areaPositionSet.vue'
 import Luozheao from './components/luozheao.vue'
 import questionScoreList from './components/questionScoreList.vue'
 import complaintHandling from './components/complaintHandling.vue'
+import questionnaireList from './components/questionnaireList.vue'
 import leaderAccountNum from './components/leaderAccountNum.vue'
 
 
@@ -40,6 +41,10 @@ const routes = [
     {
         path: '/leaderAccountNum',
         component: leaderAccountNum,
+    },
+    {
+        path: '/questionnaireList',
+        component: questionnaireList,
     },
     {
         path: '/questionScoreList',
