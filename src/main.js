@@ -16,44 +16,7 @@ import leaderAccountNum from './components/leaderAccountNum.vue'
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 
-const routes = [
-    {
-        path: '/',
-        component: peopleCenter,
-    },
-    {
-        path: '/peopleCenter',
-        component: peopleCenter,
-    },
-    {
-        path: '/areaMsgList',
-        component: areaMsgList,
-    },
-    {
-        path: '/areaPeopleManage',
-        component: areaPeopleManage,
-    },
-    {
-        path: '/areaPositionSet',
-        component: areaPositionSet,
-    },
-    {
-        path: '/leaderAccountNum',
-        component: leaderAccountNum,
-    },
-    {
-        path: '/questionScoreList',
-        component: questionScoreList,
-    },
-    {
-        path: '/complaintHandling',
-        component: complaintHandling,
-    },
-    {
-        path: '/luozheao',
-        component: Luozheao,
-    },
-]
+const routes = []
 const router = new VueRouter({
     routes
 })
