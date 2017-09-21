@@ -180,7 +180,7 @@
                     <el-menu-item index="complaintHandling">投诉处理进程</el-menu-item>
                     <el-menu-item index="questionScoreList">问卷分数统计排行</el-menu-item>
                     <el-menu-item index="areaPositionSet">区域位置设置</el-menu-item>
-                    <el-menu-item index="luozheao">luozheao测试页面</el-menu-item>
+                    <!--<el-menu-item index="luozheao">luozheao测试页面</el-menu-item>-->
                 </el-menu>
             </div>
             <!--主内容-->

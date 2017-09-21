@@ -25,7 +25,7 @@
             <div class="bodyBox">
                 <el-row>
                     <el-col :span="24">
-                        <el-button type="primary" @click="dialogFormVisible = true">添加区域信息</el-button>
+                        <el-button type="primary" @click="addAreaMsg">添加区域信息</el-button>
                         <el-dialog title="添加区域信息" :visible.sync="dialogFormVisible">
                             <el-form :model="form">
                                 <el-form-item label="所属项目" :label-width="formLabelWidth">
@@ -72,8 +72,8 @@
                     <el-table-column
                             label="操作">
                         <template scope="scope">
-                            <el-button type="danger" size="mini" @click="deleteLi(scope)">删除</el-button>
-                            <el-button type="info" size="mini" @click="changeLi(scope)">修改</el-button>
+                            <el-button type="danger" size="mini" @click="deleteLi(scope.$index, tableData)">删除</el-button>
+                            <el-button type="info" size="mini"  @click="changeLi(scope.$index, tableData)">修改</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -97,6 +97,8 @@
         data() {
             return  {
                 inputSearch:'',
+                isChange:false,
+                currentIndex:'',
                 formLabelWidth:'120px',
                 currentPageNum:1,
                 dialogFormVisible:false,
@@ -128,14 +130,21 @@
                     createTime: '2017/7/5 14:06:28',
                 }]
             },
+            addAreaMsg(){
+                this.dialogFormVisible = true
+                this.isChange=false
+            },
             inputSearchClick(val){
                 console.log(this.inputSearch)
             },
-            deleteLi(val){
-                console.log(val)
+            deleteLi(index, rows){
+                rows.splice(index, 1);
             },
-            changeLi(val){
-                console.log(val)
+            changeLi(index, rows){
+               this.dialogFormVisible = true
+                this.isChange=true
+                this.currentIndex=index;
+               this.from.form.name=rows[index].areaName;
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
@@ -144,8 +153,15 @@
                 console.log(`当前页: ${val}`);
             },
             addarea(){
+                if(this.isChange){
+                    this.tableData[this.currentIndex].areaName=this.form.name;
+                }else{
+                    var obj={}
+                    obj.areaName=this.form.name;
+                    obj.createTime= new Date(parseInt(new Date().getTime())).toLocaleString().replace(/:\d{1,2}$/,' ');
+                    this.tableData.unshift(obj);
+                }
                 this.dialogFormVisible = false
-                console.log('加多一行')
             }
         },
         created() {

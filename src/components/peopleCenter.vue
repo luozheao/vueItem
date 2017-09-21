@@ -175,7 +175,10 @@
             },
             changeNum(){
                 this.dialogFormVisible = false
-                console.log('账户已改');
+                this.$message({
+                    message: '恭喜你，账户已改',
+                    type: 'success'
+                });
             },
             changePasswordFn(){
                 this.changePassword = false
