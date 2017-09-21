@@ -6,35 +6,21 @@
 </style>
 
 <template>
-    <div id="luozheao">
-        <el-form ref="form"
-                 :model="form"
-                 label-position="top"
+    <div id="luozheao" style="height: 1000px;background: red;position: relative;opacity: 0.6;">
+        <vue-lazy-component
+                @init="initTest"
         >
-            <el-form-item label="单体模式:">
-                划分命名空间.<br>
-                集合一批相关的属性和方法<br>
-            </el-form-item>
-            <el-form-item label="工厂模式:">
-                根据调用者的参数,创建对象<br>
-                简单工厂模式:<br>
-                复杂工厂模式:<br>
-            </el-form-item>
-            <el-form-item label="订阅者模式:">
-                先订阅,后发布<br>
-            </el-form-item>
-            <el-form-item label="模板模式:">
-                覆盖重写<br>
-            </el-form-item>
-            <el-form-item label="代理模式:">
-                我的事,别人代我做<br>
-                代理人可以代理类似的多种事,也就是多对一
-            </el-form-item>
-        </el-form>
+            <!--需要懒加载的组件-->
+            <bc/>
+            <!--在加载之前展示的骨架组件-->
+            <ab slot="skeleton"/>
+        </vue-lazy-component>
     </div>
 </template>
 
 <script type="es6">
+    import { component as VueLazyComponent } from '@xunlei/vue-lazy-component'
+
     export default {
         props: [],
         data() {
@@ -45,7 +31,8 @@
                 /*******model********/
                 form: {
 
-                }
+                },
+
             }
         },
         computed: {
@@ -54,49 +41,20 @@
         },
         watch: {
             //特征:1.别的属性(外部显示监控)发生变化,本身才可以变化;2适用于触发方法或者值的改变;3改变的方法或者值在$nextTick生效
-            param() {
-                this.init();
-            },
+
         },
         methods: {
-            init(){
+            initTest(){
+                console.log(111111111);
+            },
 
-            },
-            onSubmit() {
-                console.log('submit!');
-            },
+
         },
-        created() {
-            this.init();
-            console.time("aaaa");
-            class A{
-                constructor(name){
-                    this.name=name;
-                }
-                sayName(){
-                    console.log(this.name);
-                }
-            }
+        mounted() {
 
-            class B extends A{
-                constructor(name){
-                    super(name)
-                }
-                get age(){
-                    return this._age
-                }
-                set age(age){
-                    this._age=age+10;
-                }
-            }
-            var b=new B('luojie');
-            b.age=10;
-
-            console.log(b.age);
-
-            console.timeEnd("aaaa");
         },
         components: {
+            'vue-lazy-component': VueLazyComponent,
 
         },
     }

@@ -10,8 +10,9 @@ import areaPositionSet from './components/areaPositionSet.vue'
 import Luozheao from './components/luozheao.vue'
 import questionScoreList from './components/questionScoreList.vue'
 import complaintHandling from './components/complaintHandling.vue'
-import questionnaireList from './components/questionnaireList.vue'
 import leaderAccountNum from './components/leaderAccountNum.vue'
+import questionnaireListManager from './components/questionnaireListManager.vue'
+import questionnaireListMerge from './components/questionnaireListMerge.vue'
 
 
 Vue.use(ElementUI)
@@ -43,9 +44,14 @@ const routes = [
         component: leaderAccountNum,
     },
     {
-        path: '/questionnaireList',
-        component: questionnaireList,
+        path: '/questionnaireListManager',
+        component:questionnaireListManager,
     },
+    {
+        path: '/questionnaireListMerge',
+        component: questionnaireListMerge,
+    },
+
     {
         path: '/questionScoreList',
         component: questionScoreList,
