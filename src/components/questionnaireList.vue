@@ -98,7 +98,7 @@
                 </el-row>
                 <el-table
                         :data="tableData"
-                        max-height="250"
+                        max-height="400"
                         border
                         style="width: 100% ;margin-top: 10px;">
                     <el-table-column
