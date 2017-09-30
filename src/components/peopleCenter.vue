@@ -250,6 +250,15 @@
                 }
             },
             oldPasswordValidate(rule,value,callback){
+                this.$http.get('http://101.200.39.173/area/beyond_project',{}).then(
+                    (response) => {
+                        debugger
+                        response
+                    },
+                    (response) => {
+                        debugger
+                        response
+                    });
                 if(value==''){
                     callback(new Error('请输入旧密码'));
                 }
