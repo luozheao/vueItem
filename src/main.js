@@ -7,16 +7,17 @@ import peopleCenter from './components/peopleCenter.vue'
 import areaMsgList from './components/areaMsgList.vue'
 import areaPeopleManage from './components/areaPeopleManage.vue'
 import areaPositionSet from './components/areaPositionSet.vue'
-// import Luozheao from './components/luozheao.vue'
 import questionScoreList from './components/questionScoreList.vue'
 import complaintHandling from './components/complaintHandling.vue'
 import leaderAccountNum from './components/leaderAccountNum.vue'
 import questionnaireListManager from './components/questionnaireListManager.vue'
 import questionnaireListMerge from './components/questionnaireListMerge.vue'
-
+import VueResource from 'vue-resource'
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
+Vue.use(VueResource);
+
 
 const routes = [
     {
