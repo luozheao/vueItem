@@ -168,7 +168,7 @@
                             message: response.message,
                             type:isCuccess?'success':'error'
                         });
-                        if(!isCuccess){
+                        if(isCuccess){
                               this.$emit('login');
                         }
                     },
@@ -187,11 +187,16 @@
                     (response) => {
                         console.log(response);
                         response=response.body;
+                        let isSuccess= response.code=='200';
                         this.$message({
                             showClose: false,
                             message: response.data,
-                            type: response.code=='200'?'success':'error'
+                            type:isSuccess?'success':'error'
                         });
+                        if(isSuccess){
+                            this.activeName='login';
+                            this.$refs['ruleForm'].resetFields();
+                        }
                     },
                     (response) => {
                         response=response.body;
