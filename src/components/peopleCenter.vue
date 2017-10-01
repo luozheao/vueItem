@@ -64,11 +64,11 @@
                 <div class="pInfoItem">
                     <h3 class="pInfoItemTop">注册信息</h3>
                     <ul class="pInfoUl">
-                        <li class="pInfoLi"><span class="pInfoOption">公司名称：</span><span class="pInfoTxt">{{ registerMsg.name }}</span>
+                        <li class="pInfoLi"><span class="pInfoOption">公司名称：</span><span class="pInfoTxt">{{ registerMsg.company }}</span>
                         </li>
-                        <li class="pInfoLi"><span class="pInfoOption">姓名：</span><span class="pInfoTxt">{{ registerMsg.hName }}</span>
+                        <li class="pInfoLi"><span class="pInfoOption">姓名：</span><span class="pInfoTxt">{{ registerMsg.username }}</span>
                         </li>
-                        <li class="pInfoLi"><span class="pInfoOption">登录帐号：</span><span class="pInfoTxt">{{ registerMsg.account }}</span>
+                        <li class="pInfoLi"><span class="pInfoOption">登录帐号：</span><span class="pInfoTxt">{{ registerMsg.phone }}</span>
                             &nbsp;
                             <el-button type="primary" size="mini" @click="dialogFormVisible = true">修改</el-button>
                         </li>
@@ -114,9 +114,10 @@
                 <div class="pInfoItem">
                     <h3 class="pInfoItemTop">账户信息</h3>
                     <ul class="pInfoUl">
-                        <li class="pInfoLi"><span class="pInfoOption">会员状态：</span><span class="pInfoTxt">{{accountMsg.account}}</span>
+                        <li class="pInfoLi"><span class="pInfoOption">会员状态：</span><span class="pInfoTxt" v-show="accountMsg.is_member==1">已是会员</span>
+                            <span class="pInfoTxt" v-show="accountMsg.is_member==0">不是会员</span>
                         </li>
-                        <li class="pInfoLi"><span class="pInfoOption">会员到期时间：</span><span class="pInfoTxt">{{accountMsg.endTime}}</span>
+                        <li class="pInfoLi"><span class="pInfoOption">会员到期时间：</span><span class="pInfoTxt">{{accountMsg.member_deadline}}</span>
                         </li>
                         <li class="pInfoLi"><span class="pInfoOption">续费会员：</span><span class="pInfoTxt"></span><span
                                 class="pInfoTxtRed">{{accountMsg.renew}}</span><a style="display:none;"
@@ -149,9 +150,10 @@
         data() {
             return {
                 registerMsg: {
-                    name: '',
-                    hName: '',
-                    account: ''
+                    id:'',
+                    username: '',
+                    company: '',
+                    phone: ''
                 },
                 accountMsg: {
                     account: '',
@@ -193,34 +195,73 @@
         },
         methods: {
             init(){
-                this.registerMsg = {
-                    name: '维多利亚酒店同济路店',
-                    hName: '同济路地铁店',
-                    account: 'wdlyjdtjd'
-                };
-                this.accountMsg = {
-                    account: '是',
-                    endTime: '2022-07-06 00:00',
-                    renew: '（请联系客服续费！）'
-                },
-                    this.abilityMsg = {
-                        area: '2个',
-                        question: '50个',
-                        Prompt: '正常',
-                        statistics: '正常',
-                        areaSet: '正常'
-                    }
+                this.$http.get('http://101.200.39.173/user/profile',{}).then(
+                    (response) => {
+                        response={
+                            "code": 200,
+                            "data": {
+                                "base_info": {
+                                    "id": 3,
+                                    "company": "asfaffaaf",
+                                    "username": "test",
+                                    "phone": "15920593659999"
+                                },
+                                "member_info": {
+                                    "is_member": 1,
+                                    "member_deadline": 0
+                                },
+                                "function_info": {
+                                    "area_info_number": 0,
+                                    "answer_number": 0
+                                }
+                            }
+                        };
+                        this.registerMsg = response.data.base_info
+                        this.accountMsg = response.data.member_info
+                        this.abilityMsg = response.data.function_info
+                    },
+                    (response) => {
+                        this.$message({
+                            message: response.data,
+                            type: 'error'
+                        });
+                    });
             },
             changeNum(){
-                this.dialogFormVisible = false
-                this.$message({
-                    message: '恭喜你，账户已改',
-                    type: 'success'
-                });
+                this.$http.get('http://101.200.39.173/user/change_phone',{params:this.form}).then(
+                    (response) => {
+                        this.dialogFormVisible = false
+                        console.log(response);
+                        let isSuccess= response.code=='200';
+                        this.$message({
+                            message: response.data,
+                            type:isSuccess?'success':'error'
+                        });
+                    },
+                    (response) => {
+                        this.$message({
+                            message: response.data,
+                            type: 'error'
+                        });
+                    });
             },
             changePasswordFn(){
-                this.changePassword = false
-                console.log('密码已改');
+                this.$http.get('http://101.200.39.173/user/change_password',{params:this.passwordForm}).then(
+                    (response) => {
+                        this.changePassword = false
+                        console.log(response);
+                        let isSuccess= response.code=='200';
+                        this.$message({
+                            message: response.data,
+                            type:isSuccess?'success':'error'
+                        });
+                    },
+                    (response) => {
+                        this.$message({
+                            message: response.data,
+                            type: 'error'
+                        });
+                    });
             },
             getNum(){
                 this.isGetNumLoad = true;
@@ -250,15 +291,6 @@
                 }
             },
             oldPasswordValidate(rule,value,callback){
-                this.$http.get('http://101.200.39.173/area/beyond_project',{}).then(
-                    (response) => {
-                        debugger
-                        response
-                    },
-                    (response) => {
-                        debugger
-                        response
-                    });
                 if(value==''){
                     callback(new Error('请输入旧密码'));
                 }
