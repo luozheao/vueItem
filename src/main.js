@@ -20,7 +20,7 @@ Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(VueResource);
 
-Vue.http.options.xhr = { withCredentials: true }
+// Vue.http.options.xhr = { withCredentials: true }
 Vue.http.interceptors.push((request, next) => {
 
     console.log(this)//此处this为请求所在页面的Vue实例
