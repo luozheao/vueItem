@@ -182,13 +182,13 @@
                 },
                 formLabelWidth: '120px',
                 rules: {
-                    newPassword: [
+                    new_assword: [
                         {validator: this.validatePass, trigger: 'blur'}
                     ],
                     aglinNewPassword: [
-                        {validator: this.validatePass2, trigger: 'keydonw'}
+                        {validator: this.validatePass2, trigger: 'blur'}
                     ],
-                    oldPassword: [
+                    old_password: [
                         {validator: this.oldPasswordValidate, trigger: 'blur'}
                     ]
                 }
@@ -229,7 +229,7 @@
                     });
             },
             changePasswordFn(){
-                this.$http.get('/user/change_password',{params:this.passwordForm}).then(
+                this.$http.post('/user/change_password',{params:this.passwordForm}).then(
                     (response) => {
                         this.changePassword = false
                         console.log(response);
