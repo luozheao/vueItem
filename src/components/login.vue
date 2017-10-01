@@ -45,30 +45,33 @@
             >
                 <el-tabs v-model="activeName">
                     <el-tab-pane label="登录" name="login">
-                        <el-form-item
-                                :rules="rules.phone"
-                                prop="login.phone"
-                        >
-                            <el-input placeholder="手机号码"  v-model="ruleForm.login.phone"></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-input placeholder="密码" v-model="ruleForm.login.password"></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-row>
-                                <el-col :span="16">
-                                    <el-input placeholder="验证码" v-model="ruleForm.login.captcha"></el-input>
-                                </el-col>
-                                <el-col :span="8">
-                                    <div class="captchaImg"    @click="changecaptchaImgEvent" v-html="captcahImg"></div>
-                                </el-col>
-                            </el-row>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button style="width:100%;background-color: #F36847;color:white;font-size:18px;" @click="loginEvent">登录</el-button>
-                        </el-form-item>
+
+                              <el-form-item
+                                      :rules="rules.phone"
+                                      prop="login.phone"
+                              >
+                                  <el-input placeholder="手机号码"  v-model="ruleForm.login.phone"></el-input>
+                              </el-form-item>
+                              <el-form-item>
+                                  <el-input placeholder="密码" v-model="ruleForm.login.password"></el-input>
+                              </el-form-item>
+                              <el-form-item>
+                                  <el-row>
+                                      <el-col :span="16">
+                                          <el-input placeholder="验证码" v-model="ruleForm.login.captcha"></el-input>
+                                      </el-col>
+                                      <el-col :span="8">
+                                          <div class="captchaImg"    @click="changecaptchaImgEvent" v-html="captcahImg"></div>
+                                      </el-col>
+                                  </el-row>
+                              </el-form-item>
+                              <el-form-item>
+                                  <el-button v-loading="loading" style="width:100%;background-color: #F36847;color:white;font-size:18px;" @click="loginEvent">登录</el-button>
+                              </el-form-item>
+
                     </el-tab-pane>
                     <el-tab-pane label="注册" name="register">
+
                         <el-form-item>
                             <el-input placeholder="公司名称" v-model="ruleForm.register.company"></el-input>
                         </el-form-item>
@@ -96,8 +99,9 @@
                             <el-input placeholder="再次输入密码"   v-model="ruleForm.register.password_confirmation"></el-input>
                         </el-form-item>
                         <el-form-item>
-                            <el-button style="width:100%;background-color: #F36847;color:white;font-size:18px;" @click="registerEvent">立即注册</el-button>
+                            <el-button style="width:100%;background-color: #F36847;color:white;font-size:18px;" v-loading="loading" @click="registerEvent">立即注册</el-button>
                         </el-form-item>
+
                     </el-tab-pane>
                 </el-tabs>
             </el-form>
@@ -105,6 +109,7 @@
 </template>
 
 <script>
+
     export default {
         data() {
             return {
@@ -116,7 +121,7 @@
                 ruleForm:{
                     login:{
                         phone:'17099913403',
-                        password:'123456',
+                        password:'123',
                         captcha:'123',
                     },
                     register:{
@@ -143,7 +148,6 @@
                 let isLogin=this.activeName=='login';
                 return {
                     login:true,
-
                     mh150:isLogin,
                     mh450:!isLogin
                 }
@@ -158,23 +162,25 @@
             },
             //登录
             loginEvent(){
+                this.loading=true;
                 this.$http.get('/login',{params:this.ruleForm.login}).then(
                     (response) => {
-                        console.log(response);
+                        this.loading=false;
                         response=response.body;
                         let isCuccess= response.code=='200';
                         this.$message({
                             showClose: false,
-                            message: isCuccess?'登陆成功':response.data,
+                            message: isCuccess?'登陆成功':(response.data||response.message),
                             type:isCuccess?'success':'error'
                         });
                         if(isCuccess){
                               localStorage.setItem('XSRF-TOKEN',response.data);
-                              this.$emit('login');
+                            this.$emit('login');
                         }
                     },
                     (response) => {
                         response=response.body;
+                        this.loading=false;
                         this.$message({
                             showClose: false,
                             message: response.data,
@@ -184,9 +190,10 @@
             },
             //注册
             registerEvent(){
+                this.loading=true;
                 this.$http.get('/register',{params:this.ruleForm.register}).then(
                     (response) => {
-                        console.log(response);
+                        this.loading=false;
                         response=response.body;
                         let isSuccess= response.code=='200';
                         this.$message({
@@ -195,12 +202,13 @@
                             type:isSuccess?'success':'error'
                         });
                         if(isSuccess){
+                            this.$refs['ruleForm'].resetFields();//清空
                             this.activeName='login';
-                            this.$refs['ruleForm'].resetFields();
                         }
                     },
                     (response) => {
                         response=response.body;
+                        this.loading=false;
                         this.$message({
                             showClose: false,
                             message: response.data,

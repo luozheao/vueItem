@@ -14,30 +14,20 @@ import questionnaireListManager from './components/questionnaireListManager.vue'
 import questionnaireListMerge from './components/questionnaireListMerge.vue'
 import VueResource from 'vue-resource'
 
-let url="/api";//接口地址
-
+let url=document.domain=='localhost'?"/api":'';//接口地址
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(VueResource);
-
-
+// Vue.http.options.emulateJSON = true;
 Vue.http.interceptors.push((request, next) => {
     console.log(this)//此处this为请求所在页面的Vue实例
     request.url=url+request.url;
-    // document.domain="localhost";
-    if(request.method =='POST'){
-        const jwtToken = localStorage.getItem('XSRF-TOKEN');
-        if (jwtToken) {
-            Vue.http.headers['XSRF-TOKEN'] = jwtToken;
-        } else {
-            delete Vue.http.headers.common.Authorization;
-        }
+    if(request.method == 'POST'){
+        let token = localStorage.getItem('XSRF-TOKEN');
+         request.headers.set('X-CSRF-TOKEN', token);
     }
-
     next((response) => {
-        //在响应之后传给then之前对response进行修改和逻辑判断。对于token时候已过期的判断，就添加在此处，页面中任何一次http请求都会先调用此处方法
-
         return response;
     });
 });

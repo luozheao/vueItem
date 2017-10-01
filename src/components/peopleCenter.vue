@@ -99,10 +99,11 @@
                                     <el-input v-model="passwordForm.new_password" type="password"
                                               auto-complete="off"></el-input>
                                 </el-form-item>
-                                <el-form-item label="确认新密码" :label-width="formLabelWidth" prop="aglinNewPassword">
-                                    <el-input v-model="passwordForm.aglinNewPassword" type="password"
+                                <el-form-item label="确认新密码" :label-width="formLabelWidth" prop="confirm_password">
+                                    <el-input v-model="passwordForm.confirm_password" type="password"
                                               auto-complete="off"></el-input>
                                 </el-form-item>
+
                             </el-form>
                             <div slot="footer" class="dialog-footer">
                                 <el-button @click="changePassword = false">取 消</el-button>
@@ -175,17 +176,17 @@
                     phone: ''
                 },
                 passwordForm: {
-                    id:'',
                     old_password: '',
                     new_password: '',
-                    aglinNewPassword: '',
+                    confirm_password: '',
                 },
+
                 formLabelWidth: '120px',
                 rules: {
                     new_assword: [
                         {validator: this.validatePass, trigger: 'blur'}
                     ],
-                    aglinNewPassword: [
+                    confirm_password: [
                         {validator: this.validatePass2, trigger: 'blur'}
                     ],
                     old_password: [
@@ -196,18 +197,15 @@
         },
         methods: {
             init(){
-                this.$http.get('/user/profile',{}).then(
+                this.$http.get('/user/profile').then(
                     (response) => {
                         response=response.body;
-                        if(response.code!=200){
-                            return;
-                        }
                         this.registerMsg = response.data.base_info
-                        this.passwordForm.id=response.data.base_info.id
                         this.accountMsg = response.data.member_info
                         this.abilityMsg = response.data.function_info
                     },
                     (response) => {
+                        debugger;
                         this.$message({
                             message: response.data,
                             type: 'error'
@@ -233,11 +231,12 @@
                     });
             },
             changePasswordFn(){
-                this.$http.post('/user/change_password',{params:this.passwordForm}).then(
+
+                this.$http.post('/user/change_password',this.passwordForm).then(
                     (response) => {
                         this.changePassword = false;
-                        console.log(response);
-                        let isSuccess= response.code=='200';
+                        response=response.body;
+                        let isSuccess= response.code==200;
                         this.$message({
                             message: response.data,
                             type:isSuccess?'success':'error'
@@ -262,8 +261,8 @@
                 if (value === '') {
                     callback(new Error('请输入密码'));
                 } else {
-                    if (this.passwordForm.aglinNewPassword !== '') {
-                        this.$refs.passwordForm.validateField('aglinNewPassword');
+                    if (this.passwordForm.confirm_password !== '') {
+                        this.$refs.passwordForm.validateField('confirm_password');
                     }
                     callback();
                 }

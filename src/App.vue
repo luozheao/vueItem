@@ -179,7 +179,9 @@
 </style>
 <template>
     <div style="width: 100%;height: 100%;">
-        <div :class="{hide:!isHideLoginPop}" id="main">
+        <!--登录框-->
+        <login   v-if="!isHideLoginPop" @login="loginEvent"></login>
+        <div   v-else id="main">
             <!--顶部-->
             <div id="header">
                 <el-row class="white" >
@@ -190,7 +192,7 @@
                         <div style="text-align: right;">同济路地铁店</div>
                     </el-col>
                     <el-col :span="2"  >
-                        <div class="pointer loginBtn">退出登录</div>
+                        <div class="pointer loginBtn" @click="signOutEvent">退出登录</div>
                     </el-col>
                 </el-row>
             </div>
@@ -230,8 +232,6 @@
                 <router-view ></router-view>
             </div>
         </div>
-        <!--登录框-->
-        <login  :class="{hide:isHideLoginPop}" @login="loginEvent"></login>
     </div>
 </template>
 
@@ -248,15 +248,32 @@
         methods: {
             loginEvent(){
                   this.isHideLoginPop=true;
+            },
+            signOutEvent(){
+                //提示
+                this.$message({
+                    showClose: false,
+                    message: '退出成功',
+                    type:'success'
+                });
+                //显示登录窗
+                this.isHideLoginPop=false;
+                //清空缓存
+                localStorage.clear();
             }
         },
-
         components: {
             Login
         },
         created(){
            let path=this.$route.path.slice(1);
            this.defaultActive=path?path:'peopleCenter';
+
+           //判断是否出现登录界面
+            let token=localStorage.getItem('XSRF-TOKEN');
+            if(token){
+               this.isHideLoginPop=true;
+            }
         }
     }
 </script>
