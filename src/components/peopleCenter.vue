@@ -250,7 +250,7 @@
                 }
             },
             oldPasswordValidate(rule,value,callback){
-                this.$http.get('http://101.200.39.173/area/beyond_project',{}).then(
+                this.$http.get('/area/beyond_project').then(
                     (response) => {
                         debugger
                         response

@@ -115,9 +115,9 @@
                 /******model层******/
                 ruleForm:{
                     login:{
-                        phone:'',
-                        password:'',
-                        captcha:'',
+                        phone:'17099913403',
+                        password:'123456',
+                        captcha:'123',
                     },
                     register:{
                         phone:'',
@@ -158,14 +158,14 @@
             },
             //登录
             loginEvent(){
-                this.$http.get('http://101.200.39.173/login',{params:this.ruleForm.login}).then(
+                this.$http.get('/login',{params:this.ruleForm.login}).then(
                     (response) => {
                         console.log(response);
                         response=response.body;
                         let isCuccess= response.code=='200';
                         this.$message({
                             showClose: false,
-                            message: response.message,
+                            message: response.message||response.data,
                             type:isCuccess?'success':'error'
                         });
                         if(isCuccess){
@@ -183,7 +183,7 @@
             },
             //注册
             registerEvent(){
-                this.$http.get('http://101.200.39.173/register',{params:this.ruleForm.register}).then(
+                this.$http.get('/register',{params:this.ruleForm.register}).then(
                     (response) => {
                         console.log(response);
                         response=response.body;
