@@ -165,10 +165,11 @@
                         let isCuccess= response.code=='200';
                         this.$message({
                             showClose: false,
-                            message: response.message||response.data,
+                            message: isCuccess?'登陆成功':response.data,
                             type:isCuccess?'success':'error'
                         });
                         if(isCuccess){
+                              localStorage.setItem('XSRF-TOKEN',response.data);
                               this.$emit('login');
                         }
                     },

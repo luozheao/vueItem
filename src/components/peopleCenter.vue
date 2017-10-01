@@ -198,10 +198,14 @@
             init(){
                 this.$http.get('/user/profile',{}).then(
                     (response) => {
-                        this.registerMsg = response.data.data.base_info
-                        this.passwordForm.id=response.data.data.base_info.id
-                        this.accountMsg = response.data.data.member_info
-                        this.abilityMsg = response.data.data.function_info
+                        response=response.body;
+                        if(response.code!=200){
+                            return;
+                        }
+                        this.registerMsg = response.data.base_info
+                        this.passwordForm.id=response.data.base_info.id
+                        this.accountMsg = response.data.member_info
+                        this.abilityMsg = response.data.function_info
                     },
                     (response) => {
                         this.$message({
@@ -231,7 +235,7 @@
             changePasswordFn(){
                 this.$http.post('/user/change_password',{params:this.passwordForm}).then(
                     (response) => {
-                        this.changePassword = false
+                        this.changePassword = false;
                         console.log(response);
                         let isSuccess= response.code=='200';
                         this.$message({
@@ -265,6 +269,7 @@
                 }
             },
             validatePass2 (rule, value, callback) {
+
                 if (value === '') {
                     callback(new Error('请再次输入密码'));
                 } else if (value !== this.passwordForm.newPassword) {
