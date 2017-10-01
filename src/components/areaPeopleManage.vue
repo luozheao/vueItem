@@ -158,6 +158,7 @@
                     areaValue: '选项2',
                     areaLabel: '双皮奶'
                 }]
+
             },
             inputSearchClick(val){
                 console.log(this.inputSearch)

@@ -137,7 +137,7 @@
         methods: {
             init(){
                 this.$http.get('/area/area_list',{params:{'page':1}}).then(function(response) {
-                    this.tableData=response.data.data={
+                    this.tableData=response.data={
                         "current_page": 1,
                         "data": [
                             {
@@ -176,7 +176,13 @@
                 this.isChange=false
             },
             inputSearchClick(val){
-                console.log(this.inputSearch)
+                this.$http.get('/area/search',{params:{'keyword':this.inputSearch}}).then(function(response) {
+                    if(response.data.data.length){
+                        this.tableData.data=response.data.data
+                    }
+
+                },function(response) {
+                });
             },
             deleteLi(index, data){
                 if(data.length){
