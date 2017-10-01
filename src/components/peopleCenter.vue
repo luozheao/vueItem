@@ -64,11 +64,11 @@
                 <div class="pInfoItem">
                     <h3 class="pInfoItemTop">注册信息</h3>
                     <ul class="pInfoUl">
-                        <li class="pInfoLi"><span class="pInfoOption">公司名称：</span><span class="pInfoTxt">{{ registerMsg.name }}</span>
+                        <li class="pInfoLi"><span class="pInfoOption">公司名称：</span><span class="pInfoTxt">{{ registerMsg.company }}</span>
                         </li>
-                        <li class="pInfoLi"><span class="pInfoOption">姓名：</span><span class="pInfoTxt">{{ registerMsg.hName }}</span>
+                        <li class="pInfoLi"><span class="pInfoOption">姓名：</span><span class="pInfoTxt">{{ registerMsg.username }}</span>
                         </li>
-                        <li class="pInfoLi"><span class="pInfoOption">登录帐号：</span><span class="pInfoTxt">{{ registerMsg.account }}</span>
+                        <li class="pInfoLi"><span class="pInfoOption">登录帐号：</span><span class="pInfoTxt">{{ registerMsg.phone }}</span>
                             &nbsp;
                             <el-button type="primary" size="mini" @click="dialogFormVisible = true">修改</el-button>
                         </li>
@@ -92,11 +92,11 @@
                         </li>
                         <el-dialog title="修改密码" :visible.sync="changePassword">
                             <el-form :model="passwordForm" :rules='rules' ref="passwordForm">
-                                <el-form-item label="旧密码" prop="oldPassword" :label-width="formLabelWidth">
-                                    <el-input v-model="passwordForm.oldPassword" auto-complete="off"></el-input>
+                                <el-form-item label="旧密码" prop="old_password" :label-width="formLabelWidth">
+                                    <el-input v-model="passwordForm.old_password" auto-complete="off"></el-input>
                                 </el-form-item>
-                                <el-form-item label="新密码" :label-width="formLabelWidth" prop="newPassword">
-                                    <el-input v-model="passwordForm.newPassword" type="password"
+                                <el-form-item label="新密码" :label-width="formLabelWidth" prop="new_password">
+                                    <el-input v-model="passwordForm.new_password" type="password"
                                               auto-complete="off"></el-input>
                                 </el-form-item>
                                 <el-form-item label="确认新密码" :label-width="formLabelWidth" prop="aglinNewPassword">
@@ -114,9 +114,10 @@
                 <div class="pInfoItem">
                     <h3 class="pInfoItemTop">账户信息</h3>
                     <ul class="pInfoUl">
-                        <li class="pInfoLi"><span class="pInfoOption">会员状态：</span><span class="pInfoTxt">{{accountMsg.account}}</span>
+                        <li class="pInfoLi"><span class="pInfoOption">会员状态：</span><span class="pInfoTxt" v-show="accountMsg.is_member==1">已是会员</span>
+                            <span class="pInfoTxt" v-show="accountMsg.is_member==0">不是会员</span>
                         </li>
-                        <li class="pInfoLi"><span class="pInfoOption">会员到期时间：</span><span class="pInfoTxt">{{accountMsg.endTime}}</span>
+                        <li class="pInfoLi"><span class="pInfoOption">会员到期时间：</span><span class="pInfoTxt">{{accountMsg.member_deadline}}</span>
                         </li>
                         <li class="pInfoLi"><span class="pInfoOption">续费会员：</span><span class="pInfoTxt"></span><span
                                 class="pInfoTxtRed">{{accountMsg.renew}}</span><a style="display:none;"
@@ -126,9 +127,9 @@
                 <div class="pInfoItem">
                     <h3 class="pInfoItemTop">功能状态</h3>
                     <ul class="pInfoUl">
-                        <li class="pInfoLi"><span class="pInfoOption">可建区域数量：</span><span class="pInfoTxt">{{abilityMsg.area}}</span><span
+                        <li class="pInfoLi"><span class="pInfoOption">可建区域数量：</span><span class="pInfoTxt">{{abilityMsg.area_info_number}}</span><span
                                 class="pInfoTxtRed">（如需更多请咨询客服电话）</span></li>
-                        <li class="pInfoLi"><span class="pInfoOption">可建问卷数量：</span><span class="pInfoTxt">{{abilityMsg.question}}</span><span
+                        <li class="pInfoLi"><span class="pInfoOption">可建问卷数量：</span><span class="pInfoTxt">{{abilityMsg.answer_number}}</span><span
                                 class="pInfoTxtRed">（如需更多请咨询客服电话）</span></li>
                         <li class="pInfoLi"><span class="pInfoOption">领导微信提醒：</span><span class="pInfoTxt">{{abilityMsg.Prompt}}</span>
                         </li>
@@ -149,9 +150,10 @@
         data() {
             return {
                 registerMsg: {
-                    name: '',
-                    hName: '',
-                    account: ''
+                    id:'',
+                    username: '',
+                    company: '',
+                    phone: ''
                 },
                 accountMsg: {
                     account: '',
@@ -159,8 +161,8 @@
                     renew: ''
                 },
                 abilityMsg: {
-                    area: '',
-                    question: '',
+                    area_info_number: '',
+                    answer_number: '',
                     Prompt: '',
                     statistics: '',
                     areaSet: ''
@@ -173,8 +175,9 @@
                     phone: ''
                 },
                 passwordForm: {
-                    oldPassword: '',
-                    newPassword: '',
+                    id:'',
+                    old_password: '',
+                    new_password: '',
                     aglinNewPassword: '',
                 },
                 formLabelWidth: '120px',
@@ -183,7 +186,7 @@
                         {validator: this.validatePass, trigger: 'blur'}
                     ],
                     aglinNewPassword: [
-                        {validator: this.validatePass2, trigger: 'blur'}
+                        {validator: this.validatePass2, trigger: 'keydonw'}
                     ],
                     oldPassword: [
                         {validator: this.oldPasswordValidate, trigger: 'blur'}
@@ -193,34 +196,55 @@
         },
         methods: {
             init(){
-                this.registerMsg = {
-                    name: '维多利亚酒店同济路店',
-                    hName: '同济路地铁店',
-                    account: 'wdlyjdtjd'
-                };
-                this.accountMsg = {
-                    account: '是',
-                    endTime: '2022-07-06 00:00',
-                    renew: '（请联系客服续费！）'
-                },
-                    this.abilityMsg = {
-                        area: '2个',
-                        question: '50个',
-                        Prompt: '正常',
-                        statistics: '正常',
-                        areaSet: '正常'
-                    }
+                this.$http.get('/user/profile',{}).then(
+                    (response) => {
+                        this.registerMsg = response.data.data.base_info
+                        this.passwordForm.id=response.data.data.base_info.id
+                        this.accountMsg = response.data.data.member_info
+                        this.abilityMsg = response.data.data.function_info
+                    },
+                    (response) => {
+                        this.$message({
+                            message: response.data,
+                            type: 'error'
+                        });
+                    });
             },
             changeNum(){
-                this.dialogFormVisible = false
-                this.$message({
-                    message: '恭喜你，账户已改',
-                    type: 'success'
-                });
+                this.$http.get('/user/change_phone',{params:this.form}).then(
+                    (response) => {
+                        this.dialogFormVisible = false
+                        console.log(response);
+                        let isSuccess= response.code=='200';
+                        this.$message({
+                            message: response.data.message,
+                            type:isSuccess?'success':'error'
+                        });
+                    },
+                    (response) => {
+                        this.$message({
+                            message: response.data,
+                            type: 'error'
+                        });
+                    });
             },
             changePasswordFn(){
-                this.changePassword = false
-                console.log('密码已改');
+                this.$http.get('/user/change_password',{params:this.passwordForm}).then(
+                    (response) => {
+                        this.changePassword = false
+                        console.log(response);
+                        let isSuccess= response.code=='200';
+                        this.$message({
+                            message: response.data,
+                            type:isSuccess?'success':'error'
+                        });
+                    },
+                    (response) => {
+                        this.$message({
+                            message: response.data,
+                            type: 'error'
+                        });
+                    });
             },
             getNum(){
                 this.isGetNumLoad = true;
@@ -250,15 +274,6 @@
                 }
             },
             oldPasswordValidate(rule,value,callback){
-                this.$http.get('/area/beyond_project').then(
-                    (response) => {
-                        debugger
-                        response
-                    },
-                    (response) => {
-                        debugger
-                        response
-                    });
                 if(value==''){
                     callback(new Error('请输入旧密码'));
                 }
