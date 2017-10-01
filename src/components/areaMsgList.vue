@@ -29,16 +29,20 @@
                         <el-dialog title="添加区域信息" :visible.sync="dialogFormVisible">
                             <el-form :model="form">
                                 <el-form-item label="所属项目" :label-width="formLabelWidth">
-                                    <el-select v-model="form.region" placeholder="请选择所属项目">
-                                        <el-option label="区域一" value="shanghai"></el-option>
-                                        <el-option label="区域二" value="beijing"></el-option>
+                                    <el-select v-model="form.project_id" placeholder="请选择所属项目">
+                                        <el-option
+                                                v-for="item in form.region"
+                                                :key="item.id"
+                                                :label="item.project"
+                                                :value="item.id">
+                                        </el-option>
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item label="区域名称" :label-width="formLabelWidth">
                                     <el-input v-model="form.name" auto-complete="off"></el-input>
                                 </el-form-item>
                                 <el-form-item label="区域备注" :label-width="formLabelWidth">
-                                    <el-input type="textarea" v-model="form.desc"></el-input>
+                                    <el-input type="textarea" v-model="form.remark"></el-input>
                                 </el-form-item>
                             </el-form>
                             <div slot="footer" class="dialog-footer">
@@ -55,17 +59,17 @@
                     </el-col>
                 </el-row>
                 <el-table
-                        :data="tableData"
+                        :data="tableData.data"
                         max-height="250"
                         border
                         style="margin-top: 10px;">
                     <el-table-column
-                            prop="areaName"
+                            prop="name"
                             label="区域名称"
                             >
                     </el-table-column>
                     <el-table-column
-                            prop="createTime"
+                            prop="created_at"
                             label="创建时间"
                             >
                     </el-table-column>
@@ -81,9 +85,9 @@
                     <el-pagination
                             @size-change="handleSizeChange"
                             @current-change="handleCurrentChange"
-                            :current-page.sync="currentPageNum"
+                            :current-page.sync="tableData.current_page"
                             layout="total, prev, pager, next"
-                            :total="tableData.length">
+                            :total="tableData.total">
                     </el-pagination>
                 </div>
             </div>
@@ -98,37 +102,74 @@
             return  {
                 inputSearch:'',
                 isChange:false,
-                currentIndex:'',
+                currentId:'',
                 formLabelWidth:'120px',
-                currentPageNum:1,
+                current_page:'',
                 dialogFormVisible:false,
-                tableData: [{
-                    areaName: '',
-                    createTime: '',
-                    doning: ''
-                }],
+                tableData:{
+                    data:[{
+                        name: '',
+                        remark:'',
+                        created_at: '',
+                        id: ''
+                        }],
+                    current_page: '',
+                    from: 1,
+                    last_page: 2,
+                    next_page_url: "http://localhost:809/area/area_list?page=2",
+                    path: "http://localhost:809/area/area_list",
+                    per_page: 2,
+                    prev_page_url: null,
+                    to: 2,
+                    total: 3
+                },
                 form:{
-                    region:'',
+                    region:[{
+                        id:'',
+                        project:''
+                    }],
                     name:'',
-                    desc:''
+                    remark:'',
+                    project_id:'',
                 }
             }
         },
         methods: {
             init(){
-                this.tableData=[{
-                    areaName: '客房',
-                    createTime: '2017/7/5 14:06:28',
-                },{
-                    areaName: '客房',
-                    createTime: '2017/7/5 14:06:28',
-                },{
-                    areaName: '客房',
-                    createTime: '2017/7/5 14:06:28',
-                },{
-                    areaName: '客房',
-                    createTime: '2017/7/5 14:06:28',
-                }]
+                this.$http.get('/area/area_list',{params:{'page':1}}).then(function(response) {
+                    this.tableData=response.data.data={
+                        "current_page": 1,
+                        "data": [
+                            {
+                                "id": 4,
+                                "name": "eeee",
+                                "remark": "eeee",
+                                "created_at": "2017-09-24 12:38:13"
+                            },
+                            {
+                                "id": 3,
+                                "name": "cccc",
+                                "remark": "cccc",
+                                "created_at": "2017-09-24 12:38:03"
+                            }
+                        ],
+                        "from": 1,
+                        "last_page": 2,
+                        "next_page_url": "http://localhost:809/area/area_list?page=2",
+                        "path": "http://localhost:809/area/area_list",
+                        "per_page": 2,
+                        "prev_page_url": null,
+                        "to": 2,
+                        "total": 3
+                    }
+                },function(response) {
+                });
+
+                this.$http.get('/area/beyond_project',{}).then(function(response) {
+                    this.form.region=response.data.data
+                },function(response) {
+                });
+
             },
             addAreaMsg(){
                 this.dialogFormVisible = true
@@ -137,14 +178,38 @@
             inputSearchClick(val){
                 console.log(this.inputSearch)
             },
-            deleteLi(index, rows){
-                rows.splice(index, 1);
+            deleteLi(index, data){
+                if(data.length){
+                    var arr=[];
+                    var arr2='';
+                    for(var i=0;i<data.length;i++){
+                        if(data[index].id!=data[i].id){
+                            arr.push(data[i])
+                        }else{
+                            arr2=data[i]
+                        }
+                    }
+                    this.$http.get('/user/register',{params:arr2}).then(
+                        function(response) {
+                    let isSuccess= response.code=='200';
+                    this.$message({
+                        message: response.data.message,
+                        type:isSuccess?'success':'error'
+                    });
+                            this.tableData=arr
+                },
+                    function(response) {
+                        this.$message({
+                            message: response.data,
+                            type: 'error'
+                        });
+                    });
+                }
             },
             changeLi(index, rows){
                this.dialogFormVisible = true
                 this.isChange=true
-                this.currentIndex=index;
-               this.from.form.name=rows[index].areaName;
+                this.currentId=this.tableData.data[index].id;
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
@@ -154,13 +219,37 @@
             },
             addarea(){
                 if(this.isChange){
-                    this.tableData[this.currentIndex].areaName=this.form.name;
+                    var data=JSON.parse(JSON.stringify(this.form));
+                    data.id= this.currentId;
+                    this.$http.get('/area/edit',{params:data}).then(function(response) {
+                        this.form.region=response.data.data
+                        let isSuccess= response.code=='200';
+                        this.$message({
+                            message: response.data.message,
+                            type:isSuccess?'success':'error'
+                        });
+                    },function(response) {
+                        this.$message({
+                            message: response.data,
+                            type: 'error'
+                        });
+                    });
                 }else{
-                    var obj={}
-                    obj.areaName=this.form.name;
-                    obj.createTime= new Date(parseInt(new Date().getTime())).toLocaleString().replace(/:\d{1,2}$/,' ');
-                    this.tableData.unshift(obj);
+                    this.$http.get('/area/add',{params:this.form}).then(function(response) {
+                        this.form.region=response.data.data
+                        let isSuccess= response.code=='200';
+                        this.$message({
+                            message: response.data.message,
+                            type:isSuccess?'success':'error'
+                        });
+                    },function(response) {
+                        this.$message({
+                            message: response.data,
+                            type: 'error'
+                        });
+                    });
                 }
+
                 this.dialogFormVisible = false
             }
         },

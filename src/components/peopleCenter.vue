@@ -92,11 +92,11 @@
                         </li>
                         <el-dialog title="修改密码" :visible.sync="changePassword">
                             <el-form :model="passwordForm" :rules='rules' ref="passwordForm">
-                                <el-form-item label="旧密码" prop="oldPassword" :label-width="formLabelWidth">
-                                    <el-input v-model="passwordForm.oldPassword" auto-complete="off"></el-input>
+                                <el-form-item label="旧密码" prop="old_password" :label-width="formLabelWidth">
+                                    <el-input v-model="passwordForm.old_password" auto-complete="off"></el-input>
                                 </el-form-item>
-                                <el-form-item label="新密码" :label-width="formLabelWidth" prop="newPassword">
-                                    <el-input v-model="passwordForm.newPassword" type="password"
+                                <el-form-item label="新密码" :label-width="formLabelWidth" prop="new_password">
+                                    <el-input v-model="passwordForm.new_password" type="password"
                                               auto-complete="off"></el-input>
                                 </el-form-item>
                                 <el-form-item label="确认新密码" :label-width="formLabelWidth" prop="aglinNewPassword">
@@ -127,9 +127,9 @@
                 <div class="pInfoItem">
                     <h3 class="pInfoItemTop">功能状态</h3>
                     <ul class="pInfoUl">
-                        <li class="pInfoLi"><span class="pInfoOption">可建区域数量：</span><span class="pInfoTxt">{{abilityMsg.area}}</span><span
+                        <li class="pInfoLi"><span class="pInfoOption">可建区域数量：</span><span class="pInfoTxt">{{abilityMsg.area_info_number}}</span><span
                                 class="pInfoTxtRed">（如需更多请咨询客服电话）</span></li>
-                        <li class="pInfoLi"><span class="pInfoOption">可建问卷数量：</span><span class="pInfoTxt">{{abilityMsg.question}}</span><span
+                        <li class="pInfoLi"><span class="pInfoOption">可建问卷数量：</span><span class="pInfoTxt">{{abilityMsg.answer_number}}</span><span
                                 class="pInfoTxtRed">（如需更多请咨询客服电话）</span></li>
                         <li class="pInfoLi"><span class="pInfoOption">领导微信提醒：</span><span class="pInfoTxt">{{abilityMsg.Prompt}}</span>
                         </li>
@@ -161,8 +161,8 @@
                     renew: ''
                 },
                 abilityMsg: {
-                    area: '',
-                    question: '',
+                    area_info_number: '',
+                    answer_number: '',
                     Prompt: '',
                     statistics: '',
                     areaSet: ''
@@ -175,8 +175,9 @@
                     phone: ''
                 },
                 passwordForm: {
-                    oldPassword: '',
-                    newPassword: '',
+                    id:'',
+                    old_password: '',
+                    new_password: '',
                     aglinNewPassword: '',
                 },
                 formLabelWidth: '120px',
@@ -185,7 +186,7 @@
                         {validator: this.validatePass, trigger: 'blur'}
                     ],
                     aglinNewPassword: [
-                        {validator: this.validatePass2, trigger: 'blur'}
+                        {validator: this.validatePass2, trigger: 'keydonw'}
                     ],
                     oldPassword: [
                         {validator: this.oldPasswordValidate, trigger: 'blur'}
@@ -195,30 +196,12 @@
         },
         methods: {
             init(){
-                this.$http.get('http://101.200.39.173/user/profile',{}).then(
+                this.$http.get('/user/profile',{}).then(
                     (response) => {
-                        response={
-                            "code": 200,
-                            "data": {
-                                "base_info": {
-                                    "id": 3,
-                                    "company": "asfaffaaf",
-                                    "username": "test",
-                                    "phone": "15920593659999"
-                                },
-                                "member_info": {
-                                    "is_member": 1,
-                                    "member_deadline": 0
-                                },
-                                "function_info": {
-                                    "area_info_number": 0,
-                                    "answer_number": 0
-                                }
-                            }
-                        };
-                        this.registerMsg = response.data.base_info
-                        this.accountMsg = response.data.member_info
-                        this.abilityMsg = response.data.function_info
+                        this.registerMsg = response.data.data.base_info
+                        this.passwordForm.id=response.data.data.base_info.id
+                        this.accountMsg = response.data.data.member_info
+                        this.abilityMsg = response.data.data.function_info
                     },
                     (response) => {
                         this.$message({
@@ -228,13 +211,13 @@
                     });
             },
             changeNum(){
-                this.$http.get('http://101.200.39.173/user/change_phone',{params:this.form}).then(
+                this.$http.get('/user/change_phone',{params:this.form}).then(
                     (response) => {
                         this.dialogFormVisible = false
                         console.log(response);
                         let isSuccess= response.code=='200';
                         this.$message({
-                            message: response.data,
+                            message: response.data.message,
                             type:isSuccess?'success':'error'
                         });
                     },
@@ -246,7 +229,7 @@
                     });
             },
             changePasswordFn(){
-                this.$http.get('http://101.200.39.173/user/change_password',{params:this.passwordForm}).then(
+                this.$http.get('/user/change_password',{params:this.passwordForm}).then(
                     (response) => {
                         this.changePassword = false
                         console.log(response);
