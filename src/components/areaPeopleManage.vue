@@ -63,24 +63,27 @@
                     </el-col>
                 </el-row>
                 <el-table
-                        :data="tableData"
+                        :data="tableData.data"
                         max-height="250"
                         border
                         style="width: 100% ;margin-top: 10px;">
                     <el-table-column
-                            prop="adminName"
+                            prop="username"
                             label="管理员名字"
                     >
                     </el-table-column>
                     <el-table-column
-                            prop="adminNum"
+                            prop="phone"
                             label="管理账号"
                     >
                     </el-table-column>
                     <el-table-column
-                            prop="isTure"
                             label="是否开启"
                     >
+                        <template scope='scope'>
+                            <span v-show='tableData.data.status==0'>未开启</span>
+                            <span v-show='tableData.data.status!=1'>开启</span>
+                        </template>
                     </el-table-column>
                     <el-table-column
                             prop="hasViewModel"
@@ -122,14 +125,27 @@
                 formLabelWidth:'120px',
                 currentPageNum:1,
                 dialogFormVisible:false,
-                tableData: [{
-                    adminName: '',
-                    adminNum:'',
-                    isTure:'',
-                    hasViewModel:'',
-                    createTime: '',
-                    doning: ''
-                }],
+                tableData:{
+                    "current_page": '',
+                    "data": [
+                        {
+                            "id": '',
+                            "username": "",
+                            "phone": "",
+                            "status": '',
+                            "rights": [],
+                            "created_at": ""
+                        }
+                    ],
+                    "from": '',
+                    "last_page": '',
+                    "next_page_url": null,
+                    "path": "http://localhost:809/area_admin/list",
+                    "per_page": 10,
+                    "prev_page_url": null,
+                    "to": 1,
+                    "total": 1
+                },
                 form:{
                     region:'',
                     name:'',
@@ -144,21 +160,30 @@
         },
         methods: {
             init(){
-                this.tableData=[{
-                    adminName: '客房',
-                    adminNum:'123456',
-                    isTure:'是',
-                    hasViewModel:'有',
-                    createTime: '2017/7/5 14:06:28',
-                }];
-                this.options= [{
-                    areaValue: '选项1',
-                    areaLabel: '黄金糕'
-                }, {
-                    areaValue: '选项2',
-                    areaLabel: '双皮奶'
-                }]
-
+                this.$http.get('/area_admin/list',{params:{'page':1}}).then(function(response) {
+                    this.tableData=response.data.data={
+                        "current_page": 1,
+                        "data": [
+                            {
+                                "id": 6,
+                                "username": "dddddd",
+                                "phone": "abcddd",
+                                "status": 0,
+                                "rights": [],
+                                "created_at": "2017-09-24 14:28:49"
+                            }
+                        ],
+                        "from": 1,
+                        "last_page": 1,
+                        "next_page_url": null,
+                        "path": "http://localhost:809/area_admin/list",
+                        "per_page": 10,
+                        "prev_page_url": null,
+                        "to": 1,
+                        "total": 1
+                    }
+                },function(response) {
+                });
             },
             inputSearchClick(val){
                 console.log(this.inputSearch)
