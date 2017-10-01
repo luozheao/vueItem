@@ -26,16 +26,27 @@
                 <el-row>
                     <el-col :span="24">
                         <el-button type="primary" @click="dialogFormVisible = true">添加区域管理员</el-button>
-                        <el-dialog title="添加区域管理员" :visible.sync="dialogFormVisible">
+                        <el-dialog title="区域管理员信息" :visible.sync="dialogFormVisible">
                             <el-form :model="form">
                                 <el-form-item label="所属项目" :label-width="formLabelWidth">
-                                    <el-select v-model="form.region" placeholder="请选择所属项目">
-                                        <el-option label="区域一" value="shanghai"></el-option>
-                                        <el-option label="区域二" value="beijing"></el-option>
+                                    <el-select v-model="form.project_id" placeholder="请选择所属项目">
+                                        <el-option
+                                                v-for="item in form.region"
+                                                :key="item.id"
+                                                :label="item.project"
+                                                :value="item.id">
+                                        </el-option>
                                     </el-select>
                                 </el-form-item>
-                                <el-form-item label="区域名称" :label-width="formLabelWidth">
-                                    <el-input v-model="form.name" auto-complete="off"></el-input>
+                                <el-form-item label="所属区域" :label-width="formLabelWidth">
+                                    <el-select v-model="id" placeholder="请选择区域">
+                                        <el-option
+                                                v-for="item in options"
+                                                :key="item.id"
+                                                :label="item.name"
+                                                :value="item.id">
+                                        </el-option>
+                                    </el-select>
                                 </el-form-item>
                                 <el-form-item label="区域备注" :label-width="formLabelWidth">
                                     <el-input type="textarea" v-model="form.desc"></el-input>
@@ -46,12 +57,12 @@
                                 <el-button type="primary" @click="addarea">确 定</el-button>
                             </div>
                         </el-dialog>
-                        <el-select v-model="areaValue" placeholder="请选择区域">
+                        <el-select v-model="id" placeholder="请选择区域">
                             <el-option
                                     v-for="item in options"
-                                    :key="item.areaValue"
-                                    :label="item.areaLabel"
-                                    :value="item.areaValue">
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item.id">
                             </el-option>
                         </el-select>
                         <el-input style="display: inline-block;width:300px;"
@@ -81,25 +92,25 @@
                             label="是否开启"
                     >
                         <template scope='scope'>
-                            <span v-show='tableData.data.status==0'>未开启</span>
-                            <span v-show='tableData.data.status!=1'>开启</span>
+                            <span v-show='scope.row.status==0'>未开启</span>
+                            <span v-show='scope.row.status==1'>开启</span>
                         </template>
                     </el-table-column>
                     <el-table-column
-                            prop="hasViewModel"
+                            prop="rights"
                             label="查看权限"
                     >
                     </el-table-column>
                     <el-table-column
-                            prop="createTime"
+                            prop="created_at"
                             label="创建时间"
                     >
                     </el-table-column>
                     <el-table-column
                             label="操作">
                         <template scope="scope">
-                            <el-button type="danger" size="mini" @click="deleteLi(scope)">删除</el-button>
-                            <el-button type="info" size="mini" @click="changeLi(scope)">修改</el-button>
+                            <el-button type="danger" size="mini" @click="deleteLi(scope.$index, tableData)">删除</el-button>
+                            <el-button type="info" size="mini" @click="changeLi(scope.$index, tableData)">修改</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -107,9 +118,9 @@
                     <el-pagination
                             @size-change="handleSizeChange"
                             @current-change="handleCurrentChange"
-                            :current-page.sync="currentPageNum"
+                            :current-page.sync="tableData.current_page"
                             layout="total, prev, pager, next"
-                            :total="tableData.length">
+                            :total="tableData.total">
                     </el-pagination>
                 </div>
             </div>
@@ -152,14 +163,15 @@
                     desc:''
                 },
                 options:[{
-                    areaValue: '',
-                    areaLabel: ''
+                    id: '',
+                    name: ''
                 }],
-                areaValue:'',//
+                id:'',//
             }
         },
         methods: {
             init(){
+                //获取列表数据
                 this.$http.get('/area_admin/list',{params:{'page':1}}).then(function(response) {
                     this.tableData=response.data.data={
                         "current_page": 1,
@@ -184,13 +196,57 @@
                     }
                 },function(response) {
                 });
+                //获取所属项目下拉框
+                this.$http.get('/area/beyond_project',{}).then(function(response) {
+                    this.form.region=response.data.data
+                },function(response) {
+                });
+                //获取区域下拉框
+                this.$http.get('/area/simple_list',{}).then(function(response) {
+                    this.options=response.data
+                },function(response) {
+                });
             },
+            //点击搜素
             inputSearchClick(val){
-                console.log(this.inputSearch)
+                this.$http.get('/area_admin/search',{params:{'keyword':this.inputSearch,'area_id':this.id}}).then(function(response) {
+                    if(response.data.data.length){
+                        this.tableData=response.data.data
+                    }
+
+                },function(response) {
+                });
             },
-            deleteLi(val){
-                console.log(val)
+            //删除一项
+            deleteLi(index, data){
+                if(data.length){
+                    var arr=[];
+                    var arr2='';
+                    for(var i=0;i<data.length;i++){
+                        if(data[index].id!=data[i].id){
+                            arr.push(data[i])
+                        }else{
+                            arr2=data[i]
+                        }
+                    }
+                    this.$http.get('/area_admin/delete',{params:arr2}).then(
+                        function(response) {
+                            let isSuccess= response.code=='200';
+                            this.$message({
+                                message: response.data.message,
+                                type:isSuccess?'success':'error'
+                            });
+                            this.tableData.data=arr
+                        },
+                        function(response) {
+                            this.$message({
+                                message: response.data,
+                                type: 'error'
+                            });
+                        });
+                }
             },
+            //修改一项
             changeLi(val){
                 console.log(val)
             },
@@ -200,6 +256,7 @@
             handleCurrentChange(val) {
                 console.log(`当前页: ${val}`);
             },
+            //增加和修改一项的弹框确认
             addarea(){
                 this.dialogFormVisible = false
                 console.log('加多一行')

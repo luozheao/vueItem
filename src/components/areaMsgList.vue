@@ -178,7 +178,7 @@
             inputSearchClick(val){
                 this.$http.get('/area/search',{params:{'keyword':this.inputSearch}}).then(function(response) {
                     if(response.data.data.length){
-                        this.tableData.data=response.data.data
+                        this.tableData=response.data.data
                     }
 
                 },function(response) {
@@ -202,7 +202,7 @@
                         message: response.data.message,
                         type:isSuccess?'success':'error'
                     });
-                            this.tableData=arr
+                            this.tableData.data=arr
                 },
                     function(response) {
                         this.$message({
