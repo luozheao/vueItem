@@ -268,19 +268,19 @@
                 }
             },
             validatePass2 (rule, value, callback) {
-
-                if (value === '') {
+                if (!value) {
                     callback(new Error('请再次输入密码'));
-                } else if (value !== this.passwordForm.newPassword) {
+                } else if (value !== this.passwordForm.new_password) {
                     callback(new Error('两次输入密码不一致!'));
                 } else {
                     callback();
                 }
             },
             oldPasswordValidate(rule,value,callback){
-                if(value==''){
+                if(!value){
                     callback(new Error('请输入旧密码'));
                 }
+                callback();
             }
         },
         created() {
