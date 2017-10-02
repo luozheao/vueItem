@@ -25,7 +25,7 @@
             <div class="bodyBox">
                 <el-row>
                     <el-col :span="24">
-                        <el-button type="primary" @click="dialogFormVisible = true">添加区域管理员</el-button>
+                        <el-button type="primary" @click="addAdmin">添加区域管理员</el-button>
                         <el-dialog title="区域管理员信息" :visible.sync="dialogFormVisible">
                             <el-form :model="form">
                                 <el-form-item label="所属项目" :label-width="formLabelWidth">
@@ -39,7 +39,7 @@
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item label="所属区域" :label-width="formLabelWidth">
-                                    <el-select v-model="id" placeholder="请选择区域">
+                                    <el-select v-model="form.area_id" placeholder="请选择区域">
                                         <el-option
                                                 v-for="item in options"
                                                 :key="item.id"
@@ -48,8 +48,14 @@
                                         </el-option>
                                     </el-select>
                                 </el-form-item>
-                                <el-form-item label="区域备注" :label-width="formLabelWidth">
-                                    <el-input type="textarea" v-model="form.desc"></el-input>
+                                <el-form-item label="账号" :label-width="formLabelWidth">
+                                    <el-input type="text" v-model="form.account"></el-input>
+                                </el-form-item>
+                                <el-form-item label="密码" :label-width="formLabelWidth">
+                                    <el-input type="passwork" v-model="form.passwork"></el-input>
+                                </el-form-item>
+                                <el-form-item label="姓名" :label-width="formLabelWidth">
+                                    <el-input type="text" v-model="form.username"></el-input>
                                 </el-form-item>
                             </el-form>
                             <div slot="footer" class="dialog-footer">
@@ -110,7 +116,7 @@
                             label="操作">
                         <template scope="scope">
                             <el-button type="danger" size="mini" @click="deleteLi(scope.$index, tableData)">删除</el-button>
-                            <el-button type="info" size="mini" @click="changeLi(scope.$index, tableData)">修改</el-button>
+                            <el-button type="info" size="mini" @click="changeLi(scope.$index, tableData, scope.row)">修改</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -135,6 +141,7 @@
                 inputSearch:'',
                 formLabelWidth:'120px',
                 currentPageNum:1,
+                currentListId:{'isChange':false,'id':''},//修改一项的当前id
                 dialogFormVisible:false,
                 tableData:{
                     "current_page": '',
@@ -159,8 +166,12 @@
                 },
                 form:{
                     region:'',
-                    name:'',
-                    desc:''
+                    area_id:'',
+                    username:'',
+                    passwork:'',
+                    project_id:'',
+                    account:'',
+
                 },
                 options:[{
                     id: '',
@@ -247,8 +258,10 @@
                 }
             },
             //修改一项
-            changeLi(val){
-                console.log(val)
+            changeLi(index,data,row){
+               this.currentListId.id=row.id;
+               this.currentListId.isChange=true;
+                this.dialogFormVisible=true
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
@@ -256,10 +269,50 @@
             handleCurrentChange(val) {
                 console.log(`当前页: ${val}`);
             },
+            //添加管理员的按钮
+            addAdmin(){
+                this.dialogFormVisible = true
+                this.currentListId.isChange=false;
+            },
             //增加和修改一项的弹框确认
             addarea(){
-                this.dialogFormVisible = false
-                console.log('加多一行')
+                if(this.currentListId.isChange){
+                    var data=JSON.parse(JSON.stringify(this.form));
+                    data.id= this.currentListId.id;
+                    this.$http.post('/area_admin/add',data).then(
+                        (response) => {
+                            this.dialogFormVisible = false
+                            response=response.body;
+                            let isSuccess= response.code==200;
+                            this.$message({
+                                message: response.data,
+                                type:isSuccess?'success':'error'
+                            });
+                        },
+                        (response) => {
+                            this.$message({
+                                message: response.data,
+                                type: 'error'
+                            });
+                        });
+                }else{
+                    this.$http.post('/area_admin/add',this.form).then(
+                        (response) => {
+                            this.dialogFormVisible = false
+                            response=response.body;
+                            let isSuccess= response.code==200;
+                            this.$message({
+                                message: response.data,
+                                type:isSuccess?'success':'error'
+                            });
+                        },
+                        (response) => {
+                            this.$message({
+                                message: response.data,
+                                type: 'error'
+                            });
+                        });
+                }
             }
         },
         created() {
