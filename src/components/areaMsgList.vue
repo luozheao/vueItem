@@ -173,9 +173,10 @@
                         "per_page": 2,
                         "prev_page_url": null,
                         "to": 2,
-                        "total": 3
+                        "total": 2
                     }
                 },function(response) {
+
                 });
             },
             //点击添加区域
@@ -283,6 +284,5 @@
         created() {
             this.init();
         },
-
     }
 </script>
