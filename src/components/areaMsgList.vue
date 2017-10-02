@@ -104,7 +104,7 @@
                 isChange:false,
                 currentId:'',
                 formLabelWidth:'120px',
-                current_page:'',
+                current_page:0,
                 dialogFormVisible:false,
                 tableData:{
                     data:[{
@@ -113,7 +113,7 @@
                         created_at: '',
                         id: ''
                         }],
-                    current_page: '',
+                    current_page: 0,
                     from: 1,
                     last_page: 2,
                     next_page_url: "http://localhost:809/area/area_list?page=2",

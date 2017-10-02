@@ -215,7 +215,7 @@
                 weixin:'src/images/tsxxt.jpg',
                 dialogFormVisible:false,
                 tableData:{
-                    "current_page": '',
+                    "current_page": 0,
                     "data": [
                         {
                             "id": '',
@@ -238,7 +238,7 @@
                     "per_page": '',
                     "prev_page_url": null,
                     "to": '',
-                    "total": ''
+                    "total": 0
                 },
                 form:{
                     region:'',

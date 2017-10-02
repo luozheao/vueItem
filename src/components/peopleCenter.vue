@@ -76,7 +76,7 @@
                             <el-form :model="form">
                                 <el-button type="primary" @click="getNum" :loading="isGetNumLoad">点击获取验证码</el-button>
                                 <el-form-item label="验证码" :label-width="formLabelWidth">
-                                    <el-input v-model="form.num" auto-complete="off"></el-input>
+                                    <el-input v-model="form.code" auto-complete="off"></el-input>
                                 </el-form-item>
                                 <el-form-item label="新的手机号码" :label-width="formLabelWidth">
                                     <el-input v-model="form.phone" auto-complete="off"></el-input>
@@ -172,7 +172,8 @@
                 dialogFormVisible: false,
                 changePassword: false,
                 form: {
-                    num: '',
+                    id:'',
+                    code: '',
                     phone: ''
                 },
                 passwordForm: {
@@ -213,11 +214,15 @@
                     });
             },
             changeNum(){
-                this.$http.get('/user/change_phone',{params:this.form}).then(
+                this.form.id=this.registerMsg.id;
+                this.$http.post('/user/change_phone',{params:this.form}).then(
                     (response) => {
                         this.dialogFormVisible = false
                         console.log(response);
                         let isSuccess= response.code=='200';
+                        if(isSuccess){
+                            this.registerMsg.phone=this.form.phone
+                        }
                         this.$message({
                             message: response.data.message,
                             type:isSuccess?'success':'error'

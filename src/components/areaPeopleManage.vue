@@ -144,7 +144,7 @@
                 currentListId:{'isChange':false,'id':''},//修改一项的当前id
                 dialogFormVisible:false,
                 tableData:{
-                    "current_page": '',
+                    "current_page": 0,
                     "data": [
                         {
                             "id": '',
