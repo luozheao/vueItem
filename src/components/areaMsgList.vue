@@ -104,7 +104,7 @@
                 isChange:false,
                 currentId:'',
                 formLabelWidth:'120px',
-                current_page:'',
+                current_page:0,
                 dialogFormVisible:false,
                 tableData:{
                     data:[{
@@ -113,7 +113,7 @@
                         created_at: '',
                         id: ''
                         }],
-                    current_page: '',
+                    current_page: 0,
                     from: 1,
                     last_page: 2,
                     next_page_url: "http://localhost:809/area/area_list?page=2",
@@ -160,15 +160,15 @@
                         "per_page": 2,
                         "prev_page_url": null,
                         "to": 2,
-                        "total": 3
+                        "total": 2
                     }
                 },function(response) {
+
                 });
 
                 this.$http.get('/area/beyond_project',{}).then(function(response) {
                     this.form.region=response.data.data
-                },function(response) {
-                });
+                },function(response) {});
 
             },
             addAreaMsg(){
@@ -262,6 +262,5 @@
         created() {
             this.init();
         },
-
     }
 </script>

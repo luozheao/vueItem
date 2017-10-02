@@ -28,6 +28,12 @@ Vue.http.interceptors.push((request, next) => {
          request.headers.set('X-CSRF-TOKEN', token);
     }
     next((response) => {
+        if(response.body.code==405){
+            //清空缓存
+            localStorage.clear();
+            //刷新界面
+            location.reload();
+        }
         return response;
     });
 });
