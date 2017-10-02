@@ -261,6 +261,9 @@
                     this.$http.post('/area/add',this.form).then(function(response) {
                         this.form.region=response.data.data
                         let isSuccess= response.code=='200';
+                        if(isSuccess){
+                            this.initTable();
+                        }
                         this.$message({
                             message: response.data.message,
                             type:isSuccess?'success':'error'
