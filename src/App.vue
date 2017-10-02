@@ -202,8 +202,10 @@
                          class="el-menu-vertical-demo"
                          @open=""
                          @close=""
+                         @select="selectMenu"
                          theme="dark"
                          :router="true"
+                         :default-openeds="defaultOpeneds"
                 >
                     <el-menu-item index="peopleCenter">个人中心</el-menu-item>
                     <el-menu-item index="areaMsgList">区域信息管理</el-menu-item>
@@ -246,6 +248,11 @@
             }
         },
         methods: {
+            selectMenu(index,indexPath){
+                if(['questionnaireListManager','questionnaireListMerge'].indexOf(index)<0){
+                    this.defaultOpeneds=[];
+                }
+            },
             loginEvent(){
                   this.isHideLoginPop=true;
             },
