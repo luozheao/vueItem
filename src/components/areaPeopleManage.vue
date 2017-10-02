@@ -115,7 +115,7 @@
                     <el-table-column
                             label="操作">
                         <template scope="scope">
-                            <el-button type="danger" size="mini" @click="deleteLi(scope.$index, tableData)">删除</el-button>
+                            <el-button type="danger" size="mini" @click="deleteLi(scope.$index, scope.row)">删除</el-button>
                             <el-button type="info" size="mini" @click="changeLi(scope.$index, tableData, scope.row)">修改</el-button>
                         </template>
                     </el-table-column>
@@ -204,43 +204,29 @@
             //点击搜素
             inputSearchClick(val){
                 this.$http.get('/area_admin/search',{params:{'keyword':this.inputSearch,'area_id':this.id}}).then(function(response) {
-                    if(response.data.data.length){
                         this.tableData=response.data.data
-                    }
-
                 },function(response) {
                 });
             },
             //删除一项
-            deleteLi(index, data){
-                if(data.length){
-                    var arr=[];
-                    var arr2='';
-                    for(var i=0;i<data.length;i++){
-                        if(data[index].id!=data[i].id){
-                            arr.push(data[i])
-                        }else{
-                            arr2=data[i]
-                        }
-                    }
-                    this.$http.get('/area_admin/delete',{params:arr2}).then(
+            deleteLi(index, row){
+                    this.$http.post('/area_admin/delete',{'id':row.id}).then(
                         function(response) {
-                            let isSuccess= response.code=='200';
+                            let isSuccess= response.data.code=='200';
                             if(isSuccess){
-                                this.tableData.data=arr
+                                this.initTable()
                             }
                             this.$message({
-                                message: response.data.message,
+                                message: response.data.data,
                                 type:isSuccess?'success':'error'
                             });
                         },
                         function(response) {
                             this.$message({
-                                message: response.data,
+                                message: response.data.data,
                                 type: 'error'
                             });
                         });
-                }
             },
             //修改一项
             changeLi(index,data,row){
@@ -273,11 +259,10 @@
                             let isSuccess= response.code==200;
                             if(isSuccess){
                                 //获取列表数据
-                                debugger
                                 this.initTable();
                             }
                             this.$message({
-                                message: response.data,
+                                message: response.data||response.message,
                                 type:isSuccess?'success':'error'
                             });
                         },
@@ -298,13 +283,13 @@
                                 this.initTable();
                             }
                             this.$message({
-                                message: response.data.data,
+                                message: response.data,
                                 type:isSuccess?'success':'error'
                             });
                         },
                         (response) => {
                             this.$message({
-                                message: response.data.data,
+                                message: response.data,
                                 type: 'error'
                             });
                         });
