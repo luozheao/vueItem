@@ -52,7 +52,7 @@
                                     <el-input type="text" v-model="form.account"></el-input>
                                 </el-form-item>
                                 <el-form-item label="密码" :label-width="formLabelWidth">
-                                    <el-input type="passwork" v-model="form.passwork"></el-input>
+                                    <el-input type="password" v-model="form.password"></el-input>
                                 </el-form-item>
                                 <el-form-item label="姓名" :label-width="formLabelWidth">
                                     <el-input type="text" v-model="form.username"></el-input>
@@ -168,7 +168,7 @@
                     region:'',
                     area_id:'',
                     username:'',
-                    passwork:'',
+                    password:'',
                     project_id:'',
                     account:'',
                 },
@@ -190,34 +190,14 @@
                 });
                 //获取区域下拉框
                 this.$http.get('/area/simple_list',{}).then(function(response) {
-                    this.options=response.data
+                    this.options=response.data.data
                 },function(response) {
                 });
             },
             initTable(){
                 //获取列表数据
                 this.$http.get('/area_admin/list',{params:{'page':1}}).then(function(response) {
-                    this.tableData=response.data.data={
-                        "current_page": 1,
-                        "data": [
-                            {
-                                "id": 6,
-                                "username": "dddddd",
-                                "phone": "abcddd",
-                                "status": 0,
-                                "rights": [],
-                                "created_at": "2017-09-24 14:28:49"
-                            }
-                        ],
-                        "from": 1,
-                        "last_page": 1,
-                        "next_page_url": null,
-                        "path": "http://localhost:809/area_admin/list",
-                        "per_page": 10,
-                        "prev_page_url": null,
-                        "to": 1,
-                        "total": 1
-                    }
+                    this.tableData=response.data.data
                 },function(response) {
                 });
             },
@@ -265,6 +245,8 @@
             //修改一项
             changeLi(index,data,row){
                this.currentListId.id=row.id;
+               this.form.username=row.username;
+               this.form.account=row.phone;
                this.currentListId.isChange=true;
                 this.dialogFormVisible=true
             },
@@ -291,6 +273,7 @@
                             let isSuccess= response.code==200;
                             if(isSuccess){
                                 //获取列表数据
+                                debugger
                                 this.initTable();
                             }
                             this.$message({
@@ -310,14 +293,18 @@
                             this.dialogFormVisible = false
                             response=response.body;
                             let isSuccess= response.code==200;
+                            if(isSuccess){
+                                //获取列表数据
+                                this.initTable();
+                            }
                             this.$message({
-                                message: response.data,
+                                message: response.data.data,
                                 type:isSuccess?'success':'error'
                             });
                         },
                         (response) => {
                             this.$message({
-                                message: response.data,
+                                message: response.data.data,
                                 type: 'error'
                             });
                         });

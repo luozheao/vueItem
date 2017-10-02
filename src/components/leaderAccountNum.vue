@@ -266,49 +266,22 @@
                 });
                 //获取区域下拉框
                 this.$http.get('/area/simple_list',{}).then(function(response) {
-                    this.options=response.data
+                    this.options=response.data.data
                 },function(response) {
                 });
             },
             //获取列表数据
             initTable(){
                 this.$http.get('/leader/leader_list',{params:{'page':1}}).then(function(response) {
-                    this.tableData=response.data.data={
-                        "current_page": 1,
-                        "data": [
-                            {
-                                "id": 2,
-                                "username": "hamdon",
-                                "phone": "15920593659",
-                                "bind_number": "68a5ae5b2970030c9425afbe8a94910d",
-                                "openid": '123',
-                                "is_send": 0,
-                                "is_bind": 0,
-                                "is_chase_remind": 0,
-                                "is_statistics": 0,
-                                "created_at": "2017-09-26 00:14:26",
-                                "qc_src": "http://192.168.1.102:809/get_user_qrc?url=http://192.168.1.102:809/get_wx_Info&bind_number=68a5ae5b2970030c9425afbe8a94910d&username=hamdon"
-                            }
-                        ],
-                        "from": 1,
-                        "last_page": 1,
-                        "next_page_url": null,
-                        "path": "http://192.168.1.102:809/leader/leader_list",
-                        "per_page": 10,
-                        "prev_page_url": null,
-                        "to": 1,
-                        "total": 1
-                    }
+                    this.tableData=response.data.data
                 },function(response) {
                 });
             },
             //点击搜素
             inputSearchClick(val){
                 this.$http.get('/leader/search',{params:{'keyword':this.inputSearch,'area_id':this.id}}).then(function(response) {
-                    if(response.data.data.length){
+                    debugger
                         this.tableData=response.data.data
-                    }
-
                 },function(response) {
                 });
             },
@@ -493,11 +466,10 @@
             getNum(){
                 this.$http.get('/leader/generate_code').then(
                     function(response) {
-                        debugger
-                        let isSuccess= response.code=='200';
+                        let isSuccess= response.data.code=='200';
                         this.form.bind_number=response.body.data
                         this.$message({
-                            message: response.data.message,
+                            message: '生成成功',
                             type:isSuccess?'success':'error'
                         });
                     },
