@@ -136,6 +136,19 @@
         },
         methods: {
             init(){
+                //获取列表数据
+               this.initTable();
+
+                //获取所属项目下拉框
+                this.$http.get('/area/beyond_project',{}).then(function(response) {
+                    this.form.region=response.data.data
+                    console.log(this.form.region)
+                },function(response) {
+                });
+
+            },
+            initTable(){
+                //获取列表数据
                 this.$http.get('/area/area_list',{params:{'page':1}}).then(function(response) {
                     this.tableData=response.data={
                         "current_page": 1,
@@ -164,17 +177,13 @@
                     }
                 },function(response) {
                 });
-
-                this.$http.get('/area/beyond_project',{}).then(function(response) {
-                    this.form.region=response.data.data
-                },function(response) {
-                });
-
             },
+            //点击添加区域
             addAreaMsg(){
                 this.dialogFormVisible = true
                 this.isChange=false
             },
+            //搜索按钮
             inputSearchClick(val){
                 this.$http.get('/area/search',{params:{'keyword':this.inputSearch}}).then(function(response) {
                     if(response.data.data.length){
@@ -184,6 +193,7 @@
                 },function(response) {
                 });
             },
+            //删除一项
             deleteLi(index, data){
                 if(data.length){
                     var arr=[];
@@ -198,11 +208,13 @@
                     this.$http.get('/user/register',{params:arr2}).then(
                         function(response) {
                     let isSuccess= response.code=='200';
+                    if(isSuccess){
+                        this.tableData.data=arr
+                    }
                     this.$message({
                         message: response.data.message,
                         type:isSuccess?'success':'error'
                     });
-                            this.tableData.data=arr
                 },
                     function(response) {
                         this.$message({
@@ -212,6 +224,7 @@
                     });
                 }
             },
+            //修改一项
             changeLi(index, rows){
                this.dialogFormVisible = true
                 this.isChange=true
@@ -223,6 +236,7 @@
             handleCurrentChange(val) {
                 console.log(`当前页: ${val}`);
             },
+            //添加页面的确定按钮
             addarea(){
                 if(this.isChange){
                     var data=JSON.parse(JSON.stringify(this.form));
@@ -230,6 +244,9 @@
                     this.$http.get('/area/edit',{params:data}).then(function(response) {
                         this.form.region=response.data.data
                         let isSuccess= response.code=='200';
+                        if(isSuccess){
+                            this.initTable();
+                        }
                         this.$message({
                             message: response.data.message,
                             type:isSuccess?'success':'error'
@@ -241,13 +258,14 @@
                         });
                     });
                 }else{
-                    this.$http.get('/area/add',{params:this.form}).then(function(response) {
+                    this.$http.post('/area/add',this.form).then(function(response) {
                         this.form.region=response.data.data
                         let isSuccess= response.code=='200';
                         this.$message({
                             message: response.data.message,
                             type:isSuccess?'success':'error'
                         });
+                        this.initTable();
                     },function(response) {
                         this.$message({
                             message: response.data,
