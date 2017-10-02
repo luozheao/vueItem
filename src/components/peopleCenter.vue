@@ -215,16 +215,15 @@
             },
             changeNum(){
                 this.form.id=this.registerMsg.id;
-                this.$http.post('/user/change_phone',{params:this.form}).then(
+                this.$http.post('/user/change_phone',this.form).then(
                     (response) => {
                         this.dialogFormVisible = false
-                        console.log(response);
-                        let isSuccess= response.code=='200';
+                        let isSuccess= response.data.code=='200';
                         if(isSuccess){
                             this.registerMsg.phone=this.form.phone
                         }
                         this.$message({
-                            message: response.data.message,
+                            message: response.data.data,
                             type:isSuccess?'success':'error'
                         });
                     },
