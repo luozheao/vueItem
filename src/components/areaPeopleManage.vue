@@ -171,13 +171,12 @@
                     passwork:'',
                     project_id:'',
                     account:'',
-
                 },
                 options:[{
                     id: '',
                     name: ''
                 }],
-                id:'',//
+                id:'',
             }
         },
         methods: {
@@ -279,7 +278,7 @@
                 if(this.currentListId.isChange){
                     var data=JSON.parse(JSON.stringify(this.form));
                     data.id= this.currentListId.id;
-                    this.$http.post('/area_admin/add',data).then(
+                    this.$http.post('/area_admin/edit',data).then(
                         (response) => {
                             this.dialogFormVisible = false
                             response=response.body;
