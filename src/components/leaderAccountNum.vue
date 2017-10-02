@@ -258,6 +258,20 @@
         methods: {
             init(){
                 //获取列表数据
+               this.initTable();
+                //获取所属项目下拉框
+                this.$http.get('/area/beyond_project',{}).then(function(response) {
+                    this.form.region=response.data.data
+                },function(response) {
+                });
+                //获取区域下拉框
+                this.$http.get('/area/simple_list',{}).then(function(response) {
+                    this.options=response.data
+                },function(response) {
+                });
+            },
+            //获取列表数据
+            initTable(){
                 this.$http.get('/leader/leader_list',{params:{'page':1}}).then(function(response) {
                     this.tableData=response.data.data={
                         "current_page": 1,
@@ -287,16 +301,6 @@
                     }
                 },function(response) {
                 });
-                //获取所属项目下拉框
-                this.$http.get('/area/beyond_project',{}).then(function(response) {
-                    this.form.region=response.data.data
-                },function(response) {
-                });
-                //获取区域下拉框
-                this.$http.get('/area/simple_list',{}).then(function(response) {
-                    this.options=response.data
-                },function(response) {
-                });
             },
             //点击搜素
             inputSearchClick(val){
@@ -323,11 +327,13 @@
                     this.$http.get('/leader/delete',{params:arr2}).then(
                         function(response) {
                             let isSuccess= response.code=='200';
+                            if(isSuccess){
+                                this.tableData.data=arr
+                            }
                             this.$message({
                                 message: response.data.message,
                                 type:isSuccess?'success':'error'
                             });
-                            this.tableData.data=arr
                         },
                         function(response) {
                             this.$message({
@@ -362,6 +368,10 @@
                             this.dialogFormVisible = false
                             response=response.body;
                             let isSuccess= response.code==200;
+                            if(isSuccess){
+                                //获取列表数据
+                                this.initTable();
+                            }
                             this.$message({
                                 message: response.data,
                                 type:isSuccess?'success':'error'
@@ -379,6 +389,9 @@
                             this.dialogFormVisible = false
                             response=response.body;
                             let isSuccess= response.code==200;
+                            if(isSuccess){
+                                this.initTable();
+                            }
                             this.$message({
                                 message: response.data,
                                 type:isSuccess?'success':'error'
@@ -398,6 +411,9 @@
                     (response) => {
                         response=response.body;
                         let isSuccess= response.code==200;
+                        if(isSuccess){
+                            this.initTable();
+                        }
                         this.$message({
                             message: response.data,
                             type:isSuccess?'success':'error'
@@ -416,6 +432,9 @@
                     (response) => {
                         response=response.body;
                         let isSuccess= response.code==200;
+                        if(isSuccess){
+                            this.initTable();
+                        }
                         this.$message({
                             message: response.data,
                             type:isSuccess?'success':'error'
@@ -434,6 +453,9 @@
                     (response) => {
                         response=response.body;
                         let isSuccess= response.code==200;
+                        if(isSuccess){
+                            this.initTable();
+                        }
                         this.$message({
                             message: response.data,
                             type:isSuccess?'success':'error'
@@ -452,6 +474,9 @@
                     (response) => {
                         response=response.body;
                         let isSuccess= response.code==200;
+                        if(isSuccess){
+                            this.initTable();
+                        }
                         this.$message({
                             message: response.data,
                             type:isSuccess?'success':'error'
