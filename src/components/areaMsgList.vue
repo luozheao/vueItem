@@ -176,15 +176,15 @@
                     debugger
                     this.$http.post('/user/register',{'id':data.id}).then(
                         function(response) {
-                    let isSuccess= response.data.code=='200';
-                            if(isSuccess){
+                            let isSuccess = response.data.code == '200';
+                            if (isSuccess) {
                                 this.initTable();
                             }
-                    this.$message({
-                        message: response.data.message,
-                        type:isSuccess?'success':'error'
-                    });
-                },
+                            this.$message({
+                                message: response.data.message,
+                                type: isSuccess ? 'success' : 'error'
+                            });
+                        },
                     function(response) {
                         this.$message({
                             message: response.data,
