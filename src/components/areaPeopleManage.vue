@@ -52,7 +52,7 @@
                                     <el-input type="text" v-model="form.account"></el-input>
                                 </el-form-item>
                                 <el-form-item label="密码" :label-width="formLabelWidth">
-                                    <el-input type="passwork" v-model="form.passwork"></el-input>
+                                    <el-input type="password" v-model="form.password"></el-input>
                                 </el-form-item>
                                 <el-form-item label="姓名" :label-width="formLabelWidth">
                                     <el-input type="text" v-model="form.username"></el-input>
@@ -115,7 +115,7 @@
                     <el-table-column
                             label="操作">
                         <template scope="scope">
-                            <el-button type="danger" size="mini" @click="deleteLi(scope.$index, tableData)">删除</el-button>
+                            <el-button type="danger" size="mini" @click="deleteLi(scope.$index, scope.row)">删除</el-button>
                             <el-button type="info" size="mini" @click="changeLi(scope.$index, tableData, scope.row)">修改</el-button>
                         </template>
                     </el-table-column>
@@ -168,7 +168,7 @@
                     region:'',
                     area_id:'',
                     username:'',
-                    passwork:'',
+                    password:'',
                     project_id:'',
                     account:'',
                 },
@@ -190,81 +190,49 @@
                 });
                 //获取区域下拉框
                 this.$http.get('/area/simple_list',{}).then(function(response) {
-                    this.options=response.data
+                    this.options=response.data.data
                 },function(response) {
                 });
             },
             initTable(){
                 //获取列表数据
                 this.$http.get('/area_admin/list',{params:{'page':1}}).then(function(response) {
-                    this.tableData=response.data.data={
-                        "current_page": 1,
-                        "data": [
-                            {
-                                "id": 6,
-                                "username": "dddddd",
-                                "phone": "abcddd",
-                                "status": 0,
-                                "rights": [],
-                                "created_at": "2017-09-24 14:28:49"
-                            }
-                        ],
-                        "from": 1,
-                        "last_page": 1,
-                        "next_page_url": null,
-                        "path": "http://localhost:809/area_admin/list",
-                        "per_page": 10,
-                        "prev_page_url": null,
-                        "to": 1,
-                        "total": 1
-                    }
+                    this.tableData=response.data.data
                 },function(response) {
                 });
             },
             //点击搜素
             inputSearchClick(val){
                 this.$http.get('/area_admin/search',{params:{'keyword':this.inputSearch,'area_id':this.id}}).then(function(response) {
-                    if(response.data.data.length){
                         this.tableData=response.data.data
-                    }
-
                 },function(response) {
                 });
             },
             //删除一项
-            deleteLi(index, data){
-                if(data.length){
-                    var arr=[];
-                    var arr2='';
-                    for(var i=0;i<data.length;i++){
-                        if(data[index].id!=data[i].id){
-                            arr.push(data[i])
-                        }else{
-                            arr2=data[i]
-                        }
-                    }
-                    this.$http.get('/area_admin/delete',{params:arr2}).then(
+            deleteLi(index, row){
+                    this.$http.post('/area_admin/delete',{'id':row.id}).then(
                         function(response) {
-                            let isSuccess= response.code=='200';
+                            let isSuccess= response.data.code=='200';
                             if(isSuccess){
-                                this.tableData.data=arr
+                                this.initTable()
                             }
                             this.$message({
-                                message: response.data.message,
+                                message: response.data.data,
                                 type:isSuccess?'success':'error'
                             });
                         },
                         function(response) {
                             this.$message({
-                                message: response.data,
+                                message: response.data.data,
                                 type: 'error'
                             });
                         });
-                }
             },
             //修改一项
             changeLi(index,data,row){
                this.currentListId.id=row.id;
+               this.form.username=row.username;
+               this.form.account=row.phone;
                this.currentListId.isChange=true;
                 this.dialogFormVisible=true
             },
@@ -294,7 +262,7 @@
                                 this.initTable();
                             }
                             this.$message({
-                                message: response.data,
+                                message: response.data||response.message,
                                 type:isSuccess?'success':'error'
                             });
                         },
@@ -310,6 +278,10 @@
                             this.dialogFormVisible = false
                             response=response.body;
                             let isSuccess= response.code==200;
+                            if(isSuccess){
+                                //获取列表数据
+                                this.initTable();
+                            }
                             this.$message({
                                 message: response.data,
                                 type:isSuccess?'success':'error'

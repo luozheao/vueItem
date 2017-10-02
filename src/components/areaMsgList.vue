@@ -173,8 +173,7 @@
             //删除一项
             deleteLi(index, data){
                 if(data){
-                    debugger
-                    this.$http.post('/user/register',{'id':data.id}).then(
+                    this.$http.post('/area/delete',{'id':data.id}).then(
                         function(response) {
                             let isSuccess = response.data.code == '200';
                             if (isSuccess) {
