@@ -76,7 +76,7 @@
                     <el-table-column
                             label="操作">
                         <template scope="scope">
-                            <el-button type="danger" size="mini" @click="deleteLi(scope.$index, tableData)">删除</el-button>
+                            <el-button type="danger" size="mini" @click="deleteLi(scope.$index, scope.row)">删除</el-button>
                             <el-button type="info" size="mini"  @click="changeLi(scope.$index, tableData)">修改</el-button>
                         </template>
                     </el-table-column>
@@ -150,31 +150,7 @@
             initTable(){
                 //获取列表数据
                 this.$http.get('/area/area_list',{params:{'page':1}}).then(function(response) {
-                    this.tableData=response.data={
-                        "current_page": 1,
-                        "data": [
-                            {
-                                "id": 4,
-                                "name": "eeee",
-                                "remark": "eeee",
-                                "created_at": "2017-09-24 12:38:13"
-                            },
-                            {
-                                "id": 3,
-                                "name": "cccc",
-                                "remark": "cccc",
-                                "created_at": "2017-09-24 12:38:03"
-                            }
-                        ],
-                        "from": 1,
-                        "last_page": 2,
-                        "next_page_url": "http://localhost:809/area/area_list?page=2",
-                        "path": "http://localhost:809/area/area_list",
-                        "per_page": 2,
-                        "prev_page_url": null,
-                        "to": 2,
-                        "total": 2
-                    }
+                    this.tableData=response.data.data
                 },function(response) {
 
                 });
@@ -188,7 +164,7 @@
             inputSearchClick(val){
                 this.$http.get('/area/search',{params:{'keyword':this.inputSearch}}).then(function(response) {
                     if(response.data.data.length){
-                        this.tableData=response.data.data
+                        this.tableData.data=response.data.data
                     }
 
                 },function(response) {
@@ -196,22 +172,14 @@
             },
             //删除一项
             deleteLi(index, data){
-                if(data.length){
-                    var arr=[];
-                    var arr2='';
-                    for(var i=0;i<data.length;i++){
-                        if(data[index].id!=data[i].id){
-                            arr.push(data[i])
-                        }else{
-                            arr2=data[i]
-                        }
-                    }
-                    this.$http.get('/user/register',{params:arr2}).then(
+                if(data){
+                    debugger
+                    this.$http.post('/user/register',{'id':data.id}).then(
                         function(response) {
-                    let isSuccess= response.code=='200';
-                    if(isSuccess){
-                        this.tableData.data=arr
-                    }
+                    let isSuccess= response.data.code=='200';
+                            if(isSuccess){
+                                this.initTable();
+                            }
                     this.$message({
                         message: response.data.message,
                         type:isSuccess?'success':'error'
@@ -242,14 +210,14 @@
                 if(this.isChange){
                     var data=JSON.parse(JSON.stringify(this.form));
                     data.id= this.currentId;
-                    this.$http.get('/area/edit',{params:data}).then(function(response) {
+                    this.$http.post('/area/edit',data).then(function(response) {
                         this.form.region=response.data.data
-                        let isSuccess= response.code=='200';
+                        let isSuccess= response.body.code=='200';
                         if(isSuccess){
                             this.initTable();
                         }
                         this.$message({
-                            message: response.data.message,
+                            message: response.data.data,
                             type:isSuccess?'success':'error'
                         });
                     },function(response) {
@@ -266,7 +234,7 @@
                             this.initTable();
                         }
                         this.$message({
-                            message: response.data.message,
+                            message: response.data.data,
                             type:isSuccess?'success':'error'
                         });
                         this.initTable();
