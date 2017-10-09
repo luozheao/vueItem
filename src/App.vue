@@ -137,7 +137,7 @@
         }
         background: url("./images/back.png") no-repeat 1px 2px;
         padding-left: 28px;
-        width: 76px;
+        width:90px;
         height: 28px;
         line-height: 28px;
         border: 1px solid #c4c4c4;
@@ -228,9 +228,7 @@
             </div>
             <!--主内容-->
             <div id="container">
-                <el-row >
-                    <el-col :span="24" class="backWraper"><div class="back" :plain="true" size="small">返回上一页</div></el-col>
-                </el-row>
+                <br>
                 <router-view ></router-view>
             </div>
         </div>
