@@ -210,7 +210,7 @@ function loadComplete() {
     setSidePos();
     divMenu.style.visibility = "visible";
     topnav.style.visibility = "visible";
-    $importNoCache("source/javascript/utility_new.js");//拖动js
+    $importNoCache("./questionnaire/utility_new.js");//拖动js
 }
 function $importNoCache(a) {
     $import(a);
@@ -1580,7 +1580,7 @@ function createAttr() {
         if (cM) {
             dD.innerHTML = "商品名称";
         } else {
-            var dP = $ce("a", "题目选项<img src='source/images/arrownone.gif' alt=''>", dD);
+            var dP = $ce("a", "题目选项<img src='images/arrownone.gif' alt=''>", dD);
             dP.title = "交换选项文字";
             dP.href = "javascript:void(0);";
             dP.onclick = function() {

@@ -1,8 +1,25 @@
+html,body,div,header,article,footer,span,img,a,input,table,ul,ol,dl,li,label,button,em,form,h1,h2,h3,h4,h5,h6,iframe,p,small,tr,td,thead,tbody,tfoot,textarea,th,video,audio {
+margin: 0;
+padding: 0;
+}
+body{text-align: center;font-weight:normal;background:#ffffff;color: #6a6a6a;font-family: "微软雅黑","Lucida Grande",Helvetica,Arial,Verdana,sans-serif;font-size:12px;}
+table {border-collapse:collapse;}
+table.ke-zeroborder td {border:1px dotted #AAAAAA;}
+td {font: 12px/1.5 "sans serif",tahoma,verdana,helvetica;}
+p {margin: 5px 0;}
+h1,h2,h3{font-size:12px;font-weight:normal; }
+dl,dt,dd,ul,li,ol,p,form,img {list-style: none; border: none;}
+textarea{font-size:12px;}
+a,a:link,a:active{color:#075DB3;text-decoration: none;}
+a:hover{color:#f90;}
+a img{border:0;}
+input, button {font-family: "微软雅黑","Lucida Grande",Helvetica,Arial,Verdana,sans-serif;font-size: 12px;}
 
 
 /*头部样式*/
-
- #divMenu {width: 880px;visibility: visible;margin: 0 auto;height: 28px;}
+body{background: #eeeeee;}
+#header{background-image: url(../images/shadow.gif);background-color: #e1f6ff;background-position: left bottom;background-repeat: repeat-x;padding-bottom: 10px;width: 100%;}
+#divMenu {width: 880px;visibility: visible;margin: 0 auto;height: 28px;}
 #divMenu li {margin-right: 20px;   float: left;margin-left: 5px;CLEAR: none;display: inline;LIST-STYLE-TYPE: none;PADDING: 1px 0px;list-style-position: outside;vertical-align: middle;}
 #divMenu li a{height:30px; line-height:30px;font-size:14px;}
 #divMenu li div{height:30px; line-height:30px;padding-left:15px; padding-right:15px;}
@@ -24,14 +41,14 @@ a.sumitbutton, a.sumitbutton:visited {background: #f17819;}
 .design-radio {background-position: 0px -80px;padding-right: 2px;height: 16px;width: 16px;}
 .design-check {background-position: -20px -80px;padding-right: 2px;height: 16px;width: 16px;}
 .design-text {background-position: 0px -100px;padding-right: 6px;height: 16px;width: 14px;}
-.design-icon { background-repeat: no-repeat;display: inline-block;overflow: hidden;}
+.design-icon {background-image: url("../images/designqpic.gif");background-repeat: no-repeat;display: inline-block;overflow: hidden;}
 .clb{clear: both;}
 .addImg{position: absolute;left: -50px;top: 12px;}
 #rightbar {z-index: 99;width: 45px;height: 156px;right: -47px;top: 300px;position: absolute;}
 .m-menu {width: 45px;height: 156px;}
 .m-menu li a{width: 45px;height: 39px;display: block;text-indent: -9999px;outline: 0;}
-.m-top,.m-bottom {background:   no-repeat;width: 45px;height: 40px;}
-.m-top a:hover, .m-help a:hover, .m-comment a:hover, .m-bottom a:hover{background:   no-repeat;}
+.m-top,.m-bottom {background: url(../images/rightbar.gif) no-repeat;width: 45px;height: 40px;}
+.m-top a:hover, .m-help a:hover, .m-comment a:hover, .m-bottom a:hover{background: url(../images/rightbar-hover.gif) no-repeat;}
 /*添加题目内容*/
 .survey{line-height: 20px;word-wrap: break-word; margin: 0 auto;padding: 15px 30px;overflow: auto;width: 810px;height: 644px;background: rgb(255, 255, 255);min-height:300px;}
 .survey .surveyDiv{width: 780px;margin: 0 auto;padding-left: 10px;}
@@ -81,7 +98,7 @@ input[type="checkbox"] {margin: 0px 3px 3px 4px;}
 .design-minus {background-position: -22px -60px;height: 17px;width: 17px;}
 .design-badd {background-position: 0px -40px;height: 16px;width: 16px;margin: 0 3px 2px 0;}
 .design-edit{background-position: -2px -618px;height: 16px;width: 16px;margin: 0 3px 0 0;}
-.design-icon { background-repeat: no-repeat;display: inline-block;*display:inline; *zoom:1;overflow: hidden;}
+.design-icon {background-image: url("../images/designqpic.gif");background-repeat: no-repeat;display: inline-block;*display:inline; *zoom:1;overflow: hidden;}
 .choiceimg {cursor: pointer;margin: 0 3px 2px;vertical-align: bottom;}
 .div_title_attr_question {background: none repeat scroll 0 0 #fff9dd;border: 0;padding:15px 5px 5px;font-size: 12px;}
 .ml15{margin-left:15px;}
@@ -140,5 +157,5 @@ input.underline{background-color: transparent;border: 0;border-bottom: solid 1px
 .item_select .remove {border-right: 0;border-radius: 2px 0 0 2px;}
 .item_select .add {border-left: 0;border-radius: 0 2px 2px 0;}
 .item_select .itemnum {outline: 0 none;font-size: 12px;cursor: default;margin: 0;background: #fff;}
-span.choiceimg.design-img,span.choiceimg.design-imgedit{cursor: pointer; background-repeat: no-repeat;display: inline-block;overflow: hidden;vertical-align: middle;margin: 0 3px 0 0;background-position: -52px -221px;height: 17px; width: 19px;}
+span.choiceimg.design-img,span.choiceimg.design-imgedit{cursor: pointer; background-image: url(../images/icoall.png?v=1);background-repeat: no-repeat;display: inline-block;overflow: hidden;vertical-align: middle;margin: 0 3px 0 0;background-position: -52px -221px;height: 17px; width: 19px;}
 span.choiceimg.design-img:hover,span.choiceimg.design-icon.design-imgedit {background-position: -52px -263px;}

@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title></title>
+    <link href="questionnaire/main.css" rel="stylesheet" type="text/css">
+    <style>
+        select {
+            width: 150px;
+            margin: 0px;
+            padding: 4px 6px !important;
+            line-height: 20px;
+            height: 20px;
+            box-sizing: content-box;
+            font-size: 14px;
+            background-color: #ffffff;
+            background-image: none !important;
+            filter: none !important;
+            border: 1px solid #e5e5e5;
+            outline: none;
+        }
+    </style>
+    <script src="questionnaire/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript" rel="script">
+        //去顶部
+        function gotop() {
+            var divSur = document.getElementById("sur");
+            divSur.scrollTop = 0;
+        }
+
+        //去底部
+        function gobottom() {
+            var divSur = document.getElementById("sur");
+            divSur.scrollTop = divSur.scrollHeight;
+        }
+
+        function editTitle() {
+            $('#pater_title').css('display', 'none');
+            $('#pater_title_input').css('display', 'block');
+            $('#pater_title_input').focus();
+        }
+
+        function tOnblur() {
+            var otxt = $El('pater_title_input').value;
+            $('#pater_title').css('display', 'block');
+            $('#pater_title_input').css('display', 'none');
+            $('#pater_title').html(otxt);
+        }
+
+        function decEdit() {
+            $('#pater_desc').css('display', 'none');
+            $('#decTextarea').css('display', 'block');
+            $('#decTextarea').focus();
+            var h = $('#pater_desc').height();
+            if (h > 48) {
+                $('#decTextarea').height(h);
+                $('#decTextarea').css("margin", "18px 0 10px");
+            } else {
+                $('#decTextarea').height(48);
+                $('#decTextarea').css("margin", "0");
+            }
+
+            //var atxt=$('#pater_desc').html();
+            //atxt=atxt.replace(/&nbsp;/g,' ').replace(/<br>/g,'\n');
+            //$('#decTextarea').val(atxt);
+        }
+
+        function decOnblur() {
+            var atxt = $('#decTextarea').val();
+            if (atxt == '') {
+                $('#pater_desc').html('这里是问卷描述');
+            } else {
+                atxt = atxt.replace(/ /g, '&nbsp;').replace(/\n/g, '<br>');
+                $('#pater_desc').html(atxt);
+            }
+            $('#pater_desc').css('display', 'block');
+            $('#decTextarea').css('display', 'none');
+        }
+    </script>
+    <script type="text/javascript">
+        var SubList = [{
+            "SUID": 4,
+            "SUName": "客房",
+            "StudioInfo_SID": 10,
+            "SURem": "大望路店",
+            "CrTime": "2015-10-05T15:25:50.163"
+        }, {
+            "SUID": 5,
+            "SUName": "北辰分店",
+            "StudioInfo_SID": 10,
+            "SURem": "北辰",
+            "CrTime": "2015-10-05T15:28:17.29"
+        }, {
+            "SUID": 13,
+            "SUName": "西单分店",
+            "StudioInfo_SID": 27,
+            "SURem": "西单分店",
+            "CrTime": "2015-10-20T00:03:14.323"
+        }, {
+            "SUID": 16,
+            "SUName": "中知联",
+            "StudioInfo_SID": 27,
+            "SURem": "",
+            "CrTime": "2015-10-26T13:42:06.937"
+        }, {
+            "SUID": 19,
+            "SUName": "芝麻开花",
+            "StudioInfo_SID": 10,
+            "SURem": "芝麻开花",
+            "CrTime": "2015-10-29T17:50:17.62"
+        }, {
+            "SUID": 23,
+            "SUName": "上海路分店",
+            "StudioInfo_SID": 10,
+            "SURem": "上海路分店",
+            "CrTime": "2015-11-03T18:32:22.253"
+        }, {
+            "SUID": 25,
+            "SUName": "华博酒店",
+            "StudioInfo_SID": 10,
+            "SURem": "华博酒店",
+            "CrTime": "2015-11-10T15:23:13.913"
+        }, {
+            "SUID": 26,
+            "SUName": "客房部",
+            "StudioInfo_SID": 44,
+            "SURem": "主楼1层信息反馈人 刘洋 陈华丽 丁明广\r\n主楼二层信息反馈人 刘洋 陈华丽 丁明广\r\n主楼三层信息反馈人 刘洋 陈华丽 丁明广\r\nVIPE栋信息反馈人  刘洋 陈华丽 丁明广\r\n客房前厅信息反馈人 刘洋 陈华丽 丁明广\r\n",
+            "CrTime": "2015-11-23T13:57:07.5"
+        }, {
+            "SUID": 27,
+            "SUName": "餐饮部",
+            "StudioInfo_SID": 44,
+            "SURem": "早餐自助餐厅 冯雪、刘晓超、张晓娜、孟庆伟\r\n中餐厅-冯雪、刘晓超、张晓娜、孟庆伟\r\n十全十美-杨华、刘晓超、张晓娜、孟庆伟 \r\n午餐自助餐厅-杨华、刘晓超、张晓娜、孟庆伟 \r\n",
+            "CrTime": "2015-11-23T13:57:50.753"
+        }, {
+            "SUID": 28,
+            "SUName": "温泉部",
+            "StudioInfo_SID": 44,
+            "SURem": "信息回馈人：封琳—芦邦金—陈世龙—李美霞—孙遥",
+            "CrTime": "2015-11-23T13:58:29.023"
+        }, {
+            "SUID": 29,
+            "SUName": "行政人事部",
+            "StudioInfo_SID": 44,
+            "SURem": "微信反馈：李晶，微信号是15140748097\r\n          任婷，微信号号15141711233\r\n          赵珊珊，微信号13840776323\r\n",
+            "CrTime": "2015-11-23T13:59:15.773"
+        }, {
+            "SUID": 30,
+            "SUName": "营销部",
+            "StudioInfo_SID": 44,
+            "SURem": "度假区温泉前厅大堂休息区\r\n      客房前厅大堂休息区\r\n      度假区大堂休息区\r\n信息反馈：邹文金   关萍    赵美婷  三个大堂部分各设置二维码\r\n",
+            "CrTime": "2015-11-23T14:00:32.073"
+        }, {
+            "SUID": 31,
+            "SUName": "客房",
+            "StudioInfo_SID": 38,
+            "SURem": "客房",
+            "CrTime": "2015-11-26T11:11:35.057"
+        }, {
+            "SUID": 32,
+            "SUName": "餐饮",
+            "StudioInfo_SID": 38,
+            "SURem": "餐饮",
+            "CrTime": "2015-11-26T11:16:56.11"
+        }, {
+            "SUID": 37,
+            "SUName": "前景新缘 办公室",
+            "StudioInfo_SID": 51,
+            "SURem": "前景新缘",
+            "CrTime": "2015-12-07T19:13:59.06"
+        }, {
+            "SUID": 40,
+            "SUName": "西辛小学",
+            "StudioInfo_SID": 51,
+            "SURem": "班长高桂芹 4人",
+            "CrTime": "2015-12-17T08:20:53.273"
+        }, {
+            "SUID": 41,
+            "SUName": "电大校区",
+            "StudioInfo_SID": 51,
+            "SURem": "班长李书秀 4人",
+            "CrTime": "2015-12-17T08:21:37.993"
+        }, {
+            "SUID": 42,
+            "SUName": "南彩二小",
+            "StudioInfo_SID": 51,
+            "SURem": "班长刘玉凤 共5人",
+            "CrTime": "2015-12-18T08:29:47.68"
+        }, {
+            "SUID": 43,
+            "SUName": "沿河中学",
+            "StudioInfo_SID": 51,
+            "SURem": "班长李明静 4人",
+            "CrTime": "2015-12-18T08:40:31.86"
+        }, {
+            "SUID": 44,
+            "SUName": "马坡二小",
+            "StudioInfo_SID": 51,
+            "SURem": "班长屈淑芹 3人",
+            "CrTime": "2015-12-18T08:47:15.187"
+        }, {
+            "SUID": 45,
+            "SUName": "沿河小学",
+            "StudioInfo_SID": 51,
+            "SURem": "班长于金梅  8人",
+            "CrTime": "2015-12-18T08:52:44.147"
+        }, {
+            "SUID": 46,
+            "SUName": "张镇小学",
+            "StudioInfo_SID": 51,
+            "SURem": "班长梁凤芹 5人",
+            "CrTime": "2015-12-18T09:53:29.85"
+        }, {
+            "SUID": 47,
+            "SUName": "光明小学",
+            "StudioInfo_SID": 51,
+            "SURem": "班长张瑞平 6人",
+            "CrTime": "2015-12-18T10:05:21.907"
+        }, {
+            "SUID": 48,
+            "SUName": "大孙各庄小学",
+            "StudioInfo_SID": 51,
+            "SURem": "无班长 2人",
+            "CrTime": "2015-12-18T10:10:40.203"
+        }, {
+            "SUID": 49,
+            "SUName": "图书馆",
+            "StudioInfo_SID": 51,
+            "SURem": "班长李艳梅 2人",
+            "CrTime": "2015-12-18T10:12:50.203"
+        }, {
+            "SUID": 50,
+            "SUName": "保安固定",
+            "StudioInfo_SID": 51,
+            "SURem": "工地",
+            "CrTime": "2015-12-18T10:16:38.657"
+        }, {
+            "SUID": 51,
+            "SUName": "高丽营一小",
+            "StudioInfo_SID": 51,
+            "SURem": "班长姚静萍  5人",
+            "CrTime": "2015-12-18T10:20:03.237"
+        }, {
+            "SUID": 52,
+            "SUName": "仁和小学",
+            "StudioInfo_SID": 51,
+            "SURem": "班长周美玲 6人",
+            "CrTime": "2015-12-18T10:25:14.92"
+        }, {
+            "SUID": 53,
+            "SUName": "石园小学",
+            "StudioInfo_SID": 51,
+            "SURem": "班长付海艳 4人",
+            "CrTime": "2015-12-18T10:33:53.637"
+        }, {
+            "SUID": 54,
+            "SUName": "北务小学",
+            "StudioInfo_SID": 51,
+            "SURem": "班长伊利荣 2人",
+            "CrTime": "2015-12-18T10:46:26.477"
+        }, {
+            "SUID": 55,
+            "SUName": "维修",
+            "StudioInfo_SID": 51,
+            "SURem": "",
+            "CrTime": "2015-12-18T10:51:44.877"
+        }, {
+            "SUID": 56,
+            "SUName": "霍队 卫生间码",
+            "StudioInfo_SID": 51,
+            "SURem": "",
+            "CrTime": "2015-12-18T10:59:01.15"
+        }, {
+            "SUID": 57,
+            "SUName": "尤队 卫生间码",
+            "StudioInfo_SID": 51,
+            "SURem": "",
+            "CrTime": "2015-12-18T11:01:22.8"
+        }, {
+            "SUID": 58,
+            "SUName": "霍队固定区域码",
+            "StudioInfo_SID": 51,
+            "SURem": "马坡二小、高丽营小学、马坡一小、图书馆",
+            "CrTime": "2015-12-18T11:02:34.667"
+        }, {
+            "SUID": 59,
+            "SUName": "尤队固定区域",
+            "StudioInfo_SID": 51,
+            "SURem": "西辛本校、电大校区、仁和小学、沿河小学、沿河中学、南彩二小、张镇小学、石园小学、光明小学、北务小学",
+            "CrTime": "2015-12-18T11:22:04.233"
+        }, {
+            "SUID": 61,
+            "SUName": "餐饮部",
+            "StudioInfo_SID": 56,
+            "SURem": "",
+            "CrTime": "2015-12-18T15:33:43.017"
+        }, {
+            "SUID": 62,
+            "SUName": "皇城老妈",
+            "StudioInfo_SID": 56,
+            "SURem": "",
+            "CrTime": "2015-12-18T15:34:15.497"
+        }, {
+            "SUID": 63,
+            "SUName": "综合部",
+            "StudioInfo_SID": 56,
+            "SURem": "",
+            "CrTime": "2015-12-18T15:34:27.093"
+        }, {
+            "SUID": 64,
+            "SUName": "区医院",
+            "StudioInfo_SID": 51,
+            "SURem": "周占广 15699717790",
+            "CrTime": "2015-12-29T15:13:07.38"
+        }, {
+            "SUID": 65,
+            "SUName": "平安医院",
+            "StudioInfo_SID": 27,
+            "SURem": "",
+            "CrTime": "2015-12-30T20:56:37.733"
+        }, {
+            "SUID": 66,
+            "SUName": "前门店",
+            "StudioInfo_SID": 10,
+            "SURem": "名片上的二维码测试",
+            "CrTime": "2016-01-02T00:01:10.687"
+        }, {
+            "SUID": 67,
+            "SUName": "联桥集团",
+            "StudioInfo_SID": 10,
+            "SURem": "物业",
+            "CrTime": "2016-01-02T00:10:59.74"
+        }, {
+            "SUID": 68,
+            "SUName": "物业管理",
+            "StudioInfo_SID": 10,
+            "SURem": "物业管理",
+            "CrTime": "2016-01-10T15:51:27.213"
+        }, {
+            "SUID": 70,
+            "SUName": "餐饮（堂吧）",
+            "StudioInfo_SID": 57,
+            "SURem": "",
+            "CrTime": "2016-01-18T13:33:12.67"
+        }, {
+            "SUID": 71,
+            "SUName": "餐饮（中餐）",
+            "StudioInfo_SID": 57,
+            "SURem": "",
+            "CrTime": "2016-01-18T13:33:35.013"
+        }, {
+            "SUID": 72,
+            "SUName": "桑拿",
+            "StudioInfo_SID": 57,
+            "SURem": "",
+            "CrTime": "2016-01-18T13:33:50.357"
+        }, {
+            "SUID": 73,
+            "SUName": "前厅",
+            "StudioInfo_SID": 57,
+            "SURem": "",
+            "CrTime": "2016-01-18T13:34:02.077"
+        }, {
+            "SUID": 74,
+            "SUName": "餐饮（西餐）",
+            "StudioInfo_SID": 57,
+            "SURem": "",
+            "CrTime": "2016-01-18T13:42:12.763"
+        }, {
+            "SUID": 75,
+            "SUName": "餐饮（自助餐）",
+            "StudioInfo_SID": 57,
+            "SURem": "",
+            "CrTime": "2016-01-18T14:00:55.17"
+        }, {
+            "SUID": 76,
+            "SUName": "大厅",
+            "StudioInfo_SID": 65,
+            "SURem": "大厅",
+            "CrTime": "2016-01-25T19:46:20.173"
+        }, {
+            "SUID": 78,
+            "SUName": "大厅",
+            "StudioInfo_SID": 70,
+            "SURem": "大厅",
+            "CrTime": "2016-01-27T19:56:43.267"
+        }, {
+            "SUID": 80,
+            "SUName": "棋牌室",
+            "StudioInfo_SID": 57,
+            "SURem": "",
+            "CrTime": "2016-02-01T09:44:14.037"
+        }, {
+            "SUID": 81,
+            "SUName": "食堂",
+            "StudioInfo_SID": 51,
+            "SURem": "",
+            "CrTime": "2016-02-16T09:48:44.41"
+        }, {
+            "SUID": 82,
+            "SUName": "校车",
+            "StudioInfo_SID": 51,
+            "SURem": "",
+            "CrTime": "2016-02-16T10:03:17.82"
+        }, {
+            "SUID": 83,
+            "SUName": "大厅",
+            "StudioInfo_SID": 71,
+            "SURem": "大厅",
+            "CrTime": "2016-02-16T17:41:24.87"
+        }, {
+            "SUID": 85,
+            "SUName": "胡桃里",
+            "StudioInfo_SID": 73,
+            "SURem": "胡桃里",
+            "CrTime": "2016-03-10T14:21:10.41"
+        }, {
+            "SUID": 86,
+            "SUName": "北京蜀浓香火锅万开中心店",
+            "StudioInfo_SID": 75,
+            "SURem": "蜀浓香火锅万开中心1层",
+            "CrTime": "2016-03-16T21:11:10.947"
+        }, {
+            "SUID": 87,
+            "SUName": "醉玥餐厅",
+            "StudioInfo_SID": 73,
+            "SURem": "醉玥餐厅",
+            "CrTime": "2016-03-27T18:04:25.143"
+        }, {
+            "SUID": 88,
+            "SUName": "1号店大厅",
+            "StudioInfo_SID": 76,
+            "SURem": "1号店大厅",
+            "CrTime": "2016-03-28T22:16:44.097"
+        }, {
+            "SUID": 89,
+            "SUName": "投诉",
+            "StudioInfo_SID": 69,
+            "SURem": "投诉通道用",
+            "CrTime": "2016-04-03T16:23:52.96"
+        }, {
+            "SUID": 91,
+            "SUName": "综合部",
+            "StudioInfo_SID": 78,
+            "SURem": "综合部",
+            "CrTime": "2016-04-12T23:59:56.277"
+        }, {
+            "SUID": 92,
+            "SUName": "1号店包间",
+            "StudioInfo_SID": 76,
+            "SURem": "1号店包间",
+            "CrTime": "2016-04-17T23:03:07.657"
+        }, {
+            "SUID": 93,
+            "SUName": "2号店大厅",
+            "StudioInfo_SID": 76,
+            "SURem": "",
+            "CrTime": "2016-04-17T23:11:21.063"
+        }, {
+            "SUID": 94,
+            "SUName": "2号店包间",
+            "StudioInfo_SID": 76,
+            "SURem": "",
+            "CrTime": "2016-04-17T23:11:30.83"
+        }, {
+            "SUID": 95,
+            "SUName": "4号店大厅",
+            "StudioInfo_SID": 76,
+            "SURem": "",
+            "CrTime": "2016-04-17T23:11:49.453"
+        }, {
+            "SUID": 96,
+            "SUName": "4号店包间",
+            "StudioInfo_SID": 76,
+            "SURem": "",
+            "CrTime": "2016-04-17T23:11:59.39"
+        }, {
+            "SUID": 97,
+            "SUName": "79℃吧",
+            "StudioInfo_SID": 79,
+            "SURem": "时尚餐厅",
+            "CrTime": "2016-04-24T16:52:57.89"
+        }, {
+            "SUID": 98,
+            "SUName": "包间",
+            "StudioInfo_SID": 81,
+            "SURem": "包间",
+            "CrTime": "2016-04-27T23:02:45.913"
+        }, {
+            "SUID": 99,
+            "SUName": "客房",
+            "StudioInfo_SID": 79,
+            "SURem": "",
+            "CrTime": "2016-05-03T11:55:27.68"
+        }, {
+            "SUID": 100,
+            "SUName": "包间",
+            "StudioInfo_SID": 79,
+            "SURem": "包间",
+            "CrTime": "2016-05-03T11:55:46.79"
+        }, {
+            "SUID": 102,
+            "SUName": "餐饮部",
+            "StudioInfo_SID": 82,
+            "SURem": "餐饮",
+            "CrTime": "2016-05-04T12:15:05.393"
+        }, {
+            "SUID": 103,
+            "SUName": "客房部迎宾阁",
+            "StudioInfo_SID": 82,
+            "SURem": "客房",
+            "CrTime": "2016-05-04T12:15:20.237"
+        }, {
+            "SUID": 104,
+            "SUName": "前厅部",
+            "StudioInfo_SID": 82,
+            "SURem": "前厅部",
+            "CrTime": "2016-05-04T12:15:37.8"
+        }, {
+            "SUID": 105,
+            "SUName": "拓展部",
+            "StudioInfo_SID": 82,
+            "SURem": "户外拓展",
+            "CrTime": "2016-05-04T12:15:49.77"
+        }, {
+            "SUID": 106,
+            "SUName": "审计部",
+            "StudioInfo_SID": 78,
+            "SURem": "审计部",
+            "CrTime": "2016-05-11T23:23:57.94"
+        }, {
+            "SUID": 107,
+            "SUName": "评估部",
+            "StudioInfo_SID": 78,
+            "SURem": "评估部",
+            "CrTime": "2016-05-11T23:24:10.957"
+        }, {
+            "SUID": 108,
+            "SUName": "造价部",
+            "StudioInfo_SID": 78,
+            "SURem": "造价部",
+            "CrTime": "2016-05-11T23:24:25.753"
+        }, {
+            "SUID": 109,
+            "SUName": "造价部阜平",
+            "StudioInfo_SID": 78,
+            "SURem": "造价部阜平",
+            "CrTime": "2016-05-11T23:24:41.457"
+        }, {
+            "SUID": 110,
+            "SUName": "监理部",
+            "StudioInfo_SID": 78,
+            "SURem": "监理部",
+            "CrTime": "2016-05-11T23:24:51.973"
+        }, {
+            "SUID": 111,
+            "SUName": "后勤",
+            "StudioInfo_SID": 78,
+            "SURem": "后勤",
+            "CrTime": "2016-05-11T23:25:03.083"
+        }, {
+            "SUID": 112,
+            "SUName": "代理部",
+            "StudioInfo_SID": 78,
+            "SURem": "代理部",
+            "CrTime": "2016-05-11T23:25:11.817"
+        }, {
+            "SUID": 113,
+            "SUName": "造价部平谷",
+            "StudioInfo_SID": 78,
+            "SURem": "造价部平谷",
+            "CrTime": "2016-05-11T23:25:21.253"
+        }, {
+            "SUID": 114,
+            "SUName": "造价部通州",
+            "StudioInfo_SID": 78,
+            "SURem": "造价部通州",
+            "CrTime": "2016-05-11T23:25:29.49"
+        }, {
+            "SUID": 115,
+            "SUName": "培训部",
+            "StudioInfo_SID": 78,
+            "SURem": "培训部",
+            "CrTime": "2016-05-13T17:07:53.783"
+        }, {
+            "SUID": 116,
+            "SUName": "客房",
+            "StudioInfo_SID": 84,
+            "SURem": "客房",
+            "CrTime": "2016-05-15T11:36:21.393"
+        }, {
+            "SUID": 117,
+            "SUName": "大厅",
+            "StudioInfo_SID": 85,
+            "SURem": "大厅",
+            "CrTime": "2016-05-17T11:03:00.863"
+        }, {
+            "SUID": 120,
+            "SUName": "通州基建",
+            "StudioInfo_SID": 78,
+            "SURem": "",
+            "CrTime": "2016-05-19T18:04:51.617"
+        }, {
+            "SUID": 124,
+            "SUName": "四区分公司",
+            "StudioInfo_SID": 10,
+            "SURem": "",
+            "CrTime": "2016-05-30T23:35:26.08"
+        }, {
+            "SUID": 125,
+            "SUName": "烧烤中心",
+            "StudioInfo_SID": 82,
+            "SURem": "烧烤中心",
+            "CrTime": "2016-06-04T15:30:24.41"
+        }, {
+            "SUID": 126,
+            "SUName": "客房部房车",
+            "StudioInfo_SID": 82,
+            "SURem": "",
+            "CrTime": "2016-06-04T15:32:54.523"
+        }, {
+            "SUID": 127,
+            "SUName": "员工",
+            "StudioInfo_SID": 88,
+            "SURem": "",
+            "CrTime": "2016-06-10T14:09:41.26"
+        }, {
+            "SUID": 128,
+            "SUName": "餐厅",
+            "StudioInfo_SID": 88,
+            "SURem": "",
+            "CrTime": "2016-06-10T14:09:51.807"
+        }, {
+            "SUID": 129,
+            "SUName": "佛山区",
+            "StudioInfo_SID": 89,
+            "SURem": "",
+            "CrTime": "2016-06-17T21:24:02.807"
+        }, {
+            "SUID": 130,
+            "SUName": "本溪永丰店",
+            "StudioInfo_SID": 92,
+            "SURem": "",
+            "CrTime": "2016-06-30T13:13:01.34"
+        }, {
+            "SUID": 131,
+            "SUName": "房车",
+            "StudioInfo_SID": 93,
+            "SURem": "房车",
+            "CrTime": "2016-07-08T15:35:28.95"
+        }, {
+            "SUID": 132,
+            "SUName": "木屋",
+            "StudioInfo_SID": 93,
+            "SURem": "",
+            "CrTime": "2016-07-08T15:35:40.437"
+        }, {
+            "SUID": 133,
+            "SUName": "本溪中心店",
+            "StudioInfo_SID": 92,
+            "SURem": "",
+            "CrTime": "2016-07-13T10:51:02.767"
+        }, {
+            "SUID": 134,
+            "SUName": "餐饮",
+            "StudioInfo_SID": 93,
+            "SURem": "",
+            "CrTime": "2016-07-14T11:55:59.827"
+        }, {
+            "SUID": 135,
+            "SUName": "户外拓展",
+            "StudioInfo_SID": 93,
+            "SURem": "户外",
+            "CrTime": "2016-07-14T11:57:35.357"
+        }, {
+            "SUID": 136,
+            "SUName": "烧烤",
+            "StudioInfo_SID": 93,
+            "SURem": "",
+            "CrTime": "2016-07-14T11:58:07.327"
+        }, {
+            "SUID": 137,
+            "SUName": "海川视野",
+            "StudioInfo_SID": 94,
+            "SURem": "海川视野",
+            "CrTime": "2016-07-18T14:44:01.267"
+        }, {
+            "SUID": 138,
+            "SUName": "项目管理部",
+            "StudioInfo_SID": 78,
+            "SURem": "项目管理部",
+            "CrTime": "2016-07-19T17:02:49.34"
+        }, {
+            "SUID": 139,
+            "SUName": "前厅",
+            "StudioInfo_SID": 93,
+            "SURem": "",
+            "CrTime": "2016-07-25T16:09:48.897"
+        }, {
+            "SUID": 140,
+            "SUName": "房车",
+            "StudioInfo_SID": 95,
+            "SURem": "",
+            "CrTime": "2016-07-26T14:48:57.19"
+        }, {
+            "SUID": 141,
+            "SUName": "木屋",
+            "StudioInfo_SID": 95,
+            "SURem": "",
+            "CrTime": "2016-07-26T14:49:04.207"
+        }, {
+            "SUID": 142,
+            "SUName": "餐饮",
+            "StudioInfo_SID": 95,
+            "SURem": "",
+            "CrTime": "2016-07-26T15:34:01.613"
+        }, {
+            "SUID": 143,
+            "SUName": "户外拓展",
+            "StudioInfo_SID": 95,
+            "SURem": "",
+            "CrTime": "2016-07-26T15:36:10.91"
+        }, {
+            "SUID": 144,
+            "SUName": "烧烤",
+            "StudioInfo_SID": 95,
+            "SURem": "",
+            "CrTime": "2016-07-26T15:36:18.177"
+        }, {
+            "SUID": 145,
+            "SUName": "前厅",
+            "StudioInfo_SID": 95,
+            "SURem": "",
+            "CrTime": "2016-07-26T15:36:44.207"
+        }, {
+            "SUID": 146,
+            "SUName": "物业",
+            "StudioInfo_SID": 95,
+            "SURem": "物业",
+            "CrTime": "2016-07-30T13:55:01.583"
+        }, {
+            "SUID": 147,
+            "SUName": "树屋",
+            "StudioInfo_SID": 95,
+            "SURem": "",
+            "CrTime": "2016-08-11T10:18:32.213"
+        }, {
+            "SUID": 148,
+            "SUName": "餐厅",
+            "StudioInfo_SID": 97,
+            "SURem": "",
+            "CrTime": "2016-09-05T11:24:39.983"
+        }, {
+            "SUID": 149,
+            "SUName": "客房",
+            "StudioInfo_SID": 99,
+            "SURem": "客房",
+            "CrTime": "2016-09-09T15:27:46.747"
+        }, {
+            "SUID": 150,
+            "SUName": "江苏省常州市新北区",
+            "StudioInfo_SID": 100,
+            "SURem": "宁沪高速常州收费站",
+            "CrTime": "2016-09-30T09:53:21.52"
+        }, {
+            "SUID": 151,
+            "SUName": "大厅",
+            "StudioInfo_SID": 101,
+            "SURem": "",
+            "CrTime": "2016-11-03T15:37:42.17"
+        }, {
+            "SUID": 152,
+            "SUName": "客房",
+            "StudioInfo_SID": 105,
+            "SURem": "客房",
+            "CrTime": "2016-11-17T17:41:21.953"
+        }, {
+            "SUID": 153,
+            "SUName": "客房",
+            "StudioInfo_SID": 108,
+            "SURem": "",
+            "CrTime": "2016-11-25T16:10:33.413"
+        }, {
+            "SUID": 154,
+            "SUName": "海泰食府",
+            "StudioInfo_SID": 76,
+            "SURem": "年底调查问卷",
+            "CrTime": "2016-11-30T11:22:52.927"
+        }, {
+            "SUID": 155,
+            "SUName": "章丘大厦",
+            "StudioInfo_SID": 76,
+            "SURem": "",
+            "CrTime": "2016-11-30T11:23:34.21"
+        }, {
+            "SUID": 156,
+            "SUName": "房务部",
+            "StudioInfo_SID": 56,
+            "SURem": "",
+            "CrTime": "2016-12-01T17:09:33.063"
+        }, {
+            "SUID": 157,
+            "SUName": "客房部",
+            "StudioInfo_SID": 110,
+            "SURem": "客房部",
+            "CrTime": "2016-12-04T12:18:19.157"
+        }, {
+            "SUID": 158,
+            "SUName": "前厅部",
+            "StudioInfo_SID": 110,
+            "SURem": "前厅部",
+            "CrTime": "2016-12-04T12:18:39.877"
+        }, {
+            "SUID": 159,
+            "SUName": "餐饮部",
+            "StudioInfo_SID": 110,
+            "SURem": "餐饮部",
+            "CrTime": "2016-12-04T12:18:57.39"
+        }, {
+            "SUID": 160,
+            "SUName": "前台",
+            "StudioInfo_SID": 113,
+            "SURem": "",
+            "CrTime": "2016-12-18T07:55:24.177"
+        }, {
+            "SUID": 161,
+            "SUName": "职卫",
+            "StudioInfo_SID": 115,
+            "SURem": "",
+            "CrTime": "2016-12-23T13:01:30.103"
+        }, {
+            "SUID": 162,
+            "SUName": "第一二食堂",
+            "StudioInfo_SID": 115,
+            "SURem": "第一二食堂",
+            "CrTime": "2016-12-23T13:01:53.46"
+        }, {
+            "SUID": 163,
+            "SUName": "客房",
+            "StudioInfo_SID": 116,
+            "SURem": "",
+            "CrTime": "2016-12-27T12:18:29.527"
+        }, {
+            "SUID": 164,
+            "SUName": "商超",
+            "StudioInfo_SID": 115,
+            "SURem": "",
+            "CrTime": "2016-12-27T13:06:57.467"
+        }, {
+            "SUID": 165,
+            "SUName": "第三食堂",
+            "StudioInfo_SID": 115,
+            "SURem": "第三食堂",
+            "CrTime": "2016-12-27T13:19:29.717"
+        }, {
+            "SUID": 166,
+            "SUName": "第四食堂",
+            "StudioInfo_SID": 115,
+            "SURem": "第四食堂",
+            "CrTime": "2016-12-27T13:19:43.497"
+        }, {
+            "SUID": 167,
+            "SUName": "第五食堂",
+            "StudioInfo_SID": 115,
+            "SURem": "第五食堂",
+            "CrTime": "2016-12-27T13:19:57.433"
+        }, {
+            "SUID": 168,
+            "SUName": "第六食堂",
+            "StudioInfo_SID": 115,
+            "SURem": "第六食堂",
+            "CrTime": "2016-12-27T13:20:08.683"
+        }, {
+            "SUID": 169,
+            "SUName": "第七食堂",
+            "StudioInfo_SID": 115,
+            "SURem": "第七食堂",
+            "CrTime": "2016-12-27T13:20:21.277"
+        }, {
+            "SUID": 170,
+            "SUName": "第八食堂",
+            "StudioInfo_SID": 115,
+            "SURem": "第八食堂",
+            "CrTime": "2016-12-27T13:20:32.527"
+        }, {
+            "SUID": 171,
+            "SUName": "第九食堂",
+            "StudioInfo_SID": 115,
+            "SURem": "第九食堂",
+            "CrTime": "2016-12-27T13:20:43.59"
+        }, {
+            "SUID": 172,
+            "SUName": "安奇班车",
+            "StudioInfo_SID": 115,
+            "SURem": "安奇班车",
+            "CrTime": "2016-12-27T14:35:53.84"
+        }, {
+            "SUID": 173,
+            "SUName": "运泰班车",
+            "StudioInfo_SID": 115,
+            "SURem": "运泰班车",
+            "CrTime": "2016-12-27T14:36:17.043"
+        }, {
+            "SUID": 174,
+            "SUName": "城北公寓宿舍",
+            "StudioInfo_SID": 115,
+            "SURem": "城北公寓宿舍",
+            "CrTime": "2016-12-27T14:52:32.433"
+        }, {
+            "SUID": 175,
+            "SUName": "奇瑞花园宿舍",
+            "StudioInfo_SID": 115,
+            "SURem": "奇瑞花园宿舍",
+            "CrTime": "2016-12-27T14:52:56.183"
+        }, {
+            "SUID": 176,
+            "SUName": "拓展部",
+            "StudioInfo_SID": 78,
+            "SURem": "拓展部",
+            "CrTime": "2016-12-28T09:26:50.853"
+        }, {
+            "SUID": 177,
+            "SUName": "海瑞",
+            "StudioInfo_SID": 115,
+            "SURem": "海瑞",
+            "CrTime": "2017-01-06T21:37:58.343"
+        }, {
+            "SUID": 178,
+            "SUName": "芜湖新联船厂",
+            "StudioInfo_SID": 115,
+            "SURem": "芜湖新联船厂",
+            "CrTime": "2017-01-13T14:12:25.497"
+        }, {
+            "SUID": 179,
+            "SUName": "瑞达后勤招待餐厅",
+            "StudioInfo_SID": 115,
+            "SURem": "瑞达后勤招待餐厅",
+            "CrTime": "2017-01-18T17:46:03.897"
+        }, {
+            "SUID": 180,
+            "SUName": "餐饮",
+            "StudioInfo_SID": 116,
+            "SURem": "",
+            "CrTime": "2017-02-04T17:28:06.473"
+        }, {
+            "SUID": 181,
+            "SUName": "前厅",
+            "StudioInfo_SID": 116,
+            "SURem": "",
+            "CrTime": "2017-02-04T17:28:31.21"
+        }, {
+            "SUID": 183,
+            "SUName": "客房",
+            "StudioInfo_SID": 123,
+            "SURem": "",
+            "CrTime": "2017-03-13T15:33:18.833"
+        }, {
+            "SUID": 184,
+            "SUName": "巡查区",
+            "StudioInfo_SID": 116,
+            "SURem": "",
+            "CrTime": "2017-03-23T15:43:33.347"
+        }, {
+            "SUID": 185,
+            "SUName": "广东区域",
+            "StudioInfo_SID": 127,
+            "SURem": "",
+            "CrTime": "2017-04-13T17:39:27.383"
+        }, {
+            "SUID": 186,
+            "SUName": "志健店",
+            "StudioInfo_SID": 128,
+            "SURem": "雨施咖啡志健店",
+            "CrTime": "2017-04-18T10:53:48.587"
+        }, {
+            "SUID": 187,
+            "SUName": "保洁",
+            "StudioInfo_SID": 115,
+            "SURem": "",
+            "CrTime": "2017-04-19T14:21:42.783"
+        }, {
+            "SUID": 188,
+            "SUName": "客房",
+            "StudioInfo_SID": 129,
+            "SURem": "",
+            "CrTime": "2017-04-21T15:53:38.727"
+        }, {
+            "SUID": 189,
+            "SUName": "前厅",
+            "StudioInfo_SID": 129,
+            "SURem": "",
+            "CrTime": "2017-04-21T15:53:51.383"
+        }, {
+            "SUID": 190,
+            "SUName": "俱乐部前厅",
+            "StudioInfo_SID": 129,
+            "SURem": "",
+            "CrTime": "2017-04-21T15:54:32.837"
+        }, {
+            "SUID": 191,
+            "SUName": "俱乐部楼面",
+            "StudioInfo_SID": 129,
+            "SURem": "",
+            "CrTime": "2017-04-21T15:54:44.213"
+        }, {
+            "SUID": 192,
+            "SUName": "潍州食府餐厅",
+            "StudioInfo_SID": 129,
+            "SURem": "潍州食府餐厅",
+            "CrTime": "2017-04-21T15:55:34.4"
+        }, {
+            "SUID": 193,
+            "SUName": "中餐包房",
+            "StudioInfo_SID": 129,
+            "SURem": "中餐包房",
+            "CrTime": "2017-04-21T15:55:47.697"
+        }, {
+            "SUID": 194,
+            "SUName": "咖啡厅",
+            "StudioInfo_SID": 129,
+            "SURem": "",
+            "CrTime": "2017-04-21T15:56:01.43"
+        }, {
+            "SUID": 195,
+            "SUName": "宴会厅",
+            "StudioInfo_SID": 129,
+            "SURem": "宴会厅",
+            "CrTime": "2017-04-21T15:56:16.087"
+        }, {
+            "SUID": 196,
+            "SUName": "时尚广场店",
+            "StudioInfo_SID": 128,
+            "SURem": "时尚广场店",
+            "CrTime": "2017-04-23T17:41:50.313"
+        }, {
+            "SUID": 197,
+            "SUName": "安良雨施咖啡屋",
+            "StudioInfo_SID": 128,
+            "SURem": "安良雨施咖啡屋",
+            "CrTime": "2017-04-23T17:42:09.36"
+        }, {
+            "SUID": 199,
+            "SUName": "财务部",
+            "StudioInfo_SID": 78,
+            "SURem": "",
+            "CrTime": "2017-05-27T14:09:19.263"
+        }, {
+            "SUID": 200,
+            "SUName": "客房",
+            "StudioInfo_SID": 137,
+            "SURem": "客房",
+            "CrTime": "2017-05-31T10:38:52.473"
+        }, {
+            "SUID": 201,
+            "SUName": "前厅",
+            "StudioInfo_SID": 137,
+            "SURem": "前厅",
+            "CrTime": "2017-05-31T13:49:54.693"
+        }, {
+            "SUID": 202,
+            "SUName": "阳台休息区",
+            "StudioInfo_SID": 137,
+            "SURem": "",
+            "CrTime": "2017-06-07T16:17:19.657"
+        }, {
+            "SUID": 203,
+            "SUName": "客房迷你吧",
+            "StudioInfo_SID": 129,
+            "SURem": "客房迷你吧",
+            "CrTime": "2017-06-08T15:43:01.983"
+        }, {
+            "SUID": 204,
+            "SUName": "客房",
+            "StudioInfo_SID": 140,
+            "SURem": "",
+            "CrTime": "2017-06-12T11:20:31.987"
+        }, {
+            "SUID": 205,
+            "SUName": "客房",
+            "StudioInfo_SID": 145,
+            "SURem": "客房",
+            "CrTime": "2017-07-05T14:06:28.537"
+        }, {
+            "SUID": 206,
+            "SUName": "客房",
+            "StudioInfo_SID": 147,
+            "SURem": "客房",
+            "CrTime": "2017-07-07T11:09:00.293"
+        }, {
+            "SUID": 207,
+            "SUName": "测试ID1",
+            "StudioInfo_SID": 27,
+            "SURem": "",
+            "CrTime": "2017-07-10T16:33:31.817"
+        }, {
+            "SUID": 208,
+            "SUName": "测试ID2",
+            "StudioInfo_SID": 27,
+            "SURem": "",
+            "CrTime": "2017-07-10T16:33:46.647"
+        }, {
+            "SUID": 209,
+            "SUName": "测试ID3",
+            "StudioInfo_SID": 27,
+            "SURem": "",
+            "CrTime": "2017-07-10T16:33:59.897"
+        }, {
+            "SUID": 210,
+            "SUName": "前厅",
+            "StudioInfo_SID": 147,
+            "SURem": "",
+            "CrTime": "2017-07-11T16:34:30.64"
+        }, {
+            "SUID": 211,
+            "SUName": "客房",
+            "StudioInfo_SID": 150,
+            "SURem": "",
+            "CrTime": "2017-07-16T16:03:49.587"
+        }, {
+            "SUID": 214,
+            "SUName": "客房",
+            "StudioInfo_SID": 148,
+            "SURem": "",
+            "CrTime": "2017-07-16T16:33:27.837"
+        }, {
+            "SUID": 215,
+            "SUName": "餐饮",
+            "StudioInfo_SID": 148,
+            "SURem": "餐饮",
+            "CrTime": "2017-07-16T17:27:23.587"
+        }, {
+            "SUID": 216,
+            "SUName": "娱乐",
+            "StudioInfo_SID": 148,
+            "SURem": "娱乐",
+            "CrTime": "2017-07-16T17:27:41.65"
+        }, {
+            "SUID": 217,
+            "SUName": "足浴",
+            "StudioInfo_SID": 148,
+            "SURem": "足浴",
+            "CrTime": "2017-07-16T17:27:55.167"
+        }, {
+            "SUID": 218,
+            "SUName": "客房浉河店",
+            "StudioInfo_SID": 151,
+            "SURem": "",
+            "CrTime": "2017-07-17T14:30:31.35"
+        }, {
+            "SUID": 219,
+            "SUName": "客房黄岩店",
+            "StudioInfo_SID": 152,
+            "SURem": "",
+            "CrTime": "2017-07-17T14:40:52.27"
+        }, {
+            "SUID": 220,
+            "SUName": "前厅黄岩店",
+            "StudioInfo_SID": 152,
+            "SURem": "",
+            "CrTime": "2017-07-17T14:44:17.007"
+        }, {
+            "SUID": 221,
+            "SUName": "棋牌黄岩店",
+            "StudioInfo_SID": 152,
+            "SURem": "",
+            "CrTime": "2017-07-17T14:44:51.927"
+        }, {
+            "SUID": 222,
+            "SUName": "客房",
+            "StudioInfo_SID": 153,
+            "SURem": "客房",
+            "CrTime": "2017-07-20T09:58:49.62"
+        }, {
+            "SUID": 223,
+            "SUName": "客房",
+            "StudioInfo_SID": 157,
+            "SURem": "客房",
+            "CrTime": "2017-07-30T11:10:16.823"
+        }, {
+            "SUID": 224,
+            "SUName": "客房",
+            "StudioInfo_SID": 158,
+            "SURem": "",
+            "CrTime": "2017-07-30T22:29:29.203"
+        }, {
+            "SUID": 225,
+            "SUName": "餐厅",
+            "StudioInfo_SID": 147,
+            "SURem": "餐厅",
+            "CrTime": "2017-07-31T13:14:25.513"
+        }, {
+            "SUID": 226,
+            "SUName": "温泉区",
+            "StudioInfo_SID": 153,
+            "SURem": "温泉区",
+            "CrTime": "2017-08-02T09:43:23.74"
+        }, {
+            "SUID": 227,
+            "SUName": "温泉接待大厅",
+            "StudioInfo_SID": 153,
+            "SURem": "温泉接待大厅",
+            "CrTime": "2017-08-02T09:43:43.91"
+        }, {
+            "SUID": 228,
+            "SUName": "客房前台",
+            "StudioInfo_SID": 153,
+            "SURem": "客房前台",
+            "CrTime": "2017-08-02T09:44:04.333"
+        }, {
+            "SUID": 229,
+            "SUName": "预订",
+            "StudioInfo_SID": 153,
+            "SURem": "预订",
+            "CrTime": "2017-08-02T09:47:32.473"
+        }, {
+            "SUID": 230,
+            "SUName": "餐厅",
+            "StudioInfo_SID": 153,
+            "SURem": "",
+            "CrTime": "2017-08-02T10:38:17.27"
+        }, {
+            "SUID": 231,
+            "SUName": "永城店",
+            "StudioInfo_SID": 160,
+            "SURem": "永城店",
+            "CrTime": "2017-08-11T16:33:42.023"
+        }, {
+            "SUID": 232,
+            "SUName": "夏邑1店",
+            "StudioInfo_SID": 160,
+            "SURem": "夏邑1店",
+            "CrTime": "2017-08-11T16:33:56.367"
+        }, {
+            "SUID": 233,
+            "SUName": "夏邑2店",
+            "StudioInfo_SID": 160,
+            "SURem": "夏邑2店",
+            "CrTime": "2017-08-11T16:34:09.443"
+        }, {
+            "SUID": 234,
+            "SUName": "客房",
+            "StudioInfo_SID": 163,
+            "SURem": "客房",
+            "CrTime": "2017-08-17T15:10:47.787"
+        }, {
+            "SUID": 235,
+            "SUName": "客房",
+            "StudioInfo_SID": 165,
+            "SURem": "",
+            "CrTime": "2017-08-24T23:08:39.063"
+        }, {
+            "SUID": 236,
+            "SUName": "客房",
+            "StudioInfo_SID": 166,
+            "SURem": "客房",
+            "CrTime": "2017-08-26T14:03:42.527"
+        }, {
+            "SUID": 237,
+            "SUName": "客房",
+            "StudioInfo_SID": 167,
+            "SURem": "",
+            "CrTime": "2017-08-26T15:01:37.51"
+        }, {
+            "SUID": 238,
+            "SUName": "客房",
+            "StudioInfo_SID": 168,
+            "SURem": "客房",
+            "CrTime": "2017-08-28T11:38:54.64"
+        }, {
+            "SUID": 239,
+            "SUName": "客房",
+            "StudioInfo_SID": 173,
+            "SURem": "",
+            "CrTime": "2017-08-28T13:38:23.577"
+        }, {
+            "SUID": 240,
+            "SUName": "迎宾楼",
+            "StudioInfo_SID": 148,
+            "SURem": "",
+            "CrTime": "2017-08-28T13:54:04.263"
+        }, {
+            "SUID": 243,
+            "SUName": "客房",
+            "StudioInfo_SID": 177,
+            "SURem": "客房",
+            "CrTime": "2017-09-04T10:10:15.98"
+        }, {
+            "SUID": 245,
+            "SUName": "客房",
+            "StudioInfo_SID": 169,
+            "SURem": "客房",
+            "CrTime": "2017-09-05T09:51:05.583"
+        }, {
+            "SUID": 246,
+            "SUName": "客房",
+            "StudioInfo_SID": 178,
+            "SURem": "",
+            "CrTime": "2017-09-05T10:11:32.49"
+        }, {
+            "SUID": 248,
+            "SUName": "步行街店客房",
+            "StudioInfo_SID": 175,
+            "SURem": "步行街",
+            "CrTime": "2017-09-06T11:36:18.533"
+        }, {
+            "SUID": 249,
+            "SUName": "烈士公园店客房",
+            "StudioInfo_SID": 175,
+            "SURem": "烈士公园",
+            "CrTime": "2017-09-06T11:36:46.08"
+        }, {
+            "SUID": 250,
+            "SUName": "松桂园店客房",
+            "StudioInfo_SID": 175,
+            "SURem": "松桂园",
+            "CrTime": "2017-09-06T11:37:05.83"
+        }, {
+            "SUID": 251,
+            "SUName": "芙蓉广场店客房",
+            "StudioInfo_SID": 175,
+            "SURem": "芙蓉广场店",
+            "CrTime": "2017-09-06T11:37:33.173"
+        }, {
+            "SUID": 252,
+            "SUName": "客房",
+            "StudioInfo_SID": 171,
+            "SURem": "客房",
+            "CrTime": "2017-09-12T15:00:30.667"
+        }, {
+            "SUID": 253,
+            "SUName": "客房",
+            "StudioInfo_SID": 174,
+            "SURem": "",
+            "CrTime": "2017-09-15T15:13:05.653"
+        }, {
+            "SUID": 254,
+            "SUName": "客房",
+            "StudioInfo_SID": 179,
+            "SURem": "",
+            "CrTime": "2017-09-16T16:29:43.37"
+        }, {
+            "SUID": 255,
+            "SUName": "客房",
+            "StudioInfo_SID": 170,
+            "SURem": "",
+            "CrTime": "2017-09-21T13:39:57.513"
+        }, {
+            "SUID": 256,
+            "SUName": "总经办",
+            "StudioInfo_SID": 44,
+            "SURem": "",
+            "CrTime": "2017-09-21T14:08:15.203"
+        }, {"SUID": 257, "SUName": "客房餐厅", "StudioInfo_SID": 27, "SURem": "", "CrTime": "2017-09-30T09:07:21.653"}];
+        var StuSID = 0;
+        var SubSID = 0;
+        var SubState = 0;
+    </script>
+    <script type="text/javascript" rel="script">
+        /*$.ajax({
+            url:"source/javascript/json.json",
+            dataType:"json",
+            type:'get',
+            success:function(data){
+                alert(JSON.stringify(data));
+            }
+
+        });*/
+        var activityID = "11410064";
+        $(function () {
+            StuListChange();
+            if (StuSID != 0) {
+                $("#StuList").val(StuSID);
+                StuListChange();
+                $("#SubList").val(SubSID);
+            }
+            var QID = 0;
+            QID = 0;
+            if (QID != 0) {
+                var url = '../../UIWebServer/Questionnaire.ashx/GetQuestionnaire?QID=' + QID;
+                loadData(url);
+            }
+        });
+
+        function StuListChange() {
+            var SubHtml = "";
+            if (SubState > 0) {
+                for (var i = 0; i < SubList.length; i++) {
+                    if (SubList[i].SUID == SubState) {
+
+                        SubHtml += "<option value='" + SubList[i].SUID + "'>" + SubList[i].SUName + "</option>";
+                    }
+                }
+            } else {
+                SubHtml += "<option value='0'>请选择区域</option>";
+                for (var i = 0; i < SubList.length; i++) {
+                    if (SubList[i].StudioInfo_SID == $("#StuList").val()) {
+                        SubHtml += "<option value='" + SubList[i].SUID + "'>" + SubList[i].SUName + "</option>";
+                    }
+                }
+            }
+            $("#SubList").html(SubHtml);
+
+        }
+
+        //加载数据，url为获取的json地址。
+        function loadData(url) {
+            $.get(url, {}, function (data) {
+                try {
+                    var data = eval("(" + data + ")");
+                    if (data.ErrCode == "2002") {
+                        var Qid = data.Data.QID;
+                        $('#question').attr('Qid', Qid);
+                        var title = data.Data.QName ? data.Data.QName : '问卷的题目';
+                        $('#pater_title').text(title);
+                        $("#pater_title_input").val(title);
+                        var QRem = data.Data.QRem ? data.Data.QRem : '问卷描述';
+                        var atxt = QRem.replace(/ /g, '&nbsp;').replace(/\n/g, '<br>');
+                        $('#pater_desc').html(atxt);
+                        atxt = QRem.replace(/&nbsp;/g, ' ').replace(/<br>/g, '\n');
+                        $('#decTextarea').val(atxt);
+                        var data = data.Data.Item;
+                        for (var i = 0; i < data.length; i++) {
+                            var typeCode = data[i].QIType;
+                            var qe, qb, type;
+                            var requir = false;//必答，默认非必答
+                            if (data[i].QValNull == 2) {
+                                requir = true;
+                            }
+                            switch (typeCode) {
+                                case 1:
+                                    type = 'radio';
+                                    qe = type + "§1§" + data[i].QITitle + "〒〒〒§0§1〒§false§false§0§" + requir + "§§§0§§";
+                                    for (var j = 0; j < data[i].Option.length; j++) {
+                                        if (data[i].Option[j].OPType == 1) {
+                                            qe += "§" + data[i].Option[j].OTitle + "〒false〒" + (j + 1) + "〒0〒true〒〒〒〒〒";
+                                        } else {
+                                            qe += "§" + data[i].Option[j].OTitle + "〒false〒" + (j + 1) + "〒0〒〒〒〒〒〒";
+                                        }
+
+                                    }
+                                    break;
+                                case 2:
+                                    type = 'check';
+                                    qe = type + "§1§" + data[i].QITitle + "〒〒〒§0§1〒§false§false§0§" + requir + ",,§§§0§§";
+                                    for (var j = 0; j < data[i].Option.length; j++) {
+                                        if (data[i].Option[j].OPType == 1) {
+                                            qe += "§" + data[i].Option[j].OTitle + "〒false〒" + (j + 1) + "〒0〒true〒〒〒〒〒〒";
+                                        } else {
+                                            qe += "§" + data[i].Option[j].OTitle + "〒false〒" + (j + 1) + "〒0〒〒〒〒〒〒〒";
+                                        }
+                                    }
+                                    break;
+                                case 3:
+                                    type = 'question';
+                                    qe = type + "§1§" + data[i].QITitle + "〒〒§0§1§§" + requir + "§false§§§false§§§§false§-1§§false§";
+                                    break;
+                                case 4:
+                                    type = 'radio';
+                                    qe = type + "§1§" + data[i].QITitle + "〒〒〒§0§1〒§false§false§0§" + requir + "§true〒50〒〒true〒true§§0§§";
+                                    for (var j = 0; j < data[i].Option.length; j++) {
+                                        qe += "§" + data[i].Option[j].OTitle + "〒false〒0〒0〒〒〒〒〒〒";
+                                    }
+                                    break;
+                                case 5:
+                                    type = 'shop';
+                                    qe = type + "§1§" + data[i].QITitle + "〒〒〒§0§1〒§false§false§0§" + requir + ",shop§§§0§§";
+                                    for (var j = 0; j < data[i].Option.length; j++) {
+                                        qe += "§" + data[i].Option[j].OTitle + "〒false〒" + data[i].Option[j].OPrice + "〒〒true〒〒" + data[i].Option[j].OImgUrl + "〒〒〒〒";
+                                        //data[i].Option[j].OImgUrl   商品题图片
+                                        //data[i].Option[j].OCount  商品题数量
+                                        //data[i].Option[j].OPrice  商品题单价
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                            qb = set_string_to_dataNode(qe);
+                            createQ(qb);
+                            qb._QIid = data[i].QIID;
+                            if (qb._select != null && qb._select != undefined) {
+                                for (var n = 1; n < qb._select.length; n++) {
+                                    qb._select[n].Oid = data[i].Option[n - 1].OID;
+                                }
+                            }
+                        }
+                    } else {
+                        alert(data.ErrMag);
+                    }
+                }
+                catch (mes) {
+                    alert(mes);
+                }
+
+            });
+        }
+
+        //获取页面的问题，并拼接成json数据
+        function getData() {
+            var data = new Object();//存数据
+            var Qid = $('#question').attr('Qid') ? $('#question').attr('Qid') : 0;
+            data.QID = Qid;
+            data.QName = $('#pater_title').text();
+            data.QRem = $('#decTextarea').val();
+            data.Item = new Array();
+            //以下是问题的数据
+            var l = $('#question').find('.div_question').length;
+            for (var i = 0; i < l; i++) {
+                data.Item[i] = new Object();
+                var obj = $('.div_question')[i];
+                var objNode = obj.dataNode;
+                var typeId;//问题类型id
+                //alert(objNode._requir==true);
+                data.Item[i].QValNull = objNode._requir == true ? 2 : 0;//必答，默认非必答
+                switch (objNode._type) {
+                    case 'radio':
+                        if (!objNode._isTouPiao) {
+                            typeId = 1;
+                        } else {
+                            typeId = 4;
+                        }
+                        break;
+                    case 'check':
+                        typeId = 2;
+                        break;
+                    case 'question':
+                        typeId = 3;
+                        break;
+                    case 'shop':
+                        typeId = 5;
+                        break;
+                    default:
+                        break;
+                }
+                data.Item[i].QIID = objNode._QIid ? objNode._QIid : 0;//问题在本试卷的id
+                data.Item[i].QITitle = objNode._title;//问题的题目
+                data.Item[i].QIType = typeId;//问题类型id
+                //选项
+                data.Item[i].Option = new Array();
+                if (typeId != 3) {
+                    var option = new Array();
+                    //alert(objNode._select.length);
+                    //data[i].Option[j].OImgUrl   商品题图片
+                    //data[i].Option[j].OPrice  商品题单价
+                    //data[i].Option[j].OCount  商品题数量       创建时都是0 不用存
+                    for (var j = 1; j < objNode._select.length; j++) {
+                        option[j - 1] = new Object();
+                        var key = 'A'.charCodeAt();
+                        option[j - 1].OID = objNode._select[j].Oid ? OID = objNode._select[j].Oid : 0;
+                        option[j - 1].QuestionnaireItemInfo_QIID = objNode._topic;
+                        option[j - 1].OKey = String.fromCharCode(key + j - 1);
+                        option[j - 1].OTitle = objNode._select[j]._item_title;
+                        option[j - 1].OImgUrl = objNode._select[j]._item_img;
+                        option[j - 1].OPrice = objNode._select[j]._item_value;
+                        option[j - 1].OPType = objNode._select[j]._item_tb ? 1 : 0;
+                    }
+                    data.Item[i].Option = option;
+                } else {
+                }
+            }
+            return JSON.stringify(data);
+        }
+
+        function html2Escape(sHtml) {
+            return sHtml.replace(/[<>]/g, function (c) {
+                return {'<': '$lt;', '>': '$gt;'}[c];
+            });
+        }
+
+        //保存数据
+        function save_paper() {
+
+            if ($("#StuList").val() == "0") {
+                alert("请选择项目！");
+                return;
+            }
+            if ($("#SubList").val() == "0") {
+                alert("请选择区域！");
+                return;
+            }
+            if ($("#hrefFiQ").attr("tag") != "1") {
+                return;
+            }
+            var uid = 159;
+            var type = 1;//添加
+            var QID = 0;
+            QID = 0;
+            if (QID != 0) {
+                type = 2;
+                if (!confirm("警告：修改问卷会清除所有统计结果，请务必导出统计结果之后在修改!")) {
+                    return;
+                }
+            }
+            $("#hrefFiQ").text("正在保存问卷..");
+            $("#hrefFiQ").attr("tag", "2");
+
+            var data1=getData();
+            var   data= "stusid=" + $("#StuList").val() + "&subsid=" + $("#SubList").val() + "&uid=" + uid + "&jsonModel=" + encodeURI(html2Escape(getData())) + "&type=" + type + "";
+
+            console.log(data1,'我是问卷数据');
+//            $.ajax({
+//                url: "../../UIWebServer/Questionnaire.ashx/SetQuestionnaire",
+//                dataType: "JSON",
+//                data: "stusid=" + $("#StuList").val() + "&subsid=" + $("#SubList").val() + "&uid=" + uid + "&jsonModel=" + encodeURI(html2Escape(getData())) + "&type=" + type + "",
+//                type: "Post",
+//                success: function (data) {
+//                    $("#hrefFiQ").text("完成编辑");
+//                    $("#hrefFiQ").attr("tag", "1");
+//                    data = eval("(" + data + ")");
+//                    if (data.ErrCode == "2002") {
+//                        alert("提交成功！");
+//                        window.location = "./questionnaire.aspx";
+//                    } else {
+//                        alert(data.ErrMsg);
+//                    }
+//                }
+//            });
+        }
+
+        function setImage(url) {
+            PDF_close(url);
+        }
+    </script>
+
+</head>
+<body>
+<header>
+    <div id="header">
+        <div id="divMenu" style="visibility: visible;">
+            <ul>
+                <li>
+                    <input id="StuList" type="text" value="145" style=" position: absolute; z-index: -999;">
+                    <select id="SubList">
+                        <option value="0">请选择区域</option>
+                        <option value="205">客房</option>
+                    </select>
+                    <a href="http://www.4ajf.cn/AdminWeb/ManagerPage/Questionnaire/questionnaireManager.aspx?QName=%E9%97%AE%E5%8D%B7%E5%90%8D%E7%A7%B0#"
+                       class="sumitbutton" tag="1" onclick="return save_paper();" id="hrefFiQ">完成编辑</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<article>
+    <div class="content">
+        <div id="topnav" style="visibility: visible;">
+            <div class="tabQTypet">
+                <ul id="tQType">
+                    <li>
+                        <a id="hrefChoice" href="javascript:createFreQ(&#39;radio&#39;);">
+                            <span class="design-icon design-radio"></span><span class="spanQTxt">单选</span> </a>
+                    </li>
+                    <li>
+                        <a href="javascript:createFreQ(&#39;check&#39;);"><span class="design-icon design-check"></span><span
+                                class="spanQTxt">多选</span></a>
+                    </li>
+                    <li>
+                        <a href="javascript:createFreQ(&#39;question&#39;);" title="可以用做主观题，问答题等">
+                            <span class="design-icon design-text"></span><span class="spanQTxt">填空</span></a>
+                    </li>
+                    <li onmouseover="setCepingTip(this,&#39;投票题可以直接显示每个选项的&lt;b&gt;票数&lt;/b&gt;，适合于投票、评选等&#39;);"
+                        onmouseout="setCepingTipOut(this);">
+                        <a href="javascript:createFreQ(&#39;toupiao&#39;,1);" title="">
+                            <span class="design-icon design-text"></span><span class="spanQTxt">投票</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:createFreQ(&#39;shop&#39;);" title="商品题型">
+                            <span class="design-icon design-text"></span><span class="spanQTxt">商品题型</span></a>
+                    </li>
+                </ul>
+                <div class="clb"></div>
+            </div>
+            <div class="addImg">
+                <img src="questionnaire/newicon.gif" alt="">
+            </div>
+            <div id="rightbar">
+                <div class="m-menu">
+                    <li class="m-top"><a href="javascript:;" onclick="gotop();" title="返回顶部">返回顶部</a></li>
+                    <li class="m-bottom"><a href="javascript:;" onclick="gobottom();" title="返回底部">返回底部</a></li>
+                </div>
+            </div>
+        </div>
+        <div class="survey" id="sur" style="height: 699px;">
+            <div class="surveyDiv">
+                <div id="question" class="surveycontent">
+                    <div id="divId" class="surveyhead" title="编辑问卷标题与问卷说明"
+                         style="border: 2px solid rgb(255, 255, 255);">
+                        <h1 id="pater_title" onclick="editTitle()">问卷名称</h1>
+                        <input id="pater_title_input" type="text" onblur="tOnblur();" value="问卷名称">
+                        <div id="pater_desc" class="surveydescription" onclick="decEdit()" style="display: block;">
+                            这里是问卷描述
+                        </div>
+                        <textarea id="decTextarea" class="decTextarea" style="display: none;"
+                                  onblur="decOnblur();"></textarea>
+                    </div>
+                    <!--<div style="clear: both;"></div>-->
+                    <div id="status_tip" style="display: none; top: 799px; left: 453.889px;">成功获得数据</div>
+
+                </div>
+                <div id="divbatchq">
+                    <a href="javascript:" class="BS_btn">批量添加题目</a>
+                </div>
+                <div id="toolTipLayer">
+                    <img src="questionnaire/edit_pic.jpg">
+                </div>
+                <div id="qtypeLayer"></div>
+            </div>
+        </div>
+    </div>
+    <textarea style="display: none;" id="txtContent"></textarea>
+</article>
+<script src="questionnaire/create.js" type="text/javascript" rel="script"></script>
+<script src="questionnaire/zhezhao.js" type="text/javascript" rel="script"></script>
+<script type="text/javascript">
+    $(function () {
+        createQList($('#txtContent').val());
+        var TQID = 0;
+        LodTQmodel(TQID);
+    });
+
+    //加载
+    function LodTQmodel(TQID) {
+        if (TQID != 0) {
+//            $.get("../../UIWebServer/Questionnaire.ashx/GetTemQuestionnaire", {"QID": TQID}, function (data) {
+                try {
+                    var data = eval("(" + data + ")");
+                    if (data.ErrCode == "2002") {
+                        var title = data.Data.QName;
+                        $('#pater_title').text(title);
+                        $("#pater_title_input").val(title);
+                        var data = data.Data.Item;
+                        for (var i = 0; i < data.length; i++) {
+                            var typeCode = data[i].QIType;
+                            var qe, qb, type;
+                            //必答
+                            var requir = false;
+                            if (data[i].QValNull == 2) {
+                                requir = true;
+                            }
+                            switch (typeCode) {
+                                case 1:
+                                    type = 'radio';
+                                    qe = type + "§1§" + data[i].QITitle + "〒〒〒§0§1〒§false§false§0§" + requir + "§§§0§§";
+                                    for (var j = 0; j < data[i].Option.length; j++) {
+                                        if (data[i].Option[j].OPType == 1) {
+                                            qe += "§" + data[i].Option[j].OTitle + "〒false〒" + (j + 1) + "〒0〒true〒〒〒〒〒";
+                                        } else {
+                                            qe += "§" + data[i].Option[j].OTitle + "〒false〒" + (j + 1) + "〒0〒〒〒〒〒〒";
+                                        }
+
+                                    }
+                                    break;
+                                case 2:
+                                    type = 'check';
+                                    qe = type + "§1§" + data[i].QITitle + "〒〒〒§0§1〒§false§false§0§" + requir + ",,§§§0§§";
+                                    for (var j = 0; j < data[i].Option.length; j++) {
+                                        if (data[i].Option[j].OPType == 1) {
+                                            qe += "§" + data[i].Option[j].OTitle + "〒false〒" + (j + 1) + "〒0〒true〒〒〒〒〒〒";
+                                        } else {
+                                            qe += "§" + data[i].Option[j].OTitle + "〒false〒" + (j + 1) + "〒0〒〒〒〒〒〒〒";
+                                        }
+                                    }
+                                    break;
+                                case 3:
+                                    type = 'question';
+                                    qe = type + "§1§" + data[i].QITitle + "〒〒§0§1§§" + requir + "§false§§§false§§§§false§-1§§false§";
+                                    break;
+                                case 4:
+                                    type = 'radio';
+                                    qe = type + "§1§" + data[i].QITitle + "〒〒〒§0§1〒§false§false§0§" + requir + "§true〒50〒〒true〒true§§0§§";
+                                    for (var j = 0; j < data[i].Option.length; j++) {
+                                        qe += "§" + data[i].Option[j].OTitle + "〒false〒0〒0〒〒〒〒〒〒";
+                                    }
+                                    break;
+                                case 5:
+                                    type = 'shop';
+                                    qe = type + "§1§" + data[i].QITitle + "〒〒〒§0§1〒§false§false§0§" + requir + ",shop§§§0§§";
+                                    for (var j = 0; j < data[i].Option.length; j++) {
+                                        qe += "§" + data[i].Option[j].OTitle + "〒false〒" + data[i].Option[j].OPrice + "〒〒true〒〒" + data[i].Option[j].OImgUrl + "〒〒〒〒";
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                            qb = set_string_to_dataNode(qe);
+                            createQ(qb);
+                            qb._QIid = data[i].QIID;
+                            if (qb._select != null && qb._select != undefined) {
+                                for (var n = 1; n < qb._select.length; n++) {
+                                    qb._select[n].Oid = data[i].Option[n - 1].OID;
+                                }
+                            }
+                        }
+                    } else {
+                        alert(data.ErrMag);
+                    }
+                }
+                catch (mes) {
+                    alert(mes);
+                }
+
+//            });
+        }
+        else{
+            var title = parent.QName;
+            $('#pater_title').text(title);
+            $("#pater_title_input").val(title);
+        }
+    }
+
+    function createQList(txtContent) {
+        if (txtContent.length < 1) {
+            return;
+        }
+        var QBodyTxtVal = txtContent;
+        var arryitem = QBodyTxtVal.split("\n\n");
+        var qe;
+        var type;
+        $('#pater_title').text('问卷的题目（点击修改）');
+        for (var i = 0; i < arryitem.length; i++) {
+            var qe, qb, type, typeCode = 1;
+            var Option = arryitem[i].split("\n");
+            if (Option.length > 0) {
+                if (Option[0].indexOf("[多选]") != -1) {
+                    typeCode = 2;
+                } else if (Option[0].indexOf("[填空]") != -1) {
+                    typeCode = 3;
+                } else if (Option[0].indexOf("[投票]") != -1) {
+                    typeCode = 4;
+                } else {
+                    if (Option.length == 1) {
+                        typeCode = 3;
+                    }
+                }
+                //必答
+                var requir = false;
+                if (Option[0].indexOf("[必答]") != -1) {
+                    requir = true;
+                }
+                switch (typeCode) {
+                    case 1:
+                        type = 'radio';
+                        qe = type + "§1§" + Option[0].replace("[单选]", "") + "〒〒〒§0§1〒§false§false§0§" + requir + "§§§0§§";
+                        if (Option.length > 1) {
+                            for (var j = 1; j < Option.length; j++) {
+                                if (Option[j].indexOf("[可填空]") != -1) {
+                                    qe += "§" + Option[j].replace("[可填空]", "") + "〒false〒" + j + "〒0〒true〒〒〒〒〒";
+                                } else {
+                                    qe += "§" + Option[j] + "〒false〒" + j + "〒0〒〒〒〒〒〒";
+                                }
+                                //qe += "§" + Option[j] + "〒false〒" + j + "〒0〒〒〒〒〒〒";
+                            }
+                        }
+                        break;
+                    case 2:
+                        type = 'check';
+                        qe = type + "§1§" + Option[0].replace("[多选]", "") + "〒〒〒§0§1〒§false§false§0§" + requir + ",,§§§0§§";
+                        if (Option.length > 1) {
+                            for (var j = 1; j < Option.length; j++) {
+                                if (Option[j].indexOf("[可填空]") != -1) {
+                                    qe += "§" + Option[j].replace("[可填空]", "") + "〒false〒" + j + "〒0〒true〒〒〒〒〒〒";
+                                } else {
+                                    qe += "§" + Option[j] + "〒false〒" + j + "〒0〒〒〒〒〒〒〒";
+                                }
+                            }
+                        }
+
+                        break;
+                    case 3:
+                        type = 'question';
+                        qe = type + "§1§" + Option[0].replace("[问答]", "") + "〒〒§0§1§§" + requir + "§false§§§false§§§§false§-1§§false§";
+                        break;
+                    case 4:
+                        type = 'radio';
+                        qe = type + "§1§" + Option[0].replace("[投票]", "") + "〒〒〒§0§1〒§false§false§0§" + requir + "§true〒50〒〒true〒true§§0§§";
+                        if (Option.length > 1) {
+                            for (var j = 1; j < Option.length; j++) {
+                                qe += "§" + Option[j] + "〒false〒0〒0〒〒〒〒〒〒";
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                qb = set_string_to_dataNode(qe);
+                createQ(qb);
+            }
+        }
+    }
+</script>
+
+
+</body>
+</html>
