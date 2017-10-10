@@ -164,123 +164,30 @@
 </style>
 <template>
     <div id="main">
-        <el-form  :rules="rules" :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
+         <div v-for="item in arr" :key="item">{{item}}</div>
 
-            <el-form-item>
-                <div>
-                    <el-form-item v-for="(domain, index) in dynamicValidateForm.domains" :label="'域名' + index" :key="index"
-                                 >
-
-                        <el-form-item  :prop="'domains.' + index + '.value1'" :rules="rules.haha"><el-input v-model="domain.value1"></el-input></el-form-item>
-                        <el-form-item  :prop="'domains.' + index + '.value2'" :rules="rules.haha"><el-input v-model="domain.value2"></el-input></el-form-item>
-                        <el-form-item  :prop="'domains.' + index + '.value3'" :rules="rules.haha"><el-input v-model="domain.value3"></el-input></el-form-item>
-                        <!--<el-input v-model="domain.value1"></el-input>-->
-                        <!--<el-input v-model="domain.value2"></el-input>-->
-                        <!--<el-input v-model="domain.value3"></el-input>-->
-
-                    </el-form-item>
-                </div>
-            </el-form-item>
-
-            <el-form-item>
-                <el-button @click="addDomain">新增域名</el-button>
-            </el-form-item>
-        </el-form>
+        <iframe src="../test/test.html" @load="loaded" ref="iframe" name="myFrame" style="width: 100px;height: 100px;border: 1px solid red;"></iframe>
     </div>
 </template>
-
 <script>
-
+    import  Vue from 'vue'
     export default {
         data() {
             return {
-                dynamicValidateForm: {
-                    domains: [{
-                        value1: '',
-                        value2: '',
-                        value3: '',
-                    }],
-                    email: ''
-                },
-                rules: {
-                    name: [
-                        {required: true, message: '请输入巡检项名称', trigger: 'blur'}
-                    ],
-                    classify: [
-                        {required: true, message: '请选择类别', trigger: 'change'}
-                    ],
-                    outParamValue: [
-                        {required: true, message: '请选择操作输出参数', trigger: 'change'}
-                    ],
-                    objectType:[
-                        {required: true, message: '请选择对象类型', trigger: 'blur'}
-                    ],
-
-                    errorStandard:[
-                        { required:true,validator: (rule, value, callback)=>{
-                            let tag= value.arr.length==0;
-                            if(!tag){
-                                value.arr.forEach(item=>{
-                                    if(!(item.joiner&&item.value&&item.operator)){
-                                        tag=true;
-                                    }
-                                });
-                            }
-                            if(value.text){
-                                callback('请输入操作出参异常标准');
-                            }
-                            else if(tag){
-                                callback('请添加并完善操作出参异常标准的表达式');
-                            }
-                            else{
-                                callback();
-                            }
-                        }, trigger: 'change' }
-                    ],
-                    haha:[
-                        {
-                            required: true,
-                            validator:(rule, value, callback)=> {
-                                console.log(rule, value);
-                                callback(value);
-                            },
-                            trigger: 'blur'
-                        }
-                    ]
-                },
-
-
+               arr:[1,2,3]
             }
         },
         methods: {
-
-            submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        alert('submit!');
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
-                });
-            },
-            resetForm(formName) {
-                this.$refs[formName].resetFields();
-            },
-            removeDomain(item) {
-                var index = this.dynamicValidateForm.domains.indexOf(item)
-                if (index !== -1) {
-                    this.dynamicValidateForm.domains.splice(index, 1)
+            loaded() {
+                const contentWindow = this.$refs.iframe.contentWindow;
+                console.log(contentWindow,2);
+                window.luojie=function() {
+                    alert(123);
                 }
-            },
-            addDomain() {
-                this.dynamicValidateForm.domains.push({
-                    value: '',
-                    key: Date.now()
-                });
+                contentWindow.luozheao()
+
             }
         },
-
         components: {},
         created() {
 
