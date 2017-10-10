@@ -20,12 +20,13 @@
 
 <template>
     <div>
-        <div class="box">
+        <!--问卷列表-->
+        <div  v-if="isShow" class="box">
             <p class="title">问卷列表</p>
             <div class="bodyBox">
                 <el-row>
                     <el-col :span="24">
-                        <el-button type="primary" @click="dialogFormVisible = true">添加问卷</el-button>
+                        <el-button type="primary" @click="addQuestionnaireEvent">添加问卷</el-button>
                         <el-dialog title="添加问卷" :visible.sync="dialogFormVisible" size="large">
                             <el-form :model="form">
                                 <el-row>
@@ -195,13 +196,25 @@
                 </div>
             </div>
         </div>
+        <!--添加问卷-->
+        <div v-if="!isShow">
+            <el-row id="goBackRef">
+                <el-col :span="24" class="backWraper"><div class="back" :plain="true" size="small" @click="goBack">返回上一页</div></el-col>
+            </el-row>
+            <add-questionnaire  ></add-questionnaire>
+        </div>
+
     </div>
 </template>
 
 <script type="es6">
+    import addQuestionnaire from './addQuestionnaire/addQuestionnaire.vue'
+
     export default {
+        components: {addQuestionnaire},
         data() {
             return  {
+                isShow:true,
                 inputSearch:'',
                 currentPageNum:1,
                 erweima:'src/images/smdpfwh.jpg',
@@ -287,7 +300,16 @@
             },
             getNum(){
 
-            }
+            },
+            //添加问卷
+            addQuestionnaireEvent(){
+                this.isShow=false;
+            },
+            //返回上一页
+            goBack(){
+              this.isShow=true;
+            },
+
         },
         created() {
             this.init();
@@ -297,6 +319,5 @@
 
             })
         }
-
     }
 </script>

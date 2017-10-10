@@ -1,0 +1,143 @@
+
+
+/*头部样式*/
+
+#divMenu {width: 880px;visibility: visible;margin: 0 auto;height: 28px;}
+#divMenu li {margin-right: 20px;   float: left;margin-left: 5px;CLEAR: none;display: inline;LIST-STYLE-TYPE: none;PADDING: 1px 0px;list-style-position: outside;vertical-align: middle;}
+#divMenu li a{height:30px; line-height:30px;font-size:14px;}
+#divMenu li div{height:30px; line-height:30px;padding-left:15px; padding-right:15px;}
+a.BS_btn,a.sumitbutton, a.sumitbutton:visited {background: #2E76AC;border: 0;border-radius: 6px;display: inline-block;*display:inline; *zoom:1;height: 26px;line-height: 26px;text-align: center;text-decoration: none;padding: 0 15px;font-weight: bold;color: #FFFFFF !important;   font-size: 16px;   }
+a.sumitbutton, a.sumitbutton:visited {background: #f17819;}
+/*内容样式*/
+.content {width: 870px;margin: 0 auto;text-align: left;}
+.hidden{display:none;}
+/*添加题目类型按钮*/
+#topnav {background: #8ee5f2;width: 870px;margin: 15px 0;position:relative;height:40px;}
+.tabQTypet{height:40px;}
+.tabQTypet ul#tQType {margin: 0;padding: 0px;padding-left: 5px;float: left;}
+.tabQTypet ul li {display: inline;text-align:center;margin: 6px 0 0 6px;float: left;padding: 0px 8px 0 ;background: #F2F2F2;width: auto;height: 26px;border: 1px solid #a6d0e7;border-radius: 2px;}
+.tabQTypet ul li:hover{background:#FFFFFF;}
+.tabQTypet ul li:hover a{color:#0F74F5;}
+.tabQTypet ul li a {background-position: 5px 5px;font-size: 13px;font-weight: bold;margin: 0px;cursor: pointer;color: #004499;margin-top: 2px;background-repeat: no-repeat;text-decoration: none;display: inline-block;*display:inline; *zoom:1;}
+.tabQTypet ul li a span {vertical-align: middle;}
+.design-radio {background-position: 0px -80px;padding-right: 2px;height: 16px;width: 16px;}
+.design-check {background-position: -20px -80px;padding-right: 2px;height: 16px;width: 16px;}
+.design-text {background-position: 0px -100px;padding-right: 6px;height: 16px;width: 14px;}
+.design-icon { background-repeat: no-repeat;display: inline-block;overflow: hidden;}
+.clb{clear: both;}
+.addImg{position: absolute;left: -50px;top: 12px;}
+#rightbar {z-index: 99;width: 45px;height: 156px;right: -47px;top: 300px;position: absolute;}
+.m-menu {width: 45px;height: 156px;}
+.m-menu li a{width: 45px;height: 39px;display: block;text-indent: -9999px;outline: 0;}
+.m-top,.m-bottom {background:   no-repeat;width: 45px;height: 40px;}
+.m-top a:hover, .m-help a:hover, .m-comment a:hover, .m-bottom a:hover{background:   no-repeat;}
+/*添加题目内容*/
+.survey{line-height: 20px;word-wrap: break-word; margin: 0 auto;padding: 15px 30px;overflow: auto;width: 810px;height: 644px;background: rgb(255, 255, 255);min-height:300px;}
+.survey .surveyDiv{width: 780px;margin: 0 auto;padding-left: 10px;}
+.surveycontent{width: 100%;}
+.surveyhead {line-height: 20px;text-align: center;  padding: 40px 13px 30px;border: 2px solid rgb(255, 255, 255);margin-top: 3px;width: 750px;cursor: pointer;}
+.surveyhead h1 {font-size: 24px !important;font-weight: bold;color: #f53d05;vertical-align: middle;margin: 0;padding: 15px 0;line-height: 24px; cursor: pointer;}
+.surveydescription {color: #5E5E5E;line-height: 20px;text-align: left;font-size: 12px;padding-bottom: 10px;border-bottom: 1px dashed #ccc;margin-left: 0;padding-top: 20px;}
+.decTextarea {width:98%;height:48px;padding:1px 5px;color: #5E5E5E;line-height: 20px;text-align: left;font-size: 12px;margin:0;resize: none;}
+#status_tip {height: auto;background: #f04810;margin: 10px 0;left: 790px;position: absolute; display: none;padding: 5px;color: white;font-size: 14px;font-weight: bold;z-index: 3000;}
+
+/*问题*/
+/*单选*/
+.div_question {outline: none;margin:10px 0 0;}
+.div_question_onclick {border: 2px solid #66CAFF;padding: 4px;}
+.div_question_mouseover  {cursor:move;border:2px solid  #fdb553;padding:4px;}
+.div_question_mouseout {cursor:pointer;border:2px solid  #ffffff;padding:4px;}
+.div_question_move{cursor:move;border:2px solid  #ffffff;padding:4px;}
+.div_question_error{border:2px solid  red;padding:4px;}
+.div_title_question_all{padding-top:2px;font-size:15px;color:#444444;font-weight:bold;height:auto;line-height:20px;}
+.div_topic_question {font-weight: bold;width: 28px;float: left;}
+.div_title_question {overflow: hidden;zoom: 1;}
+.needMark{color:red;}
+.div_table_radio_question {padding: 10px 0 10px 24px;border-bottom: 1px solid #EFEFEF;font-size: 14px;color: #333333;_padding-left: 27px;clear:both;}
+.div_table_radio_question li{width:99%;height:28px;line-height:28px;}
+.div_table_radio_question li label, .div_table_radio_question li input, .div_table_radio_question td input { vertical-align:middle; cursor: pointer;}
+input[type="radio"] {margin: 0px 4px 2px 5px;}
+input[type="checkbox"] {margin: 0px 3px 3px 4px;}
+.spanDiv{padding-top:8px;}
+.spanLeft {float: left;}
+.spanRight {float: right;}
+.div_ins_question {padding-top: 4px;color: #666666;padding-left: 20px;line-height: 18px;clear: both;}
+.div_ins_question a{color:#FF6600;height:22px;line-height:22px;}
+.div_ins_question a:hover{color:#075DB3;}
+.stuff {font-size: 12px;float: left;width: auto;background-color: #cef4ff;height: 23px;vertical-align: bottom; line-height: 23px;}
+.stuff li {clear: none;float: left;vertical-align: middle;list-style-position: outside;height: 23px;border: #fff 1px solid;text-align: center;}
+.stuff LI A:hover {COLOR: #336699; BACKGROUND-COLOR: #ccc}
+.stuff LI A, .stuff LI A:visited {vertical-align: bottom;display: inline-block;*display:inline; *zoom:1;cursor: pointer;color: #666;text-decoration: none;padding:0 6px;height: 23px;}
+.stuff LI A span{vertical-align:middle;display:inline-block;*display:inline; *zoom:1;}
+.design-finish {background-position: -20px -598px;height: 16px;width: 16px;margin: 0 3px 0 0;vertical-align: middle;}
+.design-copy {background-position: -2px -141px;height: 16px;width: 16px;margin: 0 3px 0 0;}
+.design-delete {background-position: -20px -40px;height: 16px;width: 16px;margin: 0 3px 0 0;}
+.design-up {background-position: -22px -2px;height: 16px;width: 16px;margin: 0px 2px 0 0;}
+.design-down {background-position: -2px -2px;height: 16px;width: 16px;margin: 0px 2px 0 0;}
+.design-first {background-position: -20px -20px;height: 16px;width: 16px;margin: 0 3px 0 0;}
+.design-last {background-position: 0px -20px;height: 16px;width: 16px;margin: 0 3px 0 0;}
+.design-add {background-position: 0px -60px;height: 17px;width: 17px;}
+.design-minus {background-position: -22px -60px;height: 17px;width: 17px;}
+.design-badd {background-position: 0px -40px;height: 16px;width: 16px;margin: 0 3px 2px 0;}
+.design-edit{background-position: -2px -618px;height: 16px;width: 16px;margin: 0 3px 0 0;}
+.design-icon { background-repeat: no-repeat;display: inline-block;*display:inline; *zoom:1;overflow: hidden;}
+.choiceimg {cursor: pointer;margin: 0 3px 2px;vertical-align: bottom;}
+.div_title_attr_question {background: none repeat scroll 0 0 #fff9dd;border: 0;padding:15px 5px 5px;font-size: 12px;}
+.ml15{margin-left:15px;}
+.pt8{padding-top:8px;}
+.question-title-txt{height: 27px; line-height: 27px; width: 400px; background: rgb(240, 240, 238);font-size: 14px;}
+.question-title-area{float:left;}
+.bixuan{float:left;margin-left:8px;}
+.bixuan input{vertical-align: middle;}
+.question-title-area{}
+.question-title-area .inputtext{width: 394px; height: 70px; overflow: auto; padding: 5px 0px 0px 4px; border: 1px solid rgb(204, 204, 204);wrap-option: soft;tab-index: 1;}
+.table-option{background-color: rgb(213, 226, 242);width:98%;}
+.table-option tr{height:20px;}
+.table-option tr td{border:0px;padding:0 6px 4px;}
+.translate-option span{width:150px;}
+.translate-option a{font-weight: bold; color: rgb(51, 51, 51); font-size: 12px; text-decoration: none;line-height: 14px;vertical-align: middle;}
+.table-option input, .table-option span, .table-option a {vertical-align: middle;}
+.operationTxt{width:100px;text-align: center;}
+.optionInput{}
+.optionInput input{width: 350px;tab-index: 1;}
+.choicetxt {height: 16px;margin: 0 2px;font-size: 12px;float: left;}
+.inputtext {border: solid 1px #7F9DB9;}
+.operationBtn{width: 100px;text-align: center;}
+.operationBtn span{cursor:pointer;margin:0 1px;}
+.add-option-btn{margin: 5px 0px;clear: both;}
+a.titlelnk:link, a.titlelnk:active, a.titlelnk:visited {color: #075DB3;text-decoration: underline;}
+a.batchadd, a.batchadd:visited {color: #4aa103;text-decoration: none;}
+.subBtn{margin: 20px auto 10px;width:96%;}
+input.submitbutton {width:100%;display: inline-block;*display:inline; *zoom:1;height: 30px;line-height: 30px;border: 0;cursor: pointer;background: #f17819;font-size: 16px;color: #fff;border-radius: 5px;padding: 0 15px;overflow: visible;}
+
+.qtypetip {color: #0066FF;font-weight: normal;font-size: 14px;}
+.div_table_radio_question .inputtext {line-height: 22px;padding: 2px;width: 62%; height: 22px; overflow: auto;}
+
+.voteLeft{float:left;width:50%;}
+.voteRight{float:left;}
+.voteRight span{color:#ff6600;}
+
+
+#pater_title_input{font-size: 20px !important;font-weight: bold;color: #5E5E5E;margin:15px auto 14px;width:300px;height:24px;display:none;border:none;border-bottom: 1px solid #666666;outline: none;text-align: center;}
+
+#divbatchq{margin: 20px auto 10px; width: 220px;}
+#divbatchq a{height: 35px; line-height: 35px; width: 200px;text-align: center; background: #56bbed;}
+#toolTipLayer{position: absolute; display: none; line-height: 20px;width: 400px; text-align: left; border: 1px solid rgb(127, 157, 185); z-index: 20000;overflow: auto; padding: 5px 8px; left: 581.453125px; top: 315px; background: rgb(239, 247, 255);}
+#toolTipLayer img{width:400px;height:152px;}
+#qtypeLayer{position: absolute; display: none; line-height: 20px;width: 330px; text-align: left; z-index: 20000; overflow: auto; padding: 5px 8px;left: 679.5px; top: 26px; background: rgb(253, 251, 203);}
+input.underline{background-color: transparent;border: 0;border-bottom: solid 1px #7F9DB9;cursor: pointer;color: #999999;}
+.div_table_radio_question li.shop-item {position: relative;float: left;width: 200px;height:auto;border: 1px solid #D5D5D5;box-shadow: 0 2px 2px #EBEBEB;margin-bottom: 8px !important;margin-right: 15px;}
+.div_table_clear_bottom{clear: both;margin-bottom: 10px;}
+.divclear{clear: both;height: 0px;line-height: 0px;font-size: 1px;}
+.shop-item .img_place {width: 190px;height: 126px;line-height:126px;text-align:center;margin: 2px auto 4px;overflow: hidden;border-bottom: 1px solid #D9D9D9;}
+.shop-item .img_place img {max-width: 190px;border: none;overflow: hidden;}
+.shop-item .text_place {height: 72px;position: relative; margin: 0 8px;}
+.shop-item .item_name {width: 189px;display: block;margin-left: 8px;color: #333;font-size: 14px;position: absolute;top: 0px;left: 0;max-height: 24px;height: 24px;line-height: 24px;overflow: hidden;text-overflow: ellipsis;}
+.shop-item .item_price {font-size: 12px;font-weight: 600;color: #0077B3;margin-right: 5px;position: absolute;text-align: right;top: 26px;right: 0;}
+.shop-item .item_select {margin-left: 8px;position: absolute;top: 24px;left: 0;z-index: 20;}
+.item_select .operation {display: inline-block;height: 34px;border: 1px solid #ABABAB;width: 34px;line-height: 33px;text-align: center;background: #EEE;vertical-align: top;padding: 0;cursor: pointer;float: left;}
+.item_select .remove {border-right: 0;border-radius: 2px 0 0 2px;}
+.item_select .add {border-left: 0;border-radius: 0 2px 2px 0;}
+.item_select .itemnum {outline: 0 none;font-size: 12px;cursor: default;margin: 0;background: #fff;}
+span.choiceimg.design-img,span.choiceimg.design-imgedit{cursor: pointer; background-repeat: no-repeat;display: inline-block;overflow: hidden;vertical-align: middle;margin: 0 3px 0 0;background-position: -52px -221px;height: 17px; width: 19px;}
+span.choiceimg.design-img:hover,span.choiceimg.design-icon.design-imgedit {background-position: -52px -263px;}
