@@ -237,15 +237,24 @@
                 this.dialogFormVisible=true
             },
             handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
+                debugger
             },
+            //翻页
             handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
+                //获取翻页列表数据
+                this.$http.get('/area_admin/list',{params:{'page':val}}).then(function(response) {
+                    this.tableData=response.data.data
+                },function(response) {
+                });
             },
             //添加管理员的按钮
             addAdmin(){
                 this.dialogFormVisible = true
                 this.currentListId.isChange=false;
+                this.currentListId.id='';
+                this.form.username='';
+                this.form.password='';
+                this.form.account='';
             },
             //增加和修改一项的弹框确认
             addarea(){
@@ -281,11 +290,17 @@
                             if(isSuccess){
                                 //获取列表数据
                                 this.initTable();
+                                this.$message({
+                                    message: response.data,
+                                    type:'success'
+                                });
+                            }else{
+                                this.$message({
+                                    message: response.message,
+                                    type:'error'
+                                });
                             }
-                            this.$message({
-                                message: response.data,
-                                type:isSuccess?'success':'error'
-                            });
+
                         },
                         (response) => {
                             this.$message({

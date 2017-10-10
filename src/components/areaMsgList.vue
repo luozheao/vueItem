@@ -77,7 +77,7 @@
                             label="操作">
                         <template scope="scope">
                             <el-button type="danger" size="mini" @click="deleteLi(scope.$index, scope.row)">删除</el-button>
-                            <el-button type="info" size="mini"  @click="changeLi(scope.$index, tableData)">修改</el-button>
+                            <el-button type="info" size="mini"  @click="changeLi(scope.$index, scope.row)">修改</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -157,6 +157,8 @@
             },
             //点击添加区域
             addAreaMsg(){
+                this.form.name='';
+                this.form.remark='';
                 this.dialogFormVisible = true
                 this.isChange=false
             },
@@ -178,11 +180,16 @@
                     let isSuccess= response.data.code=='200';
                             if(isSuccess){
                                 this.initTable();
+                                this.$message({
+                                    message: response.data.data,
+                                    type:isSuccess?'success':'error'
+                                });
+                            }else{
+                                this.$message({
+                                    message: response.data.message,
+                                    type:isSuccess?'success':'error'
+                                });
                             }
-                    this.$message({
-                        message: response.data.message,
-                        type:isSuccess?'success':'error'
-                    });
                 },
                     function(response) {
                         this.$message({
@@ -197,12 +204,19 @@
                this.dialogFormVisible = true
                 this.isChange=true
                 this.currentId=this.tableData.data[index].id;
+                this.form.name=rows.name;
+                this.form.remark=rows.remark;
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
             },
             handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
+                //获取翻页列表数据
+                this.$http.get('/area/area_list',{params:{'page':val}}).then(function(response) {
+                    this.tableData=response.data.data
+                },function(response) {
+
+                });
             },
             //添加页面的确定按钮
             addarea(){
@@ -214,11 +228,17 @@
                         let isSuccess= response.body.code=='200';
                         if(isSuccess){
                             this.initTable();
+                            this.$message({
+                                message: response.data.data,
+                                type:isSuccess?'success':'error'
+                            });
+                        }else{
+                            this.$message({
+                                message: response.data.message,
+                                type:'error'
+                            });
                         }
-                        this.$message({
-                            message: response.data.data,
-                            type:isSuccess?'success':'error'
-                        });
+
                     },function(response) {
                         this.$message({
                             message: response.data,
@@ -228,15 +248,19 @@
                 }else{
                     this.$http.post('/area/add',this.form).then(function(response) {
                         this.form.region=response.data.data
-                        let isSuccess= response.code=='200';
+                        let isSuccess= response.data.code=='200';
                         if(isSuccess){
                             this.initTable();
+                            this.$message({
+                                message: response.data.data,
+                                type:'success'
+                            });
+                        }else {
+                            this.$message({
+                                message: response.data.message,
+                                type:'error'
+                            });
                         }
-                        this.$message({
-                            message: response.data.data,
-                            type:isSuccess?'success':'error'
-                        });
-                        this.initTable();
                     },function(response) {
                         this.$message({
                             message: response.data,
