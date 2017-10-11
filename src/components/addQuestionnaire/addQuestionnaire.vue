@@ -72,7 +72,7 @@
             </article>
         </div>
         <!--创建空白问卷-->
-        <add-space-questionnaire v-if="!isShow"  @goBack="goBack"></add-space-questionnaire>
+        <add-space-questionnaire  :QName="QName" v-if="!isShow"  @goBack="goBack"></add-space-questionnaire>
     </div>
 
 
@@ -87,6 +87,7 @@
         data() {
             return {
                 isShow:true,
+                QName:'',
             }
         },
         methods:{
@@ -99,6 +100,7 @@
                   var QName = $("#QName").val() == "" ? "问卷名称" : $("#QName").val();
                   this.isShow=false;
                   this.setGoBackBtnHide(true);
+                  this.QName=QName;
               },
             //返回
             goBack(){
