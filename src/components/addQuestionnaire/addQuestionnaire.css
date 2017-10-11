@@ -20,7 +20,7 @@ a,a:visited,a:active{text-decoration:none;color:#45AFE3;}
 .navDiv .navBarDiv .navBar{height:40px;line-height:40px;width:300px;float:left;text-align: center;background:#222222;border-right:1px solid #FFFFFF;color:#CCC;font-size:16px;}
 .navDiv .navBarDiv .navBar:last-child{border-right:none;}
 .navDiv .navBarDiv .navBar.lastNavBar{border-right:none;}
-.navDiv .navBarDiv .navBar:hover,.navDiv .navBarDiv .navBar.rec{background:#5E5E5E;font-weight:bolder;}
+.navDiv .navBarDiv .navBar:hover,.navDiv .navBarDiv .navBar.rec{background:#5E5E5E;font-weight:bolder;cursor: pointer;}
 
 .navItemDiv{background:#F4F4F4;padding:16px 12px 12px;}
 .navItem{display: none;}

@@ -20,7 +20,7 @@
 <script>
     import $ from 'jquery';
     export default {
-        props:['QName'],
+        props:['QName','tqid'],
         components: {},
         data() {
             return {}
@@ -43,6 +43,8 @@
 
             //赋值问卷名
             window.QName=this.QName;
+            //问卷数据id
+            window.tqid=this.tqid;
         },
     }
 </script>
