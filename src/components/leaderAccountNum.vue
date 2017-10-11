@@ -305,15 +305,25 @@
                             });
                         });
             },
+            //修改一项
             changeLi(index,data,row){
                 this.currentListId.id=row.id;
                 this.currentListId.isChange=true;
                 this.dialogFormVisible=true
+                this.form.username=row.username;
+                this.form.phone=row.phone;
+                this.form.bind_number=row.bind_number;
+
             },
             //添加领导账号
             addAdminNum(){
                 this.dialogFormVisible = true
                 this.currentListId.isChange=false;
+                this.form.project_id='';
+                this.form.area_id='';
+                this.form.username='';
+                this.form.phone='';
+                this.form.bind_number='';
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
@@ -337,11 +347,16 @@
                             if(isSuccess){
                                 //获取列表数据
                                 this.initTable();
+                                this.$message({
+                                    message: response.data,
+                                    type:isSuccess?'success':'error'
+                                });
+                            }else{
+                                this.$message({
+                                    message: response.message,
+                                    type:'error'
+                                });
                             }
-                            this.$message({
-                                message: response.data,
-                                type:isSuccess?'success':'error'
-                            });
                         },
                         (response) => {
                             this.$message({
@@ -357,11 +372,17 @@
                             let isSuccess= response.code==200;
                             if(isSuccess){
                                 this.initTable();
+                                this.$message({
+                                    message: response.data,
+                                    type:isSuccess?'success':'error'
+                                });
+                            }else{
+                                this.$message({
+                                    message: response.message,
+                                    type:'error'
+                                });
                             }
-                            this.$message({
-                                message: response.data,
-                                type:isSuccess?'success':'error'
-                            });
+
                         },
                         (response) => {
                             this.$message({
