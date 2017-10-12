@@ -526,6 +526,7 @@ function setBatchA() {
     var a = b.getElementsByTagName("a")[0];
     a.innerHTML = "批量添加题目";
     a.onclick = function() {
+        //第一个参数写出链接
         PDF_launch("addbatchq.html", 620, 480, null, "批量添加题目");
     };
 }

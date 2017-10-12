@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0068)http://www.4ajf.cn/AdminWeb/ManagerPage/Questionnaire/addbatchq.html -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>
+        批量添加题目
+    </title>
+    <style>
+        .sumitbutton {
+            width: 100px;
+            display: inline-block;
+            height: 30px;
+            line-height: 30px;
+            border: 0;
+            cursor: pointer;
+            background: #56bbed;
+            font-size: 16px;
+            color: #fff;
+            border-radius: 5px;
+            padding: 0 15px;
+            overflow: visible;
+            text-align: center;
+        }
+
+        #divQType li {
+            float: left;
+            padding-right: 5px;
+        }
+
+        .TT-title {
+            font-size: 12px;
+            line-height: 18px;
+            font-weight: normal;
+            margin: 0 10px;
+            height: 25px;
+        }
+
+        .TT-font14 {
+            font-size: 14px;
+            color: #0067ac;
+            font-weight: bold;
+        }
+
+        .TT-textarea {
+            height: 250px;
+            width: 554px;
+            overflow: auto;
+            border: 2px solid #75c5f0;
+            padding: 10px;
+            margin: 0;
+        }
+
+        .TT-sub {
+            width: 115px;
+            padding-left: 250px;
+        }
+
+        A.TT-btn2 {
+            background: #75c5f0;
+            font-size: 12px;
+            padding: 3px 15px;
+        }
+
+        .TT-subtn {
+            color: #FFFFFF !important;
+            text-align: center;
+            display: inline-block;
+            border: 0;
+            text-decoration: none;
+        }
+    </style>
+
+
+</head>
+<body style="width:600px;">
+<div class="TE-box2" style="color:#444;">
+    <form name="Form2" method="post" action=""
+          id="Form2" style="margin: 0; padding: 0;">
+        <div>
+            <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE"
+                   value="/wEPDwUKLTI4NjM4ODExNA9kFgICAQ9kFgICAw8WAh4HVmlzaWJsZWdkZGNLU7pAcElkWpVb9+yq7vmU8qbS">
+        </div>
+
+        <div>
+
+            <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION"
+                   value="/wEWAgLljaOIAwKrmr31CVbLksILFEPlBpEQC4dPCuRMDogi">
+        </div>
+        <div class="TT-lb">
+
+            <div style="line-height:20px; text-align:left; margin-left:10px;">
+                1 第一行为题目,中间不要换行，可以不加题号 <br>
+                2 回车后,下一行开始为选项行, 选项不要空行，选项前面<b style="color:Red;">不要加数字</b>(以免跟题目混淆),一个选项 单独一行 <br>
+                3 选项结束后, 一个空行,表示问题的结束, 换下一个新问题.<br>
+                4 如果下面没有选项，直接空一行, 默认为文本输入题&nbsp;&nbsp;
+                <span id="spanWeiTuo" style="display:inline-block; margin-left:150px;"></span>
+                <br>
+            </div>
+            <textarea name="txtContent" rows="2" cols="20" wrap="off" id="txtContent" class="TT-textarea"></textarea>
+            <div style="height:10px;"></div>
+            <div>
+                <div id="TT-sub" class="TT-sub" style="float:left;">
+                    <a class="sumitbutton" href="javascript:void(0);" onclick="generateQs();">
+                        确定</a>
+                </div>
+                <div style="float:right;padding-right:10px;"><span id="spanKaoShi" style="display:none;"><input
+                        type="checkbox" id="cbKaoShi">批量添加考试题&nbsp;&nbsp;</span><span style="display:none;"
+                                                                                      id="divEnglish"><input
+                        type="checkbox" id="cbEnglish">英文问卷&nbsp;&nbsp;</span><a class="TT-btn2 TT-subtn"
+                                                                                 href="javascript:void(0);"
+                                                                                 onclick="clearTxt();">清空文本框</a></div>
+                <div class="divclear"></div>
+            </div>
+        </div>
+        <div class="divclear">
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        var divMsg = document.getElementById("divMsg");
+        var txtContent = document.getElementById("txtContent");
+        var hrefHelp = document.getElementById("hrefHelp");
+
+        var isKaoShi = 0;
+        var defValue = "题目1\n选项1\n选项2\n选项3\n\n题目2[多选]\n选项4\n选项5\n选项6\n\n单行文本题";
+        var cbKaoShi = document.getElementById("cbKaoShi");
+        if (isKaoShi) {
+            cbKaoShi.checked = true;
+            //hrefHelp.innerHTML="查看帮助";
+            hrefHelp.href = "/help/help.aspx?helpid=252&h=1";
+            defValue = "火灾初起阶段是扑救火灾( B  )的阶段。\nA、最不利\nB、最有利\nC、较不利\n\n2.遭遇火灾脱险的不正确的方法是(  AB  )[多选]\nA、在平房内关闭门窗，隔断火路，等待救援\nB、使用电梯快速脱离火场\nC、利用绳索等，顺绳索滑落到地面\nD、必须跳楼时要尽量缩小高度，做到双脚先落地。\n\n3.1+1=______";
+        }
+        txtContent.value = defValue;
+        var cbEnglish = document.getElementById("cbEnglish");
+
+
+        cbKaoShi.onclick = function () {
+            isKaoShi = cbKaoShi.checked;
+        };
+        txtContent.onclick = function () {
+            var value = this.value.replace(/\r/gi, "");
+            if (value == defValue)
+                this.value = "";
+        };
+        txtContent.onblur = function () {
+            if (!this.value) this.value = defValue;
+        }
+
+    </script>
+
+</div>
+
+
+</body>
+
+<script type="text/javascript" src="./js/addqbatch.js"></script>
+</html>

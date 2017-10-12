@@ -50,7 +50,7 @@
                         </div>
                         <div class="navItem">
                             <div class="leadingIn">
-                                <form action="questionnaireManager.aspx" method="post">
+                                <form >
                                     <div class="leadingInExplain">
                                         <h4>说明：</h4>
                                         <p>1. 题目标题最好以数字开头</p>
@@ -61,9 +61,8 @@
                                     <div class="leadingInDiv">
                                         <textarea id="QBody" name="QBody" class="leadingInArea"></textarea>
                                     </div>
-                                    <input id="Button1" type="submit" style="display:none;" value="button">
                                 </form>
-                                <div class="leadingInBtn" onclick="isokviewLink()" id="isokview">确定</div>
+                                <div class="leadingInBtn" id="isokview">确定</div>
                             </div>
 
                         </div>
@@ -72,7 +71,7 @@
             </article>
         </div>
         <!--创建空白问卷-->
-        <add-space-questionnaire  :QName="QName" :tqid="tqid" v-if="!isShow"  @goBack="goBack"></add-space-questionnaire>
+        <add-space-questionnaire  :QName="QName" :tqid="tqid" :bodyVal="bodyVal" v-if="!isShow"  @goBack="goBack"></add-space-questionnaire>
     </div>
 </template>
 
@@ -86,6 +85,7 @@
                 isShow:true,
                 QName:'',
                 tqid:0,//查询问卷数据的id
+                bodyVal:"",//批量导入的数据
             }
         },
         methods:{
@@ -140,6 +140,20 @@
                         self.tqid=tqid;
                     }
 
+                    //导入问卷文本
+                    $('body').on('click','#isokview',function(){
+                        isokviewLink();
+                    });
+                    function isokviewLink() {
+//                        var bodyVal = encodeURI($("#QBody").val());
+                        var bodyVal = $("#QBody").val();
+                        //跳转到问卷,并赋值
+                        self.isShow=false;
+                        self.setGoBackBtnHide(true);
+                        self.tqid=0;
+                        self.bodyVal=bodyVal;
+                    }
+
                     $('body').on('click','.navBar',function () {
                         if ($(this).hasClass('rec')) {
                             return;
@@ -151,24 +165,22 @@
                         }
 
                         //注入问卷
-                        if($(this).index()==1){
+                        var index=$(this).index();
+                        if(index==1){
                             loadMUban();
+                        }
+                        else if(index==2){
+                            var defValue = "题目1\n选项1\n选项2\n选项3\n\n题目2[多选]\n选项4\n选项5\n选项6\n\n单行文本题";
+                            var QBodyValue=$('#QBody').val();
+                            if(!QBodyValue){
+                                $("#QBody").val(defValue);
+                            }
                         }
 
                     });
 
-                    var defValue = "题目1\n选项1\n选项2\n选项3\n\n题目2[多选]\n选项4\n选项5\n选项6\n\n单行文本题";
-                    $("#QBody").val(defValue);
-                    $("#QBody").onclick = function () {
-                        var value = this.value.replace(/\r/gi, "");
-                        if (value == defValue)
-                            this.value = "";
-                    };
-                    $("#QBody").onblur = function () {
-                        if (!this.value) this.value = defValue;
-                    }
 
-                    var data = '';//模板数据
+
                 });
             //加载模版
             function loadMUban(){
@@ -246,21 +258,15 @@
 
             }
 
-
-
             //以此模版创建问卷
             function creatQM(obj) {
                 //有自定义属性TQID
                 window.location = "questionnaireManager.aspx?TQID=" + $(obj).attr("TQID");
             }
 
-            function isokviewLink() {
-                var bodyVal = encodeURI($("#QBody").val());
-                $("#Button1").click();
-                //window.location = "questionnaireManager.aspx?QName=在此输入标题&QBody=" + bodyVal;
-            }
         }
     }
 </script>
+
 
 

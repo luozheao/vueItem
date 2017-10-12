@@ -1718,6 +1718,21 @@
             TQID=parent.tqid;
         }
         LodTQmodel(TQID);
+
+        //
+        if(parent.bodyVal){
+            //点击问卷弹窗
+            $('#divbatchq a').click();
+            //注入内容
+            setTimeout(function(){
+                $('#PDF_i_chezchenz').css({'display':'none'});
+                $('#PDF_i_chezchenz')[0].contentWindow.txtContent.value=parent.bodyVal;
+                $('#PDF_i_chezchenz')[0].contentWindow.generateQs();
+                //清空bodyVal
+                parent.bodyVal="";
+            },100);
+
+        }
     });
 
     //加载
