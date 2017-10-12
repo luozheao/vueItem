@@ -210,6 +210,11 @@
             },
             //删除一项
             deleteLi(index, row){
+                this.$confirm('是否删除'+row.username+'?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
                     this.$http.post('/area_admin/delete',{'id':row.id}).then(
                         function(response) {
                             let isSuccess= response.data.code=='200';
@@ -227,6 +232,13 @@
                                 type: 'error'
                             });
                         });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                })
+
             },
             //修改一项
             changeLi(index,data,row){

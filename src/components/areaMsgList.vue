@@ -175,28 +175,39 @@
             //删除一项
             deleteLi(index, data){
                 if(data){
-                    this.$http.post('/area/delete',{'id':data.id}).then(
-                        function(response) {
-                    let isSuccess= response.data.code=='200';
-                            if(isSuccess){
-                                this.initTable();
+                    this.$confirm('是否删除'+data.name+'?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        this.$http.post('/area/delete',{'id':data.id}).then(
+                            function(response) {
+                                let isSuccess= response.data.code=='200';
+                                if(isSuccess){
+                                    this.initTable();
+                                    this.$message({
+                                        message: response.data.data,
+                                        type:isSuccess?'success':'error'
+                                    });
+                                }else{
+                                    this.$message({
+                                        message: response.data.message,
+                                        type:isSuccess?'success':'error'
+                                    });
+                                }
+                            },
+                            function(response) {
                                 this.$message({
-                                    message: response.data.data,
-                                    type:isSuccess?'success':'error'
+                                    message: response.data,
+                                    type: 'error'
                                 });
-                            }else{
-                                this.$message({
-                                    message: response.data.message,
-                                    type:isSuccess?'success':'error'
-                                });
-                            }
-                },
-                    function(response) {
+                            });
+                    }).catch(() => {
                         this.$message({
-                            message: response.data,
-                            type: 'error'
+                            type: 'info',
+                            message: '已取消删除'
                         });
-                    });
+                    })
                 }
             },
             //修改一项
