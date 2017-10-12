@@ -82,7 +82,7 @@ function PDF_launch(ob, zzw, zzh, callback, titlestr) {
         if (titlestr == "no") {
             PDF_c.innerHTML = "";
         } else {
-            PDF_c.innerHTML = '<div style="background:#e7e7e7;padding:0 20px;height:38px;line-height:38px;border-radius:10px 10px 0 0;"><span style="color:#222;float:left; font-weight:bold;font-size:14px;">' + titlestr + '</span><a href="javascript:void(0);" onclick="PDF_close();" style="background:url(/questionnaire/images/icon_popup_close.png) no-repeat;float:right;width:27px; height:27px;margin-top:5px;overflow:hidden;" title="关闭"></a></div>';
+            PDF_c.innerHTML = '<div style="background:#e7e7e7;padding:0 20px;height:38px;line-height:38px;border-radius:10px 10px 0 0;"><span style="color:#222;float:left; font-weight:bold;font-size:14px;">' + titlestr + '</span><a href="javascript:void(0);" onclick="PDF_close();" style="background:url(/lza/questionnaire/images/icon_popup_close.png) no-repeat;float:right;width:27px; height:27px;margin-top:5px;overflow:hidden;" title="关闭"></a></div>';
             titleHeight = 14;
         }
     }

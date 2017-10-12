@@ -527,7 +527,12 @@ function setBatchA() {
     a.innerHTML = "批量添加题目";
     a.onclick = function() {
         //第一个参数写出链接
-        PDF_launch("addbatchq.html", 620, 480, null, "批量添加题目");
+        if(document.domain=='localhost'){
+            PDF_launch("addbatchq.html", 620, 480, null, "批量添加题目");
+        }else {
+            PDF_launch("http://101.200.39.173/lza/questionnaire/addbatchq.html", 620, 480, null, "批量添加题目");
+        }
+
     };
 }
 //隐藏批量添加题目a链接
