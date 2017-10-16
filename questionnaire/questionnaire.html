@@ -1504,16 +1504,16 @@
             data.type = 1;
 //            data.QName = $('#pater_title').text();
 //            data.QRem = $('#decTextarea').val();
-            data.Item = new Array();
+            data.jsonModel = new Array();
             //以下是问题的数据
             var l = $('#question').find('.div_question').length;
             for (var i = 0; i < l; i++) {
-                data.Item[i] = new Object();
+                data.jsonModel[i] = new Object();
                 var obj = $('.div_question')[i];
                 var objNode = obj.dataNode;
                 var typeId;//问题类型id
                 //alert(objNode._requir==true);
-                data.Item[i].QValNull = objNode._requir == true ? 2 : 0;//必答，默认非必答
+                data.jsonModel[i].QValNull = objNode._requir == true ? 2 : 0;//必答，默认非必答
                 switch (objNode._type) {
                     case 'radio':
                         if (!objNode._isTouPiao) {
@@ -1534,11 +1534,11 @@
                     default:
                         break;
                 }
-                data.Item[i].QIID = objNode._QIid ? objNode._QIid : 0;//问题在本试卷的id
-                data.Item[i].QITitle = objNode._title;//问题的题目
-                data.Item[i].QIType = typeId;//问题类型id
+                data.jsonModel[i].QIID = objNode._QIid ? objNode._QIid : 0;//问题在本试卷的id
+                data.jsonModel[i].QITitle = objNode._title;//问题的题目
+                data.jsonModel[i].QIType = typeId;//问题类型id
                 //选项
-                data.Item[i].Option = new Array();
+                data.jsonModel[i].Option = new Array();
                 if (typeId != 3) {
                     var option = new Array();
                     //alert(objNode._select.length);
@@ -1556,7 +1556,7 @@
                         option[j - 1].OPrice = objNode._select[j]._item_value;
                         option[j - 1].OPType = objNode._select[j]._item_tb ? 1 : 0;
                     }
-                    data.Item[i].Option = option;
+                    data.jsonModel[i].Option = option;
                 } else {
                 }
             }
