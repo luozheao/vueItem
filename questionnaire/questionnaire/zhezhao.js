@@ -77,7 +77,7 @@ function PDF_launch(ob, zzw, zzh, callback, titlestr) {
     }
     var titleHeight = 0;
     if (!titlestr) {
-        PDF_c.innerHTML = "<a style='background:url(source/images/bt_closed.gif) no-repeat;width:30px;height:30px;margin:-10px -18px 0 0;display:inline;position:relative;float:right;cursor:pointer;' onclick='PDF_close();'></a>";
+        PDF_c.innerHTML = "<a style='background:url(http://101.200.39.173/lza/questionnaire/images/bt_closed.gif) no-repeat;width:30px;height:30px;margin:-10px -18px 0 0;display:inline;position:relative;float:right;cursor:pointer;' onclick='PDF_close();'></a>";
     } else {
         if (titlestr == "no") {
             PDF_c.innerHTML = "";
@@ -86,7 +86,7 @@ function PDF_launch(ob, zzw, zzh, callback, titlestr) {
             titleHeight = 14;
         }
     }
-    var bodyHeight = document.documentElement.clientHeight || document.body.clientHeight;
+    var bodyHeight = document.documentElement.clientHeight || document. dy.clientHeight;
     var bodyWidth = document.documentElement.clientWidth || document.body.clientWidth;
     with(PDF_c.style) {
         width = zzw + 8 + "px";
