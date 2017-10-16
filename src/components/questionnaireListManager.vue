@@ -81,12 +81,27 @@
                             </div>
 
                         </el-dialog>
-                        <el-select v-model="areaValue" placeholder="请选择区域">
+                        <el-dialog title="修改名称和描述" :visible.sync="changeNameAndMsg" size="small">
+                            <el-form :model="changeNameForm">
+                                <el-form-item label="问卷名称" :label-width="formLabelWidth">
+                                    <el-input v-model="changeNameForm.name" auto-complete="off"></el-input>
+                                </el-form-item>
+                                <el-form-item label="问卷描述" :label-width="formLabelWidth">
+                                    <el-input type="textarea" v-model="changeNameForm.msg"></el-input>
+                                </el-form-item>
+                            </el-form>
+                            <div slot="footer" class="dialog-footer">
+                                <el-button @click="changeNameAndMsg = false">取 消</el-button>
+                                <el-button type="primary" @click="changeNameAndMsgFn">确 定</el-button>
+                            </div>
+
+                        </el-dialog>
+                        <el-select v-model="form.area_id" placeholder="请选择区域">
                             <el-option
                                     v-for="item in options"
-                                    :key="item.areaValue"
-                                    :label="item.areaLabel"
-                                    :value="item.areaValue">
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item.id">
                             </el-option>
                         </el-select>
                         <el-input style="display: inline-block;width:300px;"
@@ -98,14 +113,17 @@
                     </el-col>
                 </el-row>
                 <el-table
-                        :data="tableData"
+                        :data="tableData.data"
                         max-height="400"
                         border
                         style="width: 100% ;margin-top: 10px;">
                     <el-table-column
-                            prop="name"
+                            prop="QName"
                             label="问卷名称(点击名称快速修改)"
                     >
+                        <template scope="scope">
+                          <p @click="changeName(scope.row)">{{scope.row.QName}}</p>
+                        </template>
                     </el-table-column>
                     <el-table-column
                             label="二维码"
@@ -120,15 +138,16 @@
                     >
                     </el-table-column>
                     <el-table-column
-                            prop="isSend"
+                            prop="IsOpen"
                             label="是否开启"
                     >
                         <template scope="scope">
-                            <el-button type="primary" size="small" @click="isSendFn(scope)">已开启</el-button>
+                            <el-button type="primary" size="small" @click="isSendFn(scope.row)" v-show="scope.row.IsOpen==1">已开启</el-button>
+                            <el-button type="primary" size="small" @click="isSendFn(scope.row)" v-show="scope.row.IsOpen==0">未开启</el-button>
                         </template>
                     </el-table-column>
                     <el-table-column
-                            prop="peopleNum"
+                            prop="traveller_count"
                             label="参与人数"
                     >
                     </el-table-column>
@@ -174,14 +193,14 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                            prop="createTime"
+                            prop="CrTime"
                             label="创建时间"
                     >
                     </el-table-column>
                     <el-table-column
                             label="操作" style="padding: 0;">
                         <template scope="scope">
-                            <el-button type="info" size="mini" @click="changeLi(scope)" style="margin: 0">修改</el-button>
+                            <el-button type="info" size="mini" @click="changeLi(scope.row)" style="margin: 0">修改</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -189,9 +208,9 @@
                     <el-pagination
                             @size-change="handleSizeChange"
                             @current-change="handleCurrentChange"
-                            :current-page.sync="currentPageNum"
+                            :current-page.sync="tableData.current_page"
                             layout="total, prev, pager, next"
-                            :total="tableData.length">
+                            :total="tableData.total">
                     </el-pagination>
                 </div>
             </div>
@@ -214,31 +233,53 @@
         components: {addQuestionnaire},
         data() {
             return  {
+                formLabelWidth:'120px',
                 isShow:true,
                 inputSearch:'',
                 currentPageNum:1,
                 erweima:'src/images/smdpfwh.jpg',
                 weixin:'src/images/tsxxt.jpg',
                 dialogFormVisible:false,
-                tableData: [{
-                    name:'',
-                    questionAddres:'',
-                    img:'',
-                    isSend:'',
-                    peopleNum:'',
-                    lookAll:'',
-                    setCustomPage:'',
-                    whiteList:'',
-                    blackList:'',
-                    managementPosition:'',
-                    createTime:''
-                }],
+                changeNameAndMsg:false,
+                tableData:{
+                    "current_page": 0,
+                    "data": [
+                        {
+                            "QID": '',
+                            "QKey": "",
+                            "StudioInfo_SID": '',
+                            "SubbranchInfo_SID": '',
+                            "AdminUserInfo_AUID": '',
+                            "QName": "",
+                            "QRem": "",
+                            "IsOpen": '',
+                            "IsDelete": '',
+                            "CrTime": "",
+                            "updated_at": "",
+                            "traveller_count": ''
+                        }
+                    ],
+                    "from": '',
+                    "last_page": '',
+                    "next_page_url": null,
+                    "path": "http://localhost:809/area_admin/list",
+                    "per_page": 10,
+                    "prev_page_url": null,
+                    "to": 1,
+                    "total": 1
+                },
                 form:{
                     region:'',
-                    area:'',
-                    bindPhoneNum:'',
-                    name:'',
-                    phoneNum:''
+                    area_id:'',
+                    username:'',
+                    password:'',
+                    project_id:'',
+                    account:'',
+                },
+                changeNameForm:{
+                  name:'',
+                    msg:'',
+                    id:''
                 },
                 options:[{
                     areaValue: '',
@@ -249,29 +290,60 @@
         },
         methods: {
             init(){
-                this.tableData=[{
-                    name:'维多利亚酒店同济地铁店私人管家服务',
-                    img:'src/images/erweima.png',
-                    questionAddres:'http://www.4ajf.cn/WebServer/webphone/questionnaire.aspx?QKey=a397074e985d4b6083e4d68f0d1d8420',
-                    isSend:'',
-                    peopleNum:'101',
-                    lookAll:'',
-                    setCustomPage:'',
-                    whiteList:'',
-                    blackList:'',
-                    managementPosition:'',
-                    createTime:'2017/9/16 11:25:18'
-                }];
-                this.options= [{
-                    areaValue: '选项1',
-                    areaLabel: '黄金糕'
-                }, {
-                    areaValue: '选项2',
-                    areaLabel: '双皮奶'
-                }]
+                //获取列表数据
+                this.initTable();
+                //获取区域下拉框
+                this.$http.get('/area/simple_list',{}).then(function(response) {
+                    this.options=response.data.data
+                },function(response) {
+                });
             },
+            initTable(){
+                //获取列表数据
+                this.$http.get('/question/list',{params:{'page':1}}).then(function(response) {
+                    this.tableData=response.data.data
+                },function(response) {
+                });
+            },
+            //点击搜素
             inputSearchClick(val){
-                console.log(this.inputSearch)
+                this.$http.get('',{params:{'keyword':this.inputSearch,'area_id':this.id}}).then(function(response) {
+                    this.tableData=response.data.data
+                },function(response) {
+                });
+            },
+            //修改名字
+            changeName(data){
+                this.changeNameAndMsg=true;
+                this.changeNameForm.name=data.QName;
+                this.changeNameForm.msg=data.QRem;
+                this.changeNameForm.id=data.QID;
+            },
+            //确认修改名字和描述
+            changeNameAndMsgFn:function () {
+                var obj={};
+                obj.qid=this.changeNameForm.id
+                obj.qname=this.changeNameForm.name
+                obj.qrem=this.changeNameForm.msg
+                this.$http.post('/question/update_name',obj).then(
+                    function(response){
+                        response=response.body;
+                        let isSuccess= response.code==200;
+                        if(isSuccess){
+                            this.initTable();
+                            this.changeNameAndMsg=false;
+                        }
+                        this.$message({
+                            message: response.data,
+                            type:isSuccess?'success':'error'
+                        });
+                    },
+                    function(response){
+                        this.$message({
+                            message: response.data,
+                            type: 'error'
+                        });
+                    });
             },
             changeLi(val){
                 console.log(val)
@@ -279,15 +351,38 @@
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
             },
+            //翻页
             handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
+                //获取翻页列表数据
+                this.$http.get('/question/list',{params:{'page':val}}).then(function(response) {
+                    this.tableData=response.data.data
+                },function(response) {
+                });
             },
             addarea(){
                 this.dialogFormVisible = false
                 console.log('加多一行')
             },
-            isSendFn(){
-
+            isSendFn(data){
+                var isOpen=data.IsOpen==0?1:0;
+                this.$http.post('/question/set_state',{'id':data.QID,'state':isOpen}).then(
+                    function(response){
+                    response=response.body;
+                let isSuccess= response.code==200;
+                if(isSuccess){
+                    this.initTable();
+                }
+                this.$message({
+                    message: response.data,
+                    type:isSuccess?'success':'error'
+                });
+            },
+                function(response){
+                    this.$message({
+                        message: response.data,
+                        type: 'error'
+                    });
+                });
             },
             isBindFn(){
 

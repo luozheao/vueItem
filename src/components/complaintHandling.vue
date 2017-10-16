@@ -45,7 +45,7 @@
                 <el-button type="primary" @click="searchList">查询</el-button>
                 <el-button type="primary" @click="installList" style="margin-left: 5px;">导出</el-button>
                 <el-table
-                        :data="tableData"
+                        :data="tableData.data"
                         max-height="400"
                         border
                         style="margin-top: 10px;">
@@ -86,10 +86,10 @@
                             width="270"
                     >
                         <template scope="scope">
-                            <el-button class="noMargin" type="primary" size="mini" @click="installLi(scope)">下载</el-button>
-                            <el-button class="noMargin" type="primary" size="mini" @click="writeLi(scope)">填写处理结果</el-button>
-                            <el-button class="noMargin" type="danger" size="mini" @click="deleteLi(scope)">删除</el-button>
-                            <el-button class="noMargin" type="primary" size="mini" @click="lookLi(scope)">查看</el-button>
+                            <el-button class="noMargin" type="primary" size="mini" @click="installLi(scope.$index,scope.row)">下载</el-button>
+                            <el-button class="noMargin" type="primary" size="mini" @click="writeLi(scope.$index,scope.row)">填写处理结果</el-button>
+                            <el-button class="noMargin" type="danger" size="mini" @click="deleteLi(scope.$index,scope.row)">删除</el-button>
+                            <el-button class="noMargin" type="primary" size="mini" @click="lookLi(scope.$index,scope.row)">查看</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -97,9 +97,9 @@
                     <el-pagination
                             @size-change="handleSizeChange"
                             @current-change="handleCurrentChange"
-                            :current-page.sync="currentPageNum"
+                            :current-page.sync="tableData.current_page"
                             layout="total, prev, pager, next"
-                            :total="tableData.length">
+                            :total="tableData.total">
                     </el-pagination>
                 </div>
             </div>
@@ -117,14 +117,25 @@
                 dateValue:'',
                 listOptions:[],
                 currentPageNum:1,
-                tableData: [{
-                    name:'',
-                    img:'',
-                    area:'',
-                    queationName: '',
-                    time:'',
-                    doning: ''
-                }],
+                tableData:{
+                    "current_page": 0,
+                    "data":  [{
+                        name:'',
+                        img:'',
+                        area:'',
+                        queationName: '',
+                        time:'',
+                        doning: ''
+                    }],
+                    "from": '',
+                    "last_page": '',
+                    "next_page_url": null,
+                    "path": "http://localhost:809/area_admin/list",
+                    "per_page": 10,
+                    "prev_page_url": null,
+                    "to": 1,
+                    "total": 1
+                },
                 pickerOptions2: {
                     shortcuts: [{
                         text: '最近一周',
@@ -156,28 +167,8 @@
         },
         methods: {
             init(){
-                this.tableData=[{
-                    name: '风轻扬',
-                    img: 'src/images/0.jpg',
-                    area: '客房',
-                    queationName: '维多利亚酒店同济地铁店私人管家服务',
-                    time: '2017-09-18 20:30:04',
-                    doning: ''
-                },{
-                    name:'大师傅',
-                    img:'src/images/1.jpg',
-                    area:'客房',
-                    queationName: '维多利亚酒店同济地铁店私人管家服务',
-                    time:'2017-09-18 20:30:04',
-                    doning: ''
-                },{
-                    name:'大师傅',
-                    img:'src/images/1.jpg',
-                    area:'客房',
-                    queationName: '维多利亚酒店同济地铁店私人管家服务',
-                    time:'2017-09-18 20:30:04',
-                    doning: ''
-                }];
+                //获取列表数据
+                this.initTable();
                 this.listOptions=[{
                     label:'全部',
                     value:0
@@ -192,8 +183,65 @@
                     value:3
                 }]
             },
-            deleteLi(val){
-                console.log(val)
+            initTable(){
+                //获取列表数据
+                this.$http.get('/area_admin/list',{params:{'page':1}}).then(function(response) {
+                    this.tableData=response.data.data
+                    this.tableData.data=[{
+                        name: '风轻扬',
+                        img: 'src/images/0.jpg',
+                        area: '客房',
+                        queationName: '维多利亚酒店同济地铁店私人管家服务',
+                        time: '2017-09-18 20:30:04',
+                        doning: ''
+                    },{
+                        name:'大师傅',
+                        img:'src/images/1.jpg',
+                        area:'客房',
+                        queationName: '维多利亚酒店同济地铁店私人管家服务',
+                        time:'2017-09-18 20:30:04',
+                        doning: ''
+                    },{
+                        name:'大师傅',
+                        img:'src/images/1.jpg',
+                        area:'客房',
+                        queationName: '维多利亚酒店同济地铁店私人管家服务',
+                        time:'2017-09-18 20:30:04',
+                        doning: ''
+                    }];
+                },function(response) {
+                });
+            },
+            //删除一项
+            deleteLi(index, row){
+                this.$confirm('是否删除'+row.username+'?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(function () {
+                    this.$http.post('/area_admin/delete',{'id':row.id}).then(
+                        function(response) {
+                            let isSuccess= response.data.code=='200';
+                            if(isSuccess){
+                                this.initTable()
+                            }
+                            this.$message({
+                                message: response.data.data,
+                                type:isSuccess?'success':'error'
+                            });
+                        },
+                        function(response) {
+                            this.$message({
+                                message: response.data.data,
+                                type: 'error'
+                            });
+                        });
+                }).catch(function () {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                })
             },
             lookLi(val){
                 console.log(val)
@@ -207,11 +255,20 @@
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
             },
+            //翻页
             handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
+                //获取翻页列表数据
+                this.$http.get('/area_admin/list',{params:{'page':val}}).then(function(response) {
+                    this.tableData=response.data.data
+                },function(response) {
+                });
             },
+            //点击搜素
             searchList(){
-                console.log('1');
+                this.$http.get('/area_admin/search',{params:{'keyword':this.inputSearch,'area_id':this.id}}).then(function(response) {
+                    this.tableData=response.data.data
+                },function(response) {
+                });
             },
         },
         created() {

@@ -21,7 +21,7 @@
 <template>
     <div>
         <div class="box">
-            <p class="title">问卷列表</p>
+            <p class="title">合并问卷列表</p>
             <div class="bodyBox">
                 <el-row>
                     <el-col :span="24">
