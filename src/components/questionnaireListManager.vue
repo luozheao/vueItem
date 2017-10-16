@@ -302,6 +302,7 @@
                 //获取列表数据
                 this.$http.get('/question/list',{params:{'page':1}}).then(function(response) {
                     this.tableData=response.data.data
+                    localStorage.setItem('StudioInfo_SID',this.tableData.data[0].StudioInfo_SID)
                 },function(response) {
                 });
             },
