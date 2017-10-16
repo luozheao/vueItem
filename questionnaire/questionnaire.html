@@ -1556,15 +1556,18 @@
                         option[j - 1].OPrice = objNode._select[j]._item_value;
                         option[j - 1].OPType = objNode._select[j]._item_tb ? 1 : 0;
                     }
-                    data.jsonModel[i].Option = option;
+                    data.jsonModel[i].Option =option;
+
                 } else {
                 }
             }
-            return JSON.stringify(data);
+            var a= JSON.stringify(data.jsonModel);
+            data.jsonModel=a
+            return data;
         }
 
         function html2Escape(sHtml) {
-            return sHtml.replace(/[<>]/g, function (c) {
+            return sHtml.jsonModel.replace(/[<>]/g, function (c) {
                 return {'<': '$lt;', '>': '$gt;'}[c];
             });
         }
