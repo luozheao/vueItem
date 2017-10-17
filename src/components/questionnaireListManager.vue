@@ -299,8 +299,7 @@
                 });
                 //获取项目id
                 this.$http.get('/area/beyond_project',{}).then(function(data1) {
-                    data1=eval('('+data1+')')
-                    localStorage.setItem('StudioInfo_SID',data1.data[0].id)
+                    localStorage.setItem('StudioInfo_SID',data1.data.data[0])
                 },function(response) {
                 });
             },

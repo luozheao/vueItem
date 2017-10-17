@@ -1607,7 +1607,7 @@
             parent.vueHttp.post('/answer_template/finish_edit',data1).then(function(data){
                 $("#hrefFiQ").text("完成编辑");
                 $("#hrefFiQ").attr("tag", "1");
-                debugger;
+
                 data = eval("(" + data + ")");
                 if (data.ErrCode == "2002") {
                     alert("提交成功！");
