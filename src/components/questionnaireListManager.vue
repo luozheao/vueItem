@@ -129,7 +129,7 @@
                             label="二维码"
                     >
                         <template scope="scope">
-                            <img :src="scope.row.img" style="width:100%;height: 100%"/>
+                            <img src="/question/get_question_qrc" style="width:100%;height: 100%"/>
                         </template>
                     </el-table-column>
                     <el-table-column

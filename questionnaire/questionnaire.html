@@ -22,6 +22,9 @@
     </style>
     <script src="questionnaire/jquery-1.4.1.min.js" type="text/javascript"></script>
     <script type="text/javascript" rel="script">
+        let token = localStorage.getItem('XSRF-TOKEN');
+
+
         //去顶部
         function gotop() {
             var divSur = document.getElementById("sur");
@@ -1600,16 +1603,17 @@
             $("#hrefFiQ").attr("tag", "2");
 
             var data1=getData();
-            var   data= "stusid=" + $("#StuList").val() + "&subsid=" + $("#SubList").val() + "&uid=" + uid + "&jsonModel=" + encodeURI(html2Escape(getData())) + "&type=" + type + "";
-
             console.log(data1,'我是问卷数据');
+            debugger;
             $.ajax({
                 url: "/answer_template/finish_edit",
                 dataType: "JSON",
                 data: data1,
-                type: "Post",
+                headers: {
+                    'X-CSRF-TOKEN':token,
+                },
+                type: "POST",
                 success: function (data) {
-                    debugger
                     $("#hrefFiQ").text("完成编辑");
                     $("#hrefFiQ").attr("tag", "1");
                     data = eval("(" + data + ")");
