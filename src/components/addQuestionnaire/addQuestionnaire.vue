@@ -247,11 +247,24 @@
                             loadMUban();
                         }
                         else if(index==2){
-                            var defValue = "题目1\n选项1\n选项2\n选项3\n\n题目2[多选]\n选项4\n选项5\n选项6\n\n单行文本题";
-                            var QBodyValue=$('#QBody').val();
-                            if(!QBodyValue){
-                                $("#QBody").val(defValue);
-                            }
+                           if( window.QKey){
+                               self.$http.get('/question/content',{params:{'QKey': window.QKey}}).then(function(data) {
+//
+                                  var  data1=data.data.data[0].item
+                                   debugger
+                                       $("#QBody").empty().val(data1);
+//                                  $("#isokview").click()
+                               },function(response) {
+
+                               });
+                           }else{
+                               var defValue = "题目1\n选项1\n选项2\n选项3\n\n题目2[多选]\n选项4\n选项5\n选项6\n\n单行文本题";
+                               var QBodyValue=$('#QBody').val();
+                               if(!QBodyValue){
+                                   $("#QBody").val(defValue);
+                               }
+                           }
+
                         }
 
                     });

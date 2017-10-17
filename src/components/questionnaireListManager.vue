@@ -228,6 +228,7 @@
 
 <script type="es6">
     import addQuestionnaire from './addQuestionnaire/addQuestionnaire.vue'
+    import $ from 'jquery'
 
     export default {
         components: {addQuestionnaire},
@@ -350,8 +351,15 @@
                         });
                     });
             },
+            //修改一项
             changeLi(val){
-                console.log(val)
+                this.isShow=false;
+                window.QKey=val.QKey
+                setTimeout(function () {
+                    if($('.lastNavBar').length){
+                        $('.lastNavBar').click();
+                    }
+                },500)
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
@@ -404,6 +412,7 @@
             //添加问卷
             addQuestionnaireEvent(){
                 this.isShow=false;
+                window.QKey=null
             },
             //返回上一页
             goBack(){
