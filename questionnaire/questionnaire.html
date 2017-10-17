@@ -1382,24 +1382,21 @@
         });
 
         function StuListChange() {
-            var SubHtml = "";
-            if (SubState > 0) {
-                for (var i = 0; i < SubList.length; i++) {
-                    if (SubList[i].SUID == SubState) {
-
-                        SubHtml += "<option value='" + SubList[i].SUID + "'>" + SubList[i].SUName + "</option>";
+            $.get('/api/area/simple_list',{},function(data){
+                data=eval('('+data+')')
+                SubState=data.data
+                var SubHtml = "<option>请选择区域</option>";
+                if (SubState.length!=0) {
+                    for (var i = 0; i < SubState.length; i++) {
+                        SubHtml += "<option value='" + SubState[i].id + "'>" + SubState[i].name + "</option>";
                     }
+                }else {
+                    var SubHtml = "<option>请选择区域</option>";
                 }
-            } else {
-                SubHtml += "<option value='0'>请选择区域</option>";
-                for (var i = 0; i < SubList.length; i++) {
-                    if (SubList[i].StudioInfo_SID == $("#StuList").val()) {
-                        SubHtml += "<option value='" + SubList[i].SUID + "'>" + SubList[i].SUName + "</option>";
-                    }
-                }
-            }
-            $("#SubList").html(SubHtml);
+                $("#SubList").html(SubHtml);
+            },function(data1){
 
+            });
         }
 
         //加载数据，url为获取的json地址。
