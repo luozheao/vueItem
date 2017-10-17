@@ -80,6 +80,7 @@
     import addSpaceQuestionnaire from './addSpaceQuestionnaire.vue'
     export default {
         components: {addSpaceQuestionnaire},
+        props:['updateTqid'],
         data() {
             return {
                 isShow:true,
@@ -88,12 +89,18 @@
                 bodyVal:"",//批量导入的数据
             }
         },
+        watcher:{
+            updateTqid(){
+                this.tqid=this.updateTqid;
+                this.isok();
+            }
+        },
         methods:{
             //返回按钮的显示与隐藏控制
              setGoBackBtnHide(bool){
                  $('#goBackRef')[bool?'hide':'show']();
              },
-            ///创建试卷
+             ///创建试卷
               isok() {
                   var QName = $("#QName").val() == "" ? "问卷名称" : $("#QName").val();
                   this.isShow=false;
@@ -108,6 +115,10 @@
 
         },
         mounted() {
+
+
+
+
                 var self=this;
                 $(function () {
                     //查看选择问卷模版
@@ -301,6 +312,12 @@
             function creatQM(obj) {
                 //有自定义属性TQID
                 window.location = "questionnaireManager.aspx?TQID=" + $(obj).attr("TQID");
+            }
+
+            if(this.updateTqid){
+                this.tqid=this.updateTqid;
+
+                this.isok();
             }
 
         }

@@ -223,7 +223,7 @@
             <el-row id="goBackRef">
                 <el-col :span="24" class="backWraper"><div class="back" :plain="true" size="small" @click="goBack">返回上一页</div></el-col>
             </el-row>
-            <add-questionnaire  ></add-questionnaire>
+            <add-questionnaire :updateTqid="tqid" ></add-questionnaire>
         </div>
 
     </div>
@@ -237,6 +237,7 @@
         components: {addQuestionnaire},
         data() {
             return  {
+                tqid:null,
                 formLabelWidth:'120px',
                 isShow:true,
                 inputSearch:'',
@@ -363,12 +364,10 @@
             //修改一项
             changeLi(val){
                 this.isShow=false;
-                window.QKey=val.QKey
-                setTimeout(function () {
-                    if($('.lastNavBar').length){
-                        $('.lastNavBar').click();
-                    }
-                },500)
+                this.tqid=val.QID;
+
+                //进入添加问卷页面
+                this.addQuestionnaireEvent();
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);

@@ -29,8 +29,7 @@
             //返回上一页
             goBack(){
                 this.$emit('goBack');
-            },
-
+            }
         },
         created(){},
         mounted(){
@@ -49,6 +48,10 @@
             window.bodyVal=this.bodyVal;
             //$http
             window.vueHttp=this.$http;
+            //刷新
+            window.reload=function(){
+                location.reload();
+            }
         },
     }
 </script>
