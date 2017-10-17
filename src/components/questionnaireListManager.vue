@@ -297,12 +297,17 @@
                     this.options=response.data.data
                 },function(response) {
                 });
+                //获取项目id
+                this.$http.get('/area/beyond_project',{}).then(function(data1) {
+                    data1=eval('('+data1+')')
+                    localStorage.setItem('StudioInfo_SID',data1.data[0].id)
+                },function(response) {
+                });
             },
             initTable(){
                 //获取列表数据
                 this.$http.get('/question/list',{params:{'page':1}}).then(function(response) {
                     this.tableData=response.data.data
-                    localStorage.setItem('StudioInfo_SID',this.tableData.data[0].StudioInfo_SID)
                 },function(response) {
                 });
             },
