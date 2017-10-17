@@ -129,13 +129,16 @@
                             label="二维码"
                     >
                         <template scope="scope">
-                            <img src="/question/get_question_qrc" style="width:100%;height: 100%"/>
+                            <div v-html="getCodeImg(scope.row)"></div>
                         </template>
                     </el-table-column>
                     <el-table-column
                             prop="questionAddres"
                             label="问卷地址"
                     >
+                        <template scope="scope">
+                         {{getCodeImgUrl(scope.row)}}
+                        </template>
                     </el-table-column>
                     <el-table-column
                             prop="IsOpen"
@@ -289,6 +292,12 @@
             }
         },
         methods: {
+            getCodeImg(data){
+                return '<img src="http://101.200.39.173/question/get_question_qrc?url=http://101.200.39.173/question/detail?QKey='+data.QKey+'" style="width:100%;height: 100%"/>'
+            },
+            getCodeImgUrl(data){
+                return "http://101.200.39.173/question/detail?QKey="+data.QKey;
+            },
             init(){
                 //获取列表数据
                 this.initTable();
