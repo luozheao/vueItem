@@ -47,6 +47,8 @@
             window.tqid=this.tqid;
             //导入问卷文本
             window.bodyVal=this.bodyVal;
+            //$http
+            window.vueHttp=this.$http;
         },
     }
 </script>

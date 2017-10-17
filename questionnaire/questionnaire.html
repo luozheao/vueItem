@@ -1604,28 +1604,24 @@
 
             var data1=getData();
             console.log(data1,'我是问卷数据');
-            debugger;
-            //添加了头部
-            $.ajax({
-                url: "/answer_template/finish_edit",
-                dataType: "JSON",
-                data: data1,
-                headers: {
-                    'X-CSRF-TOKEN':token,
-                },
-                type: "POST",
-                success: function (data) {
-                    $("#hrefFiQ").text("完成编辑");
-                    $("#hrefFiQ").attr("tag", "1");
-                    data = eval("(" + data + ")");
-                    if (data.ErrCode == "2002") {
-                        alert("提交成功！");
-                        window.location = "./questionnaire.aspx";
-                    } else {
-                        alert(data.ErrMsg);
-                    }
+
+
+
+            parent.vueHttp.post('/answer_template/finish_edit',data1).then(function(data){
+                $("#hrefFiQ").text("完成编辑");
+                $("#hrefFiQ").attr("tag", "1");
+                debugger;
+                data = eval("(" + data + ")");
+                if (data.ErrCode == "2002") {
+                    alert("提交成功！");
+                    window.location = "./questionnaire.aspx";
+                } else {
+                    alert(data.ErrMsg);
                 }
+            },function(){
+
             });
+
         }
 
         function setImage(url) {
