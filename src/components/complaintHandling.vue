@@ -86,13 +86,32 @@
                             width="270"
                     >
                         <template scope="scope">
-                            <el-button class="noMargin" type="primary" size="mini" @click="installLi(scope.$index,scope.row)">下载</el-button>
-                            <el-button class="noMargin" type="primary" size="mini" @click="writeLi(scope.$index,scope.row)">填写处理结果</el-button>
-                            <el-button class="noMargin" type="danger" size="mini" @click="deleteLi(scope.$index,scope.row)">删除</el-button>
-                            <el-button class="noMargin" type="primary" size="mini" @click="lookLi(scope.$index,scope.row)">查看</el-button>
+                            <el-button class="noMargin" type="primary" size="mini" @click="installLi(scope.row)">下载</el-button>
+                            <el-button class="noMargin" type="primary" size="mini" @click="writeLi(scope.row)">填写处理结果</el-button>
+                            <el-button class="noMargin" type="danger" size="mini" @click="deleteLi(scope.row)">删除</el-button>
+                            <el-button class="noMargin" type="primary" size="mini" @click="lookLi(scope.row)">查看</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
+                <el-dialog title="填写处理结果" :visible.sync="writeLiVisible" size="small">
+                    <el-form>
+                        <el-form-item label="处理结果：">
+                            <el-input type="textarea" v-model="writeResult"></el-input>
+                        </el-form-item>
+                    </el-form>
+
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="writeLiVisible = false">取 消</el-button>
+                        <el-button type="primary" @click="addWriteResult">确 定</el-button>
+                    </div>
+
+                </el-dialog>
+                <el-dialog title="问卷查看" :visible.sync="lookLiVisible" size="large">
+                    <div slot="footer" class="dialog-footer">
+                        <el-button type="primary" @click="lookLiVisibleFn">谁谁谁处理中...</el-button>
+                    </div>
+
+                </el-dialog>
                 <div class="block" style="text-align: right;margin-top: 5px;">
                     <el-pagination
                             @size-change="handleSizeChange"
@@ -116,7 +135,10 @@
                 listValue:0,
                 dateValue:'',
                 listOptions:[],
+                writeResult:'',
                 currentPageNum:1,
+                writeLiVisible:false,
+                lookLiVisible:false,
                 tableData:{
                     "current_page": 0,
                     "data":  [{
@@ -213,7 +235,7 @@
                 });
             },
             //删除一项
-            deleteLi(index, row){
+            deleteLi(row){
                 this.$confirm('是否删除'+row.username+'?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -243,14 +265,54 @@
                     });
                 })
             },
-            lookLi(val){
-                console.log(val)
-            },
-            installList(){
-                console.log('2');
-            },
-            writeLi(){
+            //下载
+            installLi(row){
+                this.$http.get('',{params:{'page':1}}).then(function(data) {
 
+                },function (data) {
+
+                })
+            },
+            //查看一项
+            lookLi(val){
+                this.lookLiVisible=true
+            },
+            //查看一项的确定按钮
+            lookLiVisibleFn(){
+                this.lookLiVisible=false
+            },
+            //导出
+            installList(){
+                this.$http.get('',{params:{'page':1}}).then(function(data) {
+
+                },function (data) {
+
+                })
+            },
+            //填写处理结果
+            writeLi(row){
+                this.writeLiVisible=true
+            },
+            //确定填写处理结果
+            addWriteResult(){
+                return false
+                this.$http.post('',{'id':row.id}).then(
+                    function(response) {
+                        let isSuccess= response.data.code=='200';
+                        if(isSuccess){
+                            this.initTable()
+                        }
+                        this.$message({
+                            message: response.data.data,
+                            type:isSuccess?'success':'error'
+                        });
+                    },
+                    function(response) {
+                        this.$message({
+                            message: response.data.data,
+                            type: 'error'
+                        });
+                    });
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
