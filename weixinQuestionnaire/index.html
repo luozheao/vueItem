@@ -1,0 +1,2645 @@
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <title id="ttxt">问卷的题目a1</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body {
+            font-size: 16px;
+            -webkit-user-select: none;
+            -webkit-text-size-adjust: none;
+            font-family: "Microsoft Yahei", helvetica;
+            background: #f7f7f7;
+            color: #333;
+            position: relative;
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+
+        *, *:after, *:before {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        a, button, label, textarea, div, select, option {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+
+        input {
+            outline: none;
+        }
+
+        a, a:visited, a:active {
+            text-decoration: none;
+            color: #45AFE3;
+        }
+
+        .clear:after {
+            clear: both;
+            content: ".";
+            display: block;
+            height: 0;
+            visibility: hidden;
+        }
+
+        /*---------------------*/
+        .button {
+            width: 100%;
+            display: block;
+            margin: 10px 0px;
+            outline: none;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            box-sizing: border-box;
+            font-size: 1.2em;
+            padding: 9px 0px 9px;
+            border-radius: .2em;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+        }
+
+        .button:hover {
+            text-decoration: none;
+        }
+
+        .button:active {
+            position: relative;
+            top: 1px;
+        }
+
+        .blue, .blue:visited {
+            color: #F7F7F7;
+            background: #2695D0;
+        }
+
+        .blue:hover {
+            background: #007ead;
+        }
+
+        .logofooter {
+            background-color: #4b4b4b;
+        }
+
+        .wjfooter {
+            height: 30px;
+            line-height: 30px;
+            margin: 5px 0;
+            text-align: center;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .logofooter a {
+            color: #fff;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        fieldset {
+            border: none;
+        }
+
+        .ui-controlgroup {
+            border: 1px solid #d5d5d5;
+            border-radius: 3px;
+            margin: 5px 0;
+            padding: 0;
+        }
+
+        .ui-controlgroup .ui-radio, .ui-controlgroup .ui-checkbox, .ui-controlgroup .ui-li-static {
+            background: none repeat scroll 0 0 #fff;
+            border-bottom: 1px solid #ebebeb; /*border-color: #fff #fff #ebebeb;font-size: 16px;*/
+            min-height: 43px;
+            position: relative;
+        }
+
+        .ui-li-static {
+            padding: 11px 0;
+        }
+
+        .ui-controlgroup .ui-radio:first-child, .ui-controlgroup .ui-checkbox:first-child {
+            border-radius: 4px 4px 0 0;
+        }
+
+        .ui-controlgroup .ui-radio:last-child, .ui-controlgroup .ui-checkbox:last-child {
+            border-bottom: none;
+        }
+
+        .focuschoice {
+            background-color: #f4f9fe !important;
+        }
+
+        .ui-controlgroup .ui-radio label, .ui-controlgroup .ui-checkbox label {
+            display: block;
+            margin-left: 40px;
+            padding: 12px 10px 10px 0;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .ui-input-text {
+            border-style: solid;
+            border-width: 1px;
+            margin: 0.5em 0 0;
+            background-color: #f9f9f9;
+            border-color: #aaa;
+            color: #333;
+            text-shadow: 0 1px 0 #fff;
+            background-clip: padding-box;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+            line-height: 2;
+        }
+
+        .ui-input-text input {
+            background: #fff;
+            border: 0 none;
+            margin: 0;
+            min-height: 3em;
+            display: block;
+            line-height: 1.8em;
+            outline: 0 none;
+            padding: 0.6em;
+            width: 100%;
+        }
+
+        .jqradio {
+            width: 20px;
+            height: 20px;
+            -webkit-appearance: none;
+            background-color: #fafafa;
+            border: 1px solid #cacece;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+            padding: 9px;
+            border-radius: 50px;
+            display: inline-block;
+            position: relative;
+        }
+
+        a.jqcheck {
+            width: 20px;
+            height: 20px;
+            background-color: #fafafa;
+            border: 1px solid #cacece;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+            padding: 9px;
+            border-radius: 3px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .jqradiowrapper a.jqchecked:after {
+            content: ' ';
+            width: 12px;
+            height: 12px;
+            border-radius: 50px;
+            position: absolute;
+            top: 3px;
+            background: #52adf9;
+            box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3);
+            text-shadow: 0px;
+            left: 3px;
+            font-size: 32px;
+        }
+
+        .jqcheckwrapper a.jqchecked {
+            background: url("source/hook.png") no-repeat center top;
+            background-size: cover;
+            display: block;
+            height: 20px;
+            vertical-align: middle;
+            width: 20px;
+            border: none;
+        }
+
+        .jqradiowrapper, .jqcheckwrapper {
+            display: block;
+            float: left;
+            margin: 10px 4px 10px 10px;
+        }
+
+        #divQuestion {
+            padding-top: 0px;
+        }
+
+        div.field {
+            clear: both;
+            margin: 4px 5px;
+            padding: 0 7px;
+            border: 2px solid #f7f7f7;
+        }
+
+        span.req {
+            color: red !important;
+            margin: 2px 0 0 2px;
+        }
+
+        div.field-label {
+            font-size: 16px !important;
+            font-weight: bold !important;
+            margin: 10px 0 10px 0 !important;
+            display: block;
+            word-wrap: break-word;
+            overflow: hidden;
+        }
+
+        div.ValError {
+            color: Red;
+            display: block;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            text-shadow: none;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .errorMessage {
+            color: Red;
+            min-height: 20px;
+            line-height: 20px;
+            font-size: 12px;
+        }
+
+        #toptitle {
+            background-color: #2695D0;
+            padding: 12px 10px;
+            width: 100%;
+            color: #ffffff;
+        }
+
+        #toptitle .htitle {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .qtypetip {
+            color: #0066FF;
+        }
+
+        .hideInput {
+            display: none;
+        }
+
+        .tpSpan {
+            color: #ff6600;
+            float: right;
+            display: none;
+        }
+
+        #divSubmit {
+            padding: 10px;
+        }
+
+        .logofooter {
+            margin: 0 auto;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        #divContent {
+            padding-bottom: 40px;
+        }
+
+        /*绑定*/
+        .bindingDiv {
+            padding-top: 40px;
+        }
+
+        .bindingDiv .bindingImg {
+            width: 80%;
+            margin: 32px auto;
+        }
+
+        .bindingDiv .bindingImg img {
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+        }
+
+        .bindingDiv .bindingCont {
+            width: 80%;
+            margin: 0 auto;
+            padding: 16px 0;
+        }
+
+        .bindingDiv .bindingCont .bindingSJH {
+            display: block;
+            width: 100%;
+            height: 32px;
+            padding: 2px 4px;
+            border: 1px solid #CCC;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .bindingDiv .bindingCont .bindingSJH:focus {
+            outline: none;
+            border: 1px solid #9ABEF7;
+            box-shadow: 0 0 2px #9ABEF7;
+            text-align: left;
+        }
+
+        .bindingDiv .bindingCont .bindingTxt {
+            height: 32px;
+            line-height: 32px;
+            font-size: 14px;
+            color: #5E5E5E;
+        }
+
+        .bindingDiv .bindingCont .bindingBtn {
+            height: 40px;
+            line-height: 40px;
+            width: 180px;
+            margin: 16px auto;
+            background: #216CDE;
+            color: #EEEEEE;
+            box-shadow: inset 0 0 12px #0043FA;
+            text-align: center;
+            border-radius: 6px;
+        }
+
+        .bindingDiv .bindingCont .bindingBtn.cancel {
+            background: #EA3939;
+            box-shadow: inset 0 0 12px #8E0505;
+        }
+
+        /*提交后*/
+        .referDiv {
+        }
+
+        .referDiv .referCont {
+            padding: 160px 32px 32px
+        }
+
+        .referDiv .referCont .referTxt {
+            font-size: 20px;
+            text-align: center;
+            line-height: 32px;
+            color: #3E3E3E;
+            text-shadow: 0 0 1px #5E5E5E;
+        }
+
+        .ui-text {
+            border: 1px solid #e5e5e5;
+            margin: 0 10px 0 40px;
+        }
+
+        .upFile {
+            height: 42px;
+            border: 1px solid #DBDBDB;
+            background: #00a6e6;
+            margin: 4px 0;
+            border-radius: 4px;
+            margin-top: -4px;
+        }
+
+        .upFile span {
+            display: block;
+            width: 120px;
+            margin: 0 auto;
+            text-align: center;
+            padding-left: 40px;
+            line-height: 40px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bolder;
+            background: #00a6e6 url("source/upfileBg.png") no-repeat 4px 50%;
+            background-size: 32px;
+        }
+
+        .ui-text input {
+            border: 0 solid #e5e5e5;
+            border-radius: 2px;
+            font-size: 16px;
+            margin: 0;
+            padding: 8px 5px;
+            width: 100%;
+            background: #fff;
+        }
+
+        .field .line {
+            height: 1px;
+            width: 100%;
+            color: #E6E6E6;
+            border-color: #E6E6E6;
+            background-color: #E6E6E6;
+        }
+
+        .ui-controlgroup.shop {
+            border: none;
+            padding: 6px 0;
+        }
+
+        .clx:after {
+            display: block;
+            clear: both;
+            content: "";
+            visibility: hidden;
+            height: 0
+        }
+
+        .clx {
+            zoom: 1
+        }
+
+        .ui-controlgroup.shop .ui-checkbox {
+            width: 30%;
+            height: auto;
+            border: 1px solid #D9D9D9;
+            float: left;
+            margin-bottom: 8px;
+        }
+
+        .ui-controlgroup.shop .ui-checkbox:nth-child(3n+2) {
+            margin: 0 5% 8px;
+        }
+
+        .shop-img {
+            width: 100%;
+            height: 88px;
+            border-bottom: 1px solid #E6E6E6;
+        }
+
+        .shop-img img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .shop-name {
+            height: 20px;
+            line-height: 20px;
+            padding-left: 4px;
+            font-size: 12px;
+            color: #333333;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .shop-price {
+            height: 20px;
+            line-height: 20px;
+            padding-left: 4px;
+            font-size: 12px;
+            color: #FA5555;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .shop-count {
+            margin: 4px;
+            height: 22px;
+            border: 1px solid #E6E6E6;
+            font-size: 0;
+        }
+
+        .shop-count span {
+            display: inline-block;
+            width: 33.3%;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #333333;
+        }
+
+        .shop-count span.shop-num {
+            border-left: 1px solid #E6E6E6;
+            border-right: 1px solid #E6E6E6;
+        }
+
+        .shop-count span.minus, .shop-count span.plus {
+            font-size: 16px;
+        }
+
+        .ui-controlgroup.shop .ui-checkbox {
+            clear: none;
+        }
+    </style>
+    <script src="js/hm.js"></script>
+    <script type="text/javascript">
+        /* Zepto v1.1.4 - zepto event ajax form ie - zeptojs.com/license */
+        var Zepto = function () {
+            function L(t) {
+                return null == t ? String(t) : j[S.call(t)] || "object"
+            }
+
+            function Z(t) {
+                return "function" == L(t)
+            }
+
+            function $(t) {
+                return null != t && t == t.window
+            }
+
+            function _(t) {
+                return null != t && t.nodeType == t.DOCUMENT_NODE
+            }
+
+            function D(t) {
+                return "object" == L(t)
+            }
+
+            function R(t) {
+                return D(t) && !$(t) && Object.getPrototypeOf(t) == Object.prototype
+            }
+
+            function M(t) {
+                return "number" == typeof t.length
+            }
+
+            function k(t) {
+                return s.call(t, function (t) {
+                    return null != t
+                })
+            }
+
+            function z(t) {
+                return t.length > 0 ? n.fn.concat.apply([], t) : t
+            }
+
+            function F(t) {
+                return t.replace(/::/g, "/").replace(/([A-Z]+)([A-Z][a-z])/g, "$1_$2").replace(/([a-z\d])([A-Z])/g, "$1_$2").replace(/_/g, "-").toLowerCase()
+            }
+
+            function q(t) {
+                return t in f ? f[t] : f[t] = new RegExp("(^|\\s)" + t + "(\\s|$)")
+            }
+
+            function H(t, e) {
+                return "number" != typeof e || c[F(t)] ? e : e + "px"
+            }
+
+            function I(t) {
+                var e, n;
+                return u[t] || (e = a.createElement(t), a.body.appendChild(e), n = getComputedStyle(e, "").getPropertyValue("display"), e.parentNode.removeChild(e), "none" == n && (n = "block"), u[t] = n), u[t]
+            }
+
+            function V(t) {
+                return "children" in t ? o.call(t.children) : n.map(t.childNodes, function (t) {
+                    return 1 == t.nodeType ? t : void 0
+                })
+            }
+
+            function B(n, i, r) {
+                for (e in i) r && (R(i[e]) || A(i[e])) ? (R(i[e]) && !R(n[e]) && (n[e] = {}), A(i[e]) && !A(n[e]) && (n[e] = []), B(n[e], i[e], r)) : i[e] !== t && (n[e] = i[e])
+            }
+
+            function U(t, e) {
+                return null == e ? n(t) : n(t).filter(e)
+            }
+
+            function J(t, e, n, i) {
+                return Z(e) ? e.call(t, n, i) : e
+            }
+
+            function X(t, e, n) {
+                null == n ? t.removeAttribute(e) : t.setAttribute(e, n)
+            }
+
+            function W(e, n) {
+                var i = e.className, r = i && i.baseVal !== t;
+                return n === t ? r ? i.baseVal : i : void (r ? i.baseVal = n : e.className = n)
+            }
+
+            function Y(t) {
+                var e;
+                try {
+                    return t ? "true" == t || ("false" == t ? !1 : "null" == t ? null : /^0/.test(t) || isNaN(e = Number(t)) ? /^[\[\{]/.test(t) ? n.parseJSON(t) : t : e) : t
+                } catch (i) {
+                    return t
+                }
+            }
+
+            function G(t, e) {
+                e(t);
+                for (var n = 0, i = t.childNodes.length; i > n; n++) G(t.childNodes[n], e)
+            }
+
+            var t, e, n, i, C, N, r = [], o = r.slice, s = r.filter, a = window.document, u = {}, f = {}, c = {
+                    "column-count": 1,
+                    columns: 1,
+                    "font-weight": 1,
+                    "line-height": 1,
+                    opacity: 1,
+                    "z-index": 1,
+                    zoom: 1
+                }, l = /^\s*<(\w+|!)[^>]*>/, h = /^<(\w+)\s*\/?>(?:<\/\1>|)$/,
+                p = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi, d = /^(?:body|html)$/i,
+                m = /([A-Z])/g, g = ["val", "css", "html", "text", "data", "width", "height", "offset"],
+                v = ["after", "prepend", "before", "append"], y = a.createElement("table"), x = a.createElement("tr"),
+                b = {
+                    tr: a.createElement("tbody"),
+                    tbody: y,
+                    thead: y,
+                    tfoot: y,
+                    td: x,
+                    th: x,
+                    "*": a.createElement("div")
+                }, w = /complete|loaded|interactive/, E = /^[\w-]*$/, j = {}, S = j.toString, T = {},
+                O = a.createElement("div"), P = {
+                    tabindex: "tabIndex",
+                    readonly: "readOnly",
+                    "for": "htmlFor",
+                    "class": "className",
+                    maxlength: "maxLength",
+                    cellspacing: "cellSpacing",
+                    cellpadding: "cellPadding",
+                    rowspan: "rowSpan",
+                    colspan: "colSpan",
+                    usemap: "useMap",
+                    frameborder: "frameBorder",
+                    contenteditable: "contentEditable"
+                }, A = Array.isArray || function (t) {
+                    return t instanceof Array
+                };
+            return T.matches = function (t, e) {
+                if (!e || !t || 1 !== t.nodeType) return !1;
+                var n = t.webkitMatchesSelector || t.mozMatchesSelector || t.oMatchesSelector || t.matchesSelector;
+                if (n) return n.call(t, e);
+                var i, r = t.parentNode, o = !r;
+                return o && (r = O).appendChild(t), i = ~T.qsa(r, e).indexOf(t), o && O.removeChild(t), i
+            }, C = function (t) {
+                return t.replace(/-+(.)?/g, function (t, e) {
+                    return e ? e.toUpperCase() : ""
+                })
+            }, N = function (t) {
+                return s.call(t, function (e, n) {
+                    return t.indexOf(e) == n
+                })
+            }, T.fragment = function (e, i, r) {
+                var s, u, f;
+                return h.test(e) && (s = n(a.createElement(RegExp.$1))), s || (e.replace && (e = e.replace(p, "<$1></$2>")), i === t && (i = l.test(e) && RegExp.$1), i in b || (i = "*"), f = b[i], f.innerHTML = "" + e, s = n.each(o.call(f.childNodes), function () {
+                    f.removeChild(this)
+                })), R(r) && (u = n(s), n.each(r, function (t, e) {
+                    g.indexOf(t) > -1 ? u[t](e) : u.attr(t, e)
+                })), s
+            }, T.Z = function (t, e) {
+                return t = t || [], t.__proto__ = n.fn, t.selector = e || "", t
+            }, T.isZ = function (t) {
+                return t instanceof T.Z
+            }, T.init = function (e, i) {
+                var r;
+                if (!e) return T.Z();
+                if ("string" == typeof e) if (e = e.trim(), "<" == e[0] && l.test(e)) r = T.fragment(e, RegExp.$1, i), e = null; else {
+                    if (i !== t) return n(i).find(e);
+                    r = T.qsa(a, e)
+                } else {
+                    if (Z(e)) return n(a).ready(e);
+                    if (T.isZ(e)) return e;
+                    if (A(e)) r = k(e); else if (D(e)) r = [e], e = null; else if (l.test(e)) r = T.fragment(e.trim(), RegExp.$1, i), e = null; else {
+                        if (i !== t) return n(i).find(e);
+                        r = T.qsa(a, e)
+                    }
+                }
+                return T.Z(r, e)
+            }, n = function (t, e) {
+                return T.init(t, e)
+            }, n.extend = function (t) {
+                var e, n = o.call(arguments, 1);
+                return "boolean" == typeof t && (e = t, t = n.shift()), n.forEach(function (n) {
+                    B(t, n, e)
+                }), t
+            }, T.qsa = function (t, e) {
+                var n, i = "#" == e[0], r = !i && "." == e[0], s = i || r ? e.slice(1) : e, a = E.test(s);
+                return _(t) && a && i ? (n = t.getElementById(s)) ? [n] : [] : 1 !== t.nodeType && 9 !== t.nodeType ? [] : o.call(a && !i ? r ? t.getElementsByClassName(s) : t.getElementsByTagName(e) : t.querySelectorAll(e))
+            }, n.contains = a.documentElement.contains ? function (t, e) {
+                return t !== e && t.contains(e)
+            } : function (t, e) {
+                for (; e && (e = e.parentNode);) if (e === t) return !0;
+                return !1
+            }, n.type = L, n.isFunction = Z, n.isWindow = $, n.isArray = A, n.isPlainObject = R, n.isEmptyObject = function (t) {
+                var e;
+                for (e in t) return !1;
+                return !0
+            }, n.inArray = function (t, e, n) {
+                return r.indexOf.call(e, t, n)
+            }, n.camelCase = C, n.trim = function (t) {
+                return null == t ? "" : String.prototype.trim.call(t)
+            }, n.uuid = 0, n.support = {}, n.expr = {}, n.map = function (t, e) {
+                var n, r, o, i = [];
+                if (M(t)) for (r = 0; r < t.length; r++) n = e(t[r], r), null != n && i.push(n); else for (o in t) n = e(t[o], o), null != n && i.push(n);
+                return z(i)
+            }, n.each = function (t, e) {
+                var n, i;
+                if (M(t)) {
+                    for (n = 0; n < t.length; n++) if (e.call(t[n], n, t[n]) === !1) return t
+                } else for (i in t) if (e.call(t[i], i, t[i]) === !1) return t;
+                return t
+            }, n.grep = function (t, e) {
+                return s.call(t, e)
+            }, window.JSON && (n.parseJSON = JSON.parse), n.each("Boolean Number String Function Array Date RegExp Object Error".split(" "), function (t, e) {
+                j["[object " + e + "]"] = e.toLowerCase()
+            }), n.fn = {
+                forEach: r.forEach,
+                reduce: r.reduce,
+                push: r.push,
+                sort: r.sort,
+                indexOf: r.indexOf,
+                concat: r.concat,
+                map: function (t) {
+                    return n(n.map(this, function (e, n) {
+                        return t.call(e, n, e)
+                    }))
+                },
+                slice: function () {
+                    return n(o.apply(this, arguments))
+                },
+                ready: function (t) {
+                    return w.test(a.readyState) && a.body ? t(n) : a.addEventListener("DOMContentLoaded", function () {
+                        t(n)
+                    }, !1), this
+                },
+                get: function (e) {
+                    return e === t ? o.call(this) : this[e >= 0 ? e : e + this.length]
+                },
+                toArray: function () {
+                    return this.get()
+                },
+                size: function () {
+                    return this.length
+                },
+                remove: function () {
+                    return this.each(function () {
+                        null != this.parentNode && this.parentNode.removeChild(this)
+                    })
+                },
+                each: function (t) {
+                    return r.every.call(this, function (e, n) {
+                        return t.call(e, n, e) !== !1
+                    }), this
+                },
+                filter: function (t) {
+                    return Z(t) ? this.not(this.not(t)) : n(s.call(this, function (e) {
+                        return T.matches(e, t)
+                    }))
+                },
+                add: function (t, e) {
+                    return n(N(this.concat(n(t, e))))
+                },
+                is: function (t) {
+                    return this.length > 0 && T.matches(this[0], t)
+                },
+                not: function (e) {
+                    var i = [];
+                    if (Z(e) && e.call !== t) this.each(function (t) {
+                        e.call(this, t) || i.push(this)
+                    }); else {
+                        var r = "string" == typeof e ? this.filter(e) : M(e) && Z(e.item) ? o.call(e) : n(e);
+                        this.forEach(function (t) {
+                            r.indexOf(t) < 0 && i.push(t)
+                        })
+                    }
+                    return n(i)
+                },
+                has: function (t) {
+                    return this.filter(function () {
+                        return D(t) ? n.contains(this, t) : n(this).find(t).size()
+                    })
+                },
+                eq: function (t) {
+                    return -1 === t ? this.slice(t) : this.slice(t, +t + 1)
+                },
+                first: function () {
+                    var t = this[0];
+                    return t && !D(t) ? t : n(t)
+                },
+                last: function () {
+                    var t = this[this.length - 1];
+                    return t && !D(t) ? t : n(t)
+                },
+                find: function (t) {
+                    var e, i = this;
+                    return e = t ? "object" == typeof t ? n(t).filter(function () {
+                        var t = this;
+                        return r.some.call(i, function (e) {
+                            return n.contains(e, t)
+                        })
+                    }) : 1 == this.length ? n(T.qsa(this[0], t)) : this.map(function () {
+                        return T.qsa(this, t)
+                    }) : []
+                },
+                closest: function (t, e) {
+                    var i = this[0], r = !1;
+                    for ("object" == typeof t && (r = n(t)); i && !(r ? r.indexOf(i) >= 0 : T.matches(i, t));) i = i !== e && !_(i) && i.parentNode;
+                    return n(i)
+                },
+                parents: function (t) {
+                    for (var e = [], i = this; i.length > 0;) i = n.map(i, function (t) {
+                        return (t = t.parentNode) && !_(t) && e.indexOf(t) < 0 ? (e.push(t), t) : void 0
+                    });
+                    return U(e, t)
+                },
+                parent: function (t) {
+                    return U(N(this.pluck("parentNode")), t)
+                },
+                children: function (t) {
+                    return U(this.map(function () {
+                        return V(this)
+                    }), t)
+                },
+                contents: function () {
+                    return this.map(function () {
+                        return o.call(this.childNodes)
+                    })
+                },
+                siblings: function (t) {
+                    return U(this.map(function (t, e) {
+                        return s.call(V(e.parentNode), function (t) {
+                            return t !== e
+                        })
+                    }), t)
+                },
+                empty: function () {
+                    return this.each(function () {
+                        this.innerHTML = ""
+                    })
+                },
+                pluck: function (t) {
+                    return n.map(this, function (e) {
+                        return e[t]
+                    })
+                },
+                show: function () {
+                    return this.each(function () {
+                        "none" == this.style.display && (this.style.display = ""), "none" == getComputedStyle(this, "").getPropertyValue("display") && (this.style.display = I(this.nodeName))
+                    })
+                },
+                replaceWith: function (t) {
+                    return this.before(t).remove()
+                },
+                wrap: function (t) {
+                    var e = Z(t);
+                    if (this[0] && !e) var i = n(t).get(0), r = i.parentNode || this.length > 1;
+                    return this.each(function (o) {
+                        n(this).wrapAll(e ? t.call(this, o) : r ? i.cloneNode(!0) : i)
+                    })
+                },
+                wrapAll: function (t) {
+                    if (this[0]) {
+                        n(this[0]).before(t = n(t));
+                        for (var e; (e = t.children()).length;) t = e.first();
+                        n(t).append(this)
+                    }
+                    return this
+                },
+                wrapInner: function (t) {
+                    var e = Z(t);
+                    return this.each(function (i) {
+                        var r = n(this), o = r.contents(), s = e ? t.call(this, i) : t;
+                        o.length ? o.wrapAll(s) : r.append(s)
+                    })
+                },
+                unwrap: function () {
+                    return this.parent().each(function () {
+                        n(this).replaceWith(n(this).children())
+                    }), this
+                },
+                clone: function () {
+                    return this.map(function () {
+                        return this.cloneNode(!0)
+                    })
+                },
+                hide: function () {
+                    return this.css("display", "none")
+                },
+                toggle: function (e) {
+                    return this.each(function () {
+                        var i = n(this);
+                        (e === t ? "none" == i.css("display") : e) ? i.show() : i.hide()
+                    })
+                },
+                prev: function (t) {
+                    return n(this.pluck("previousElementSibling")).filter(t || "*")
+                },
+                next: function (t) {
+                    return n(this.pluck("nextElementSibling")).filter(t || "*")
+                },
+                html: function (t) {
+                    return 0 in arguments ? this.each(function (e) {
+                        var i = this.innerHTML;
+                        n(this).empty().append(J(this, t, e, i))
+                    }) : 0 in this ? this[0].innerHTML : null
+                },
+                text: function (t) {
+                    return 0 in arguments ? this.each(function (e) {
+                        var n = J(this, t, e, this.textContent);
+                        this.textContent = null == n ? "" : "" + n
+                    }) : 0 in this ? this[0].textContent : null
+                },
+                attr: function (n, i) {
+                    var r;
+                    return "string" != typeof n || 1 in arguments ? this.each(function (t) {
+                        if (1 === this.nodeType) if (D(n)) for (e in n) X(this, e, n[e]); else X(this, n, J(this, i, t, this.getAttribute(n)))
+                    }) : this.length && 1 === this[0].nodeType ? !(r = this[0].getAttribute(n)) && n in this[0] ? this[0][n] : r : t
+                },
+                removeAttr: function (t) {
+                    return this.each(function () {
+                        1 === this.nodeType && X(this, t)
+                    })
+                },
+                prop: function (t, e) {
+                    return t = P[t] || t, 1 in arguments ? this.each(function (n) {
+                        this[t] = J(this, e, n, this[t])
+                    }) : this[0] && this[0][t]
+                },
+                data: function (e, n) {
+                    var i = "data-" + e.replace(m, "-$1").toLowerCase(),
+                        r = 1 in arguments ? this.attr(i, n) : this.attr(i);
+                    return null !== r ? Y(r) : t
+                },
+                val: function (t) {
+                    return 0 in arguments ? this.each(function (e) {
+                        this.value = J(this, t, e, this.value)
+                    }) : this[0] && (this[0].multiple ? n(this[0]).find("option").filter(function () {
+                        return this.selected
+                    }).pluck("value") : this[0].value)
+                },
+                offset: function (t) {
+                    if (t) return this.each(function (e) {
+                        var i = n(this), r = J(this, t, e, i.offset()), o = i.offsetParent().offset(),
+                            s = {top: r.top - o.top, left: r.left - o.left};
+                        "static" == i.css("position") && (s.position = "relative"), i.css(s)
+                    });
+                    if (!this.length) return null;
+                    var e = this[0].getBoundingClientRect();
+                    return {
+                        left: e.left + window.pageXOffset,
+                        top: e.top + window.pageYOffset,
+                        width: Math.round(e.width),
+                        height: Math.round(e.height)
+                    }
+                },
+                css: function (t, i) {
+                    if (arguments.length < 2) {
+                        var r = this[0], o = getComputedStyle(r, "");
+                        if (!r) return;
+                        if ("string" == typeof t) return r.style[C(t)] || o.getPropertyValue(t);
+                        if (A(t)) {
+                            var s = {};
+                            return n.each(A(t) ? t : [t], function (t, e) {
+                                s[e] = r.style[C(e)] || o.getPropertyValue(e)
+                            }), s
+                        }
+                    }
+                    var a = "";
+                    if ("string" == L(t)) i || 0 === i ? a = F(t) + ":" + H(t, i) : this.each(function () {
+                        this.style.removeProperty(F(t))
+                    }); else for (e in t) t[e] || 0 === t[e] ? a += F(e) + ":" + H(e, t[e]) + ";" : this.each(function () {
+                        this.style.removeProperty(F(e))
+                    });
+                    return this.each(function () {
+                        this.style.cssText += ";" + a
+                    })
+                },
+                index: function (t) {
+                    return t ? this.indexOf(n(t)[0]) : this.parent().children().indexOf(this[0])
+                },
+                hasClass: function (t) {
+                    return t ? r.some.call(this, function (t) {
+                        return this.test(W(t))
+                    }, q(t)) : !1
+                },
+                addClass: function (t) {
+                    return t ? this.each(function (e) {
+                        i = [];
+                        var r = W(this), o = J(this, t, e, r);
+                        o.split(/\s+/g).forEach(function (t) {
+                            n(this).hasClass(t) || i.push(t)
+                        }, this), i.length && W(this, r + (r ? " " : "") + i.join(" "))
+                    }) : this
+                },
+                removeClass: function (e) {
+                    return this.each(function (n) {
+                        return e === t ? W(this, "") : (i = W(this), J(this, e, n, i).split(/\s+/g).forEach(function (t) {
+                            i = i.replace(q(t), " ")
+                        }), void W(this, i.trim()))
+                    })
+                },
+                toggleClass: function (e, i) {
+                    return e ? this.each(function (r) {
+                        var o = n(this), s = J(this, e, r, W(this));
+                        s.split(/\s+/g).forEach(function (e) {
+                            (i === t ? !o.hasClass(e) : i) ? o.addClass(e) : o.removeClass(e)
+                        })
+                    }) : this
+                },
+                scrollTop: function (e) {
+                    if (this.length) {
+                        var n = "scrollTop" in this[0];
+                        return e === t ? n ? this[0].scrollTop : this[0].pageYOffset : this.each(n ? function () {
+                            this.scrollTop = e
+                        } : function () {
+                            this.scrollTo(this.scrollX, e)
+                        })
+                    }
+                },
+                scrollLeft: function (e) {
+                    if (this.length) {
+                        var n = "scrollLeft" in this[0];
+                        return e === t ? n ? this[0].scrollLeft : this[0].pageXOffset : this.each(n ? function () {
+                            this.scrollLeft = e
+                        } : function () {
+                            this.scrollTo(e, this.scrollY)
+                        })
+                    }
+                },
+                position: function () {
+                    if (this.length) {
+                        var t = this[0], e = this.offsetParent(), i = this.offset(),
+                            r = d.test(e[0].nodeName) ? {top: 0, left: 0} : e.offset();
+                        return i.top -= parseFloat(n(t).css("margin-top")) || 0, i.left -= parseFloat(n(t).css("margin-left")) || 0, r.top += parseFloat(n(e[0]).css("border-top-width")) || 0, r.left += parseFloat(n(e[0]).css("border-left-width")) || 0, {
+                            top: i.top - r.top,
+                            left: i.left - r.left
+                        }
+                    }
+                },
+                offsetParent: function () {
+                    return this.map(function () {
+                        for (var t = this.offsetParent || a.body; t && !d.test(t.nodeName) && "static" == n(t).css("position");) t = t.offsetParent;
+                        return t
+                    })
+                }
+            }, n.fn.detach = n.fn.remove, ["width", "height"].forEach(function (e) {
+                var i = e.replace(/./, function (t) {
+                    return t[0].toUpperCase()
+                });
+                n.fn[e] = function (r) {
+                    var o, s = this[0];
+                    return r === t ? $(s) ? s["inner" + i] : _(s) ? s.documentElement["scroll" + i] : (o = this.offset()) && o[e] : this.each(function (t) {
+                        s = n(this), s.css(e, J(this, r, t, s[e]()))
+                    })
+                }
+            }), v.forEach(function (t, e) {
+                var i = e % 2;
+                n.fn[t] = function () {
+                    var t, o, r = n.map(arguments, function (e) {
+                        return t = L(e), "object" == t || "array" == t || null == e ? e : T.fragment(e)
+                    }), s = this.length > 1;
+                    return r.length < 1 ? this : this.each(function (t, u) {
+                        o = i ? u : u.parentNode, u = 0 == e ? u.nextSibling : 1 == e ? u.firstChild : 2 == e ? u : null;
+                        var f = n.contains(a.documentElement, o);
+                        r.forEach(function (t) {
+                            if (s) t = t.cloneNode(!0); else if (!o) return n(t).remove();
+                            o.insertBefore(t, u), f && G(t, function (t) {
+                                null == t.nodeName || "SCRIPT" !== t.nodeName.toUpperCase() || t.type && "text/javascript" !== t.type || t.src || window.eval.call(window, t.innerHTML)
+                            })
+                        })
+                    })
+                }, n.fn[i ? t + "To" : "insert" + (e ? "Before" : "After")] = function (e) {
+                    return n(e)[t](this), this
+                }
+            }), T.Z.prototype = n.fn, T.uniq = N, T.deserializeValue = Y, n.zepto = T, n
+        }();
+        window.Zepto = Zepto, void 0 === window.$ && (window.$ = Zepto), function (t) {
+            function l(t) {
+                return t._zid || (t._zid = e++)
+            }
+
+            function h(t, e, n, i) {
+                if (e = p(e), e.ns) var r = d(e.ns);
+                return (s[l(t)] || []).filter(function (t) {
+                    return !(!t || e.e && t.e != e.e || e.ns && !r.test(t.ns) || n && l(t.fn) !== l(n) || i && t.sel != i)
+                })
+            }
+
+            function p(t) {
+                var e = ("" + t).split(".");
+                return {e: e[0], ns: e.slice(1).sort().join(" ")}
+            }
+
+            function d(t) {
+                return new RegExp("(?:^| )" + t.replace(" ", " .* ?") + "(?: |$)")
+            }
+
+            function m(t, e) {
+                return t.del && !u && t.e in f || !!e
+            }
+
+            function g(t) {
+                return c[t] || u && f[t] || t
+            }
+
+            function v(e, i, r, o, a, u, f) {
+                var h = l(e), d = s[h] || (s[h] = []);
+                i.split(/\s/).forEach(function (i) {
+                    if ("ready" == i) return t(document).ready(r);
+                    var s = p(i);
+                    s.fn = r, s.sel = a, s.e in c && (r = function (e) {
+                        var n = e.relatedTarget;
+                        return !n || n !== this && !t.contains(this, n) ? s.fn.apply(this, arguments) : void 0
+                    }), s.del = u;
+                    var l = u || r;
+                    s.proxy = function (t) {
+                        if (t = j(t), !t.isImmediatePropagationStopped()) {
+                            t.data = o;
+                            var i = l.apply(e, t._args == n ? [t] : [t].concat(t._args));
+                            return i === !1 && (t.preventDefault(), t.stopPropagation()), i
+                        }
+                    }, s.i = d.length, d.push(s), "addEventListener" in e && e.addEventListener(g(s.e), s.proxy, m(s, f))
+                })
+            }
+
+            function y(t, e, n, i, r) {
+                var o = l(t);
+                (e || "").split(/\s/).forEach(function (e) {
+                    h(t, e, n, i).forEach(function (e) {
+                        delete s[o][e.i], "removeEventListener" in t && t.removeEventListener(g(e.e), e.proxy, m(e, r))
+                    })
+                })
+            }
+
+            function j(e, i) {
+                return (i || !e.isDefaultPrevented) && (i || (i = e), t.each(E, function (t, n) {
+                    var r = i[t];
+                    e[t] = function () {
+                        return this[n] = x, r && r.apply(i, arguments)
+                    }, e[n] = b
+                }), (i.defaultPrevented !== n ? i.defaultPrevented : "returnValue" in i ? i.returnValue === !1 : i.getPreventDefault && i.getPreventDefault()) && (e.isDefaultPrevented = x)), e
+            }
+
+            function S(t) {
+                var e, i = {originalEvent: t};
+                for (e in t) w.test(e) || t[e] === n || (i[e] = t[e]);
+                return j(i, t)
+            }
+
+            var n, e = 1, i = Array.prototype.slice, r = t.isFunction, o = function (t) {
+                    return "string" == typeof t
+                }, s = {}, a = {}, u = "onfocusin" in window, f = {focus: "focusin", blur: "focusout"},
+                c = {mouseenter: "mouseover", mouseleave: "mouseout"};
+            a.click = a.mousedown = a.mouseup = a.mousemove = "MouseEvents", t.event = {
+                add: v,
+                remove: y
+            }, t.proxy = function (e, n) {
+                var s = 2 in arguments && i.call(arguments, 2);
+                if (r(e)) {
+                    var a = function () {
+                        return e.apply(n, s ? s.concat(i.call(arguments)) : arguments)
+                    };
+                    return a._zid = l(e), a
+                }
+                if (o(n)) return s ? (s.unshift(e[n], e), t.proxy.apply(null, s)) : t.proxy(e[n], e);
+                throw new TypeError("expected function")
+            }, t.fn.bind = function (t, e, n) {
+                return this.on(t, e, n)
+            }, t.fn.unbind = function (t, e) {
+                return this.off(t, e)
+            }, t.fn.one = function (t, e, n, i) {
+                return this.on(t, e, n, i, 1)
+            };
+            var x = function () {
+                return !0
+            }, b = function () {
+                return !1
+            }, w = /^([A-Z]|returnValue$|layer[XY]$)/, E = {
+                preventDefault: "isDefaultPrevented",
+                stopImmediatePropagation: "isImmediatePropagationStopped",
+                stopPropagation: "isPropagationStopped"
+            };
+            t.fn.delegate = function (t, e, n) {
+                return this.on(e, t, n)
+            }, t.fn.undelegate = function (t, e, n) {
+                return this.off(e, t, n)
+            }, t.fn.live = function (e, n) {
+                return t(document.body).delegate(this.selector, e, n), this
+            }, t.fn.die = function (e, n) {
+                return t(document.body).undelegate(this.selector, e, n), this
+            }, t.fn.on = function (e, s, a, u, f) {
+                var c, l, h = this;
+                return e && !o(e) ? (t.each(e, function (t, e) {
+                    h.on(t, s, a, e, f)
+                }), h) : (o(s) || r(u) || u === !1 || (u = a, a = s, s = n), (r(a) || a === !1) && (u = a, a = n), u === !1 && (u = b), h.each(function (n, r) {
+                    f && (c = function (t) {
+                        return y(r, t.type, u), u.apply(this, arguments)
+                    }), s && (l = function (e) {
+                        var n, o = t(e.target).closest(s, r).get(0);
+                        return o && o !== r ? (n = t.extend(S(e), {
+                            currentTarget: o,
+                            liveFired: r
+                        }), (c || u).apply(o, [n].concat(i.call(arguments, 1)))) : void 0
+                    }), v(r, e, u, a, s, l || c)
+                }))
+            }, t.fn.off = function (e, i, s) {
+                var a = this;
+                return e && !o(e) ? (t.each(e, function (t, e) {
+                    a.off(t, i, e)
+                }), a) : (o(i) || r(s) || s === !1 || (s = i, i = n), s === !1 && (s = b), a.each(function () {
+                    y(this, e, s, i)
+                }))
+            }, t.fn.trigger = function (e, n) {
+                return e = o(e) || t.isPlainObject(e) ? t.Event(e) : j(e), e._args = n, this.each(function () {
+                    "dispatchEvent" in this ? this.dispatchEvent(e) : t(this).triggerHandler(e, n)
+                })
+            }, t.fn.triggerHandler = function (e, n) {
+                var i, r;
+                return this.each(function (s, a) {
+                    i = S(o(e) ? t.Event(e) : e), i._args = n, i.target = a, t.each(h(a, e.type || e), function (t, e) {
+                        return r = e.proxy(i), i.isImmediatePropagationStopped() ? !1 : void 0
+                    })
+                }), r
+            }, "focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select keydown keypress keyup error".split(" ").forEach(function (e) {
+                t.fn[e] = function (t) {
+                    return t ? this.bind(e, t) : this.trigger(e)
+                }
+            }), ["focus", "blur"].forEach(function (e) {
+                t.fn[e] = function (t) {
+                    return t ? this.bind(e, t) : this.each(function () {
+                        try {
+                            this[e]()
+                        } catch (t) {
+                        }
+                    }), this
+                }
+            }), t.Event = function (t, e) {
+                o(t) || (e = t, t = e.type);
+                var n = document.createEvent(a[t] || "Events"), i = !0;
+                if (e) for (var r in e) "bubbles" == r ? i = !!e[r] : n[r] = e[r];
+                return n.initEvent(t, i, !0), j(n)
+            }
+        }(Zepto), function (t) {
+            function l(e, n, i) {
+                var r = t.Event(n);
+                return t(e).trigger(r, i), !r.isDefaultPrevented()
+            }
+
+            function h(t, e, i, r) {
+                return t.global ? l(e || n, i, r) : void 0
+            }
+
+            function p(e) {
+                e.global && 0 === t.active++ && h(e, null, "ajaxStart")
+            }
+
+            function d(e) {
+                e.global && !--t.active && h(e, null, "ajaxStop")
+            }
+
+            function m(t, e) {
+                var n = e.context;
+                return e.beforeSend.call(n, t, e) === !1 || h(e, n, "ajaxBeforeSend", [t, e]) === !1 ? !1 : void h(e, n, "ajaxSend", [t, e])
+            }
+
+            function g(t, e, n, i) {
+                var r = n.context, o = "success";
+                n.success.call(r, t, o, e), i && i.resolveWith(r, [t, o, e]), h(n, r, "ajaxSuccess", [e, n, t]), y(o, e, n)
+            }
+
+            function v(t, e, n, i, r) {
+                var o = i.context;
+                i.error.call(o, n, e, t), r && r.rejectWith(o, [n, e, t]), h(i, o, "ajaxError", [n, i, t || e]), y(e, n, i)
+            }
+
+            function y(t, e, n) {
+                var i = n.context;
+                n.complete.call(i, e, t), h(n, i, "ajaxComplete", [e, n]), d(n)
+            }
+
+            function x() {
+            }
+
+            function b(t) {
+                return t && (t = t.split(";", 2)[0]), t && (t == f ? "html" : t == u ? "json" : s.test(t) ? "script" : a.test(t) && "xml") || "text"
+            }
+
+            function w(t, e) {
+                return "" == e ? t : (t + "&" + e).replace(/[&?]{1,2}/, "?")
+            }
+
+            function E(e) {
+                e.processData && e.data && "string" != t.type(e.data) && (e.data = t.param(e.data, e.traditional)), !e.data || e.type && "GET" != e.type.toUpperCase() || (e.url = w(e.url, e.data), e.data = void 0)
+            }
+
+            function j(e, n, i, r) {
+                return t.isFunction(n) && (r = i, i = n, n = void 0), t.isFunction(i) || (r = i, i = void 0), {
+                    url: e,
+                    data: n,
+                    success: i,
+                    dataType: r
+                }
+            }
+
+            function T(e, n, i, r) {
+                var o, s = t.isArray(n), a = t.isPlainObject(n);
+                t.each(n, function (n, u) {
+                    o = t.type(u), r && (n = i ? r : r + "[" + (a || "object" == o || "array" == o ? n : "") + "]"), !r && s ? e.add(u.name, u.value) : "array" == o || !i && "object" == o ? T(e, u, i, n) : e.add(n, u)
+                })
+            }
+
+            var i, r, e = 0, n = window.document, o = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+                s = /^(?:text|application)\/javascript/i, a = /^(?:text|application)\/xml/i, u = "application/json",
+                f = "text/html", c = /^\s*$/;
+            t.active = 0, t.ajaxJSONP = function (i, r) {
+                if (!("type" in i)) return t.ajax(i);
+                var f, h, o = i.jsonpCallback, s = (t.isFunction(o) ? o() : o) || "jsonp" + ++e,
+                    a = n.createElement("script"), u = window[s], c = function (e) {
+                        t(a).triggerHandler("error", e || "abort")
+                    }, l = {abort: c};
+                return r && r.promise(l), t(a).on("load error", function (e, n) {
+                    clearTimeout(h), t(a).off().remove(), "error" != e.type && f ? g(f[0], l, i, r) : v(null, n || "error", l, i, r), window[s] = u, f && t.isFunction(u) && u(f[0]), u = f = void 0
+                }), m(l, i) === !1 ? (c("abort"), l) : (window[s] = function () {
+                    f = arguments
+                }, a.src = i.url.replace(/\?(.+)=\?/, "?$1=" + s), n.head.appendChild(a), i.timeout > 0 && (h = setTimeout(function () {
+                    c("timeout")
+                }, i.timeout)), l)
+            }, t.ajaxSettings = {
+                type: "GET",
+                beforeSend: x,
+                success: x,
+                error: x,
+                complete: x,
+                context: null,
+                global: !0,
+                xhr: function () {
+                    return new window.XMLHttpRequest
+                },
+                accepts: {
+                    script: "text/javascript, application/javascript, application/x-javascript",
+                    json: u,
+                    xml: "application/xml, text/xml",
+                    html: f,
+                    text: "text/plain"
+                },
+                crossDomain: !1,
+                timeout: 0,
+                processData: !0,
+                cache: !0
+            }, t.ajax = function (e) {
+                var n = t.extend({}, e || {}), o = t.Deferred && t.Deferred();
+                for (i in t.ajaxSettings) void 0 === n[i] && (n[i] = t.ajaxSettings[i]);
+                p(n), n.crossDomain || (n.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(n.url) && RegExp.$2 != window.location.host), n.url || (n.url = window.location.toString()), E(n);
+                var s = n.dataType, a = /\?.+=\?/.test(n.url);
+                if (a && (s = "jsonp"), n.cache !== !1 && (e && e.cache === !0 || "script" != s && "jsonp" != s) || (n.url = w(n.url, "_=" + Date.now())), "jsonp" == s) return a || (n.url = w(n.url, n.jsonp ? n.jsonp + "=?" : n.jsonp === !1 ? "" : "callback=?")), t.ajaxJSONP(n, o);
+                var j, u = n.accepts[s], f = {}, l = function (t, e) {
+                        f[t.toLowerCase()] = [t, e]
+                    }, h = /^([\w-]+:)\/\//.test(n.url) ? RegExp.$1 : window.location.protocol, d = n.xhr(),
+                    y = d.setRequestHeader;
+                if (o && o.promise(d), n.crossDomain || l("X-Requested-With", "XMLHttpRequest"), l("Accept", u || "*/*"), (u = n.mimeType || u) && (u.indexOf(",") > -1 && (u = u.split(",", 2)[0]), d.overrideMimeType && d.overrideMimeType(u)), (n.contentType || n.contentType !== !1 && n.data && "GET" != n.type.toUpperCase()) && l("Content-Type", n.contentType || "application/x-www-form-urlencoded"), n.headers) for (r in n.headers) l(r, n.headers[r]);
+                if (d.setRequestHeader = l, d.onreadystatechange = function () {
+                        if (4 == d.readyState) {
+                            d.onreadystatechange = x, clearTimeout(j);
+                            var e, i = !1;
+                            if (d.status >= 200 && d.status < 300 || 304 == d.status || 0 == d.status && "file:" == h) {
+                                s = s || b(n.mimeType || d.getResponseHeader("content-type")), e = d.responseText;
+                                try {
+                                    "script" == s ? (1, eval)(e) : "xml" == s ? e = d.responseXML : "json" == s && (e = c.test(e) ? null : t.parseJSON(e))
+                                } catch (r) {
+                                    i = r
+                                }
+                                i ? v(i, "parsererror", d, n, o) : g(e, d, n, o)
+                            } else v(d.statusText || null, d.status ? "error" : "abort", d, n, o)
+                        }
+                    }, m(d, n) === !1) return d.abort(), v(null, "abort", d, n, o), d;
+                if (n.xhrFields) for (r in n.xhrFields) d[r] = n.xhrFields[r];
+                var S = "async" in n ? n.async : !0;
+                d.open(n.type, n.url, S, n.username, n.password);
+                for (r in f) y.apply(d, f[r]);
+                return n.timeout > 0 && (j = setTimeout(function () {
+                    d.onreadystatechange = x, d.abort(), v(null, "timeout", d, n, o)
+                }, n.timeout)), d.send(n.data ? n.data : null), d
+            }, t.get = function () {
+                return t.ajax(j.apply(null, arguments))
+            }, t.post = function () {
+                var e = j.apply(null, arguments);
+                return e.type = "POST", t.ajax(e)
+            }, t.getJSON = function () {
+                var e = j.apply(null, arguments);
+                return e.dataType = "json", t.ajax(e)
+            }, t.fn.load = function (e, n, i) {
+                if (!this.length) return this;
+                var a, r = this, s = e.split(/\s/), u = j(e, n, i), f = u.success;
+                return s.length > 1 && (u.url = s[0], a = s[1]), u.success = function (e) {
+                    r.html(a ? t("<div>").html(e.replace(o, "")).find(a) : e), f && f.apply(r, arguments)
+                }, t.ajax(u), this
+            };
+            var S = encodeURIComponent;
+            t.param = function (t, e) {
+                var n = [];
+                return n.add = function (t, e) {
+                    this.push(S(t) + "=" + S(e))
+                }, T(n, t, e), n.join("&").replace(/%20/g, "+")
+            }
+        }(Zepto), function (t) {
+            t.fn.serializeArray = function () {
+                var n, e = [];
+                return t([].slice.call(this.get(0).elements)).each(function () {
+                    n = t(this);
+                    var i = n.attr("type");
+                    "fieldset" != this.nodeName.toLowerCase() && !this.disabled && "submit" != i && "reset" != i && "button" != i && ("radio" != i && "checkbox" != i || this.checked) && e.push({
+                        name: n.attr("name"),
+                        value: n.val()
+                    })
+                }), e
+            }, t.fn.serialize = function () {
+                var t = [];
+                return this.serializeArray().forEach(function (e) {
+                    t.push(encodeURIComponent(e.name) + "=" + encodeURIComponent(e.value))
+                }), t.join("&")
+            }, t.fn.submit = function (e) {
+                if (e) this.bind("submit", e); else if (this.length) {
+                    var n = t.Event("submit");
+                    this.eq(0).trigger(n), n.isDefaultPrevented() || this.get(0).submit()
+                }
+                return this
+            }
+        }(Zepto), function (t) {
+            "__proto__" in {} || t.extend(t.zepto, {
+                Z: function (e, n) {
+                    return e = e || [], t.extend(e, t.fn), e.selector = n || "", e.__Z = !0, e
+                }, isZ: function (e) {
+                    return "array" === t.type(e) && "__Z" in e
+                }
+            });
+            try {
+                getComputedStyle(void 0)
+            } catch (e) {
+                var n = getComputedStyle;
+                window.getComputedStyle = function (t) {
+                    try {
+                        return n(t)
+                    } catch (e) {
+                        return null
+                    }
+                }
+            }
+        }(Zepto);
+
+    </script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?06c8aba55920f25824f4ec5384724956";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <script type="text/javascript">
+        var QKey = "946f4d9e12554d1ab3b49be539d8f162";
+        var QitemCount = 0;
+        var requirCount = 0;
+
+        $(function () {
+            CheckLocation(function () {
+                LoadData();
+            });
+        });
+
+        function LoadData() {
+            setLodaData();
+            function setLodaData(data) {
+                data={
+                    "Method":"POST",
+                    "Action":"http://www.4ajf.cn/WebServer/controller/pagecontroller.ashx/GetQuestionnaire",
+                    "ParametersString":"QKey=946f4d9e12554d1ab3b49be539d8f162&OpenId=",
+                    "ErrCode":"2002",
+                    "ErrMsg":"ok！",
+                    "Data":{
+                        "QID":2862,
+                        "QKey":"946f4d9e12554d1ab3b49be539d8f162",
+                        "StudioInfo_SID":145,
+                        "SubbranchInfo_SID":205,
+                        "AdminUserInfo_AUID":0,
+                        "QName":"问卷的题目a1",
+                        "QRem":"问卷的题目a问卷的题目a",
+                        "IsOpen":2,
+                        "IsDelete":2,
+                        "SCount":11,
+                        "CrTime":"2017-10-19T00:56:38.837",
+                        "Item":[
+                            {
+                                "QIID":21879,
+                                "QuestionnaireInfo_QID":2862,
+                                "QITitle":"jjj",
+                                "QIType":2,
+                                "QValNull":2,
+                                "CrTime":"2017-10-19T00:56:38.837",
+                                "InertCount":0,
+                                "Option":[
+                                    {
+                                        "OID":64721,
+                                        "QuestionnaireItemInfo_QIID":21879,
+                                        "OKey":"A",
+                                        "OTitle":"luozheao",
+                                        "OImgUrl":"",
+                                        "OPrice":"undefined",
+                                        "UserValue":"",
+                                        "PCount":0,
+                                        "SUMPCount":0,
+                                        "OPType":0,
+                                        "CrTime":"2017-10-19T00:56:38.837"
+                                    },
+                                    {
+                                        "OID":64722,
+                                        "QuestionnaireItemInfo_QIID":21879,
+                                        "OKey":"B",
+                                        "OTitle":"ll",
+                                        "OImgUrl":"",
+                                        "OPrice":"undefined",
+                                        "UserValue":"",
+                                        "PCount":0,
+                                        "SUMPCount":0,
+                                        "OPType":0,
+                                        "CrTime":"2017-10-19T00:56:38.84"
+                                    }
+                                ]
+                            },
+                            {
+                                "QIID":21880,
+                                "QuestionnaireInfo_QID":2862,
+                                "QITitle":"yyyyy",
+                                "QIType":1,
+                                "QValNull":2,
+                                "CrTime":"2017-10-19T00:56:38.84",
+                                "InertCount":0,
+                                "Option":[
+                                    {
+                                        "OID":64723,
+                                        "QuestionnaireItemInfo_QIID":21880,
+                                        "OKey":"A",
+                                        "OTitle":"uuu",
+                                        "OImgUrl":"",
+                                        "OPrice":"",
+                                        "UserValue":"",
+                                        "PCount":0,
+                                        "SUMPCount":0,
+                                        "OPType":0,
+                                        "CrTime":"2017-10-19T00:56:38.84"
+                                    },
+                                    {
+                                        "OID":64724,
+                                        "QuestionnaireItemInfo_QIID":21880,
+                                        "OKey":"B",
+                                        "OTitle":"iii",
+                                        "OImgUrl":"",
+                                        "OPrice":"",
+                                        "UserValue":"",
+                                        "PCount":0,
+                                        "SUMPCount":0,
+                                        "OPType":0,
+                                        "CrTime":"2017-10-19T00:56:38.84"
+                                    }
+                                ]
+                            },
+                            {
+                                "QIID":21881,
+                                "QuestionnaireInfo_QID":2862,
+                                "QITitle":"请输入你的建议",
+                                "QIType":3,
+                                "QValNull":0,
+                                "CrTime":"2017-10-19T00:56:38.843",
+                                "InertCount":0,
+                                "Option":[
+
+                                ]
+                            }
+                        ]
+                    }
+                }
+
+                $.get("http://101.200.39.173/question/content",{QKey:'5f00755cbea2721a6fdfeb83e2dc6ccc'},function(data1){
+
+                });
+               data={"code":200,"data":[{"QID":39,"QKey":"5f00755cbea2721a6fdfeb83e2dc6ccc","StudioInfo_SID":11,"SubbranchInfo_SID":18,"AdminUserInfo_AUID":11,"QName":"\u5efa\u534e\u6d4b\u8bd51","QRem":null,"IsOpen":0,"IsDelete":0,"item":[{"QIID":363,"QuestionnaireInfo_QID":39,"QITitle":"aaaaa","QIType":1,"QValNull":2,"sequence":1,"CrTime":"1508429498","updated_at":"1508429498","deleted_at":null,"option":[{"OID":1228,"QuestionnaireItemInfo_QIID":363,"OKey":"A","OTitle":"111","OImgUrl":"","OPrice":"undefined","UserValue":null,"PCount":null,"SUMPCount":null,"OPType":0,"sequence":1,"CrTime":"1508429498","updated_at":"1508429498","deleted_at":null},{"OID":1229,"QuestionnaireItemInfo_QIID":363,"OKey":"B","OTitle":"22222","OImgUrl":"","OPrice":"undefined","UserValue":null,"PCount":null,"SUMPCount":null,"OPType":0,"sequence":2,"CrTime":"1508429498","updated_at":"1508429498","deleted_at":null}]}],"CrTime":"1508429498","updated_at":"1508429847","qc_src":"http:\/\/101.200.39.173\/question\/get_question_qrc"}]}
+                $("#showloding").hide();
+
+                if (data.code == 200) {
+                    var objData = data.data[0];
+
+                    //转换option
+
+                    objData.item.map(function(p){
+                        if(!p.Option){
+                            p.Option=p.option;
+                        }
+                    });
+
+                    $("#ttxt").text(objData.QName);
+                    $("#toptitleStr").text(objData.QName);
+                    if (objData.QRem != '' && objData.QRem != undefined && objData.QRem != null) {
+                        $("#tDesc").html(objData.QRem);
+                        $("#tDesc").css('display', 'block');
+                    } else {
+                        $("#tDesc").css('display', 'none');
+                    }
+                    $("#fieldset1").html(logItem(objData));
+                    //初始化事件
+                    $("#fieldset1 .minus").click(function () {
+                        var count = 0;
+                        count = parseInt($(this).next().text());
+                        if (isNaN(count)) {
+                            count = 0;
+                        }
+                        if (count - 1 >= 0) {
+                            $(this).next().text(count - 1);
+                        }
+                    });
+                    $("#fieldset1 .plus").click(function () {
+                        var count = 0;
+                        count = parseInt($(this).prev().text());
+                        if (isNaN(count)) {
+                            count = 0;
+                        }
+                        $(this).prev().text(count + 1);
+                    });
+                    cilckInt();
+                    //检查是否显示
+                    GetIsShow(objData.StudioInfo_SID);
+                }
+            }
+
+        }
+
+        //组合题目信息
+        function logItem(obj) {
+            var html = "";
+            var bida = "<span class=\"req\">*</span>";
+            QitemCount = obj.item.length;
+            for (var i = 0; i < obj.item.length; i++) {
+                var objItem = obj.item[i];
+                var requir = objItem.QValNull;
+                switch (objItem.QIType) {
+                    case 1://单选
+                        var tem1 = "<div sel='item' itemid='" + objItem.QIID + "' class=\"field ui-field-contain\"  type=\"1\" requir=\"" + requir + "\">";
+                        tem1 += "<div class=\"field-label\">" + (i + 1) + "." + objItem.QITitle;
+                        //必答
+                        if (requir == 2) {
+                            tem1 += bida;
+                            requirCount++;
+                        }
+                        tem1 += "</div>";
+                        //选项开始
+                        tem1 += "<div class=\"ui-controlgroup\">";
+                        for (var j = 0; j < objItem.Option.length; j++) {
+                            var OptionItem = objItem.Option[j];
+                            tem1 += "<div optionid='" + OptionItem.OID + "' class=\"ui-radio\">";
+                            tem1 += "<span class=\"jqradiowrapper\">";
+                            tem1 += "<input oid='" + OptionItem.OID + "' type=\"radio\" value=\"" + OptionItem.OKey + "\" id=\"q" + (i + 1) + "_" + (j + 1) + "\" name=\"q" + (i + 1) + "\" style=\"display: none;\"><a class=\"jqradio\" href=\"javascript:;\"></a>";
+                            tem1 += "</span>";
+                            tem1 += "<label for=\"q" + (i + 1) + "_" + (j + 1) + "\">" + OptionItem.OTitle + "</label>";
+                            if (OptionItem.OPType == 1) {
+                                tem1 += "<div class=\"ui-text\"><input type=\"text\" id=\"tqq" + (i + 1) + "_" + (j + 1) + "\" class=\"OtherRadioText\" placeholder=\"请注明...\"></div><br>"
+                            }
+                            tem1 += "</div>";
+                        }
+                        tem1 += "</div>";
+                        tem1 += "<div class=\"errorMessage\"></div>";
+                        tem1 += "</div>";
+                        html += tem1;
+                        break;
+                    case 2://多选
+                        var tem2 = "<div sel='item' itemid='" + objItem.QIID + "' class=\"field ui-field-contain\"   type=\"2\" requir=\"" + requir + "\">";
+                        tem2 += "<div class=\"field-label\">" + (i + 1) + "." + objItem.QITitle + "<span class=\"qtypetip\">&nbsp;[多选]</span>";
+                        //必答
+                        if (requir == 2) {
+                            tem2 += bida;
+                            requirCount++;
+                        }
+                        tem2 += "</div>";
+                        //选项开始
+                        tem2 += "<div class=\"ui-controlgroup\">";
+                        for (var j = 0; j < objItem.Option.length; j++) {
+                            var OptionItem = objItem.Option[j];
+                            tem2 += "<div optionid='" + OptionItem.OID + "' class=\"ui-checkbox\">";
+                            tem2 += "<span class=\"jqcheckwrapper\">";
+                            tem2 += "<input oid='" + OptionItem.OID + "' type=\"checkbox\" value=\"" + OptionItem.OKey + "\" id=\"q" + (i + 1) + "_" + (j + 1) + "\" name=\"q" + (i + 1) + "\" style=\"display: none;\"><a class=\"jqcheck\" href=\"javascript:;\"></a>";
+                            tem2 += "</span>";
+                            tem2 += "<label for=\"q" + (i + 1) + "_" + (j + 1) + "\">" + OptionItem.OTitle + "</label>";
+                            if (OptionItem.OPType == 1) {
+                                tem2 += "<div class=\"ui-text\"><input type=\"text\" id=\"tqq" + (i + 1) + "_" + (j + 1) + "\" class=\"OtherRadioText\" placeholder=\"请注明...\"></div><br>"
+                            }
+                            tem2 += "</div>";
+                        }
+                        tem2 += "</div>";
+                        tem2 += "<div class=\"errorMessage\"></div>";
+                        tem2 += "</div>";
+                        html += tem2;
+                        break;
+                    case 3:
+                        var tem3 = "<div sel='item' itemid='" + objItem.QIID + "' class=\"field ui-field-contain\"  type=\"3\" requir=\"" + requir + "\">";
+                        tem3 += "<div class=\"field-label\">" + (i + 1) + "." + objItem.QITitle;
+                        //必答
+                        if (requir == 2) {
+                            tem3 += bida;
+                            requirCount++;
+                        }
+                        tem3 += "</div>";
+                        //选项开始
+                        tem3 += "<div class=\"ui-input-text\">";
+                        tem3 += "<input type=\"text\" id=\"q" + (i + 1) + "_" + (j + 1) + "\" value=\"\" name=\"q" + (i + 1) + "\">";
+                        tem3 += "</div>";
+                        tem3 += "<div class=\"errorMessage\"></div>";
+                        //tem3 += "<div class=\"upFile\" onclick=\"clickFile\"><span>上传图片</span></div><input id=\"file\" style=\"display:none;\" type=\"file\" />";
+                        tem3 += "</div>";
+                        html += tem3;
+                        break;
+                    case 4://投票
+                        var tem4 = "<div sel='item' itemid='" + objItem.QIID + "' class=\"field ui-field-contain\" type=\"4\" requir=\"" + requir + "\">";
+                        tem4 += "<div class=\"field-label\">" + (i + 1) + "." + objItem.QITitle;
+                        //必答
+                        if (requir == 2) {
+                            tem4 += bida;
+                            requirCount++;
+                        }
+                        tem4 += "</div>";
+                        //选项开始
+                        tem4 += "<div class=\"ui-controlgroup\">";
+                        for (var j = 0; j < objItem.Option.length; j++) {
+                            var OptionItem = objItem.Option[j];
+                            tem4 += "<div optionid='" + OptionItem.OID + "' class=\"ui-radio\">";
+                            tem4 += "<span class=\"jqradiowrapper\">";
+                            tem4 += "<input oid='" + OptionItem.OID + "' type=\"radio\" value=\"" + OptionItem.OKey + "\" id=\"q" + (i + 1) + "_" + (j + 1) + "\" name=\"q" + (i + 1) + "\" style=\"display: none;\"><a class=\"jqradio\" href=\"javascript:;\"></a>";
+                            tem4 += "</span>";
+                            tem4 += "<label for=\"q" + (i + 1) + "_" + (j + 1) + "\">" + OptionItem.OTitle + "<span style=\"color: #ff6600; \" >(" + OptionItem.PCount + ")票</span></label>";
+                            tem4 += "</div>";
+                        }
+                        tem4 += "</div>";
+                        tem4 += "<div class=\"errorMessage\"></div>";
+                        tem4 += "</div>";
+                        html += tem4;
+                        break;
+                    case 5://商品
+                        var tem5 = "<div sel='item' itemid='" + objItem.QIID + "' class=\"field ui-field-contain\"  type=\"5\" requir=\"" + requir + "\">";
+                        tem5 += "<div class=\"field-label\">" + (i + 1) + "." + objItem.QITitle;
+                        //必答
+                        if (requir == 2) {
+                            tem5 += bida;
+                            requirCount++;
+                        }
+                        tem5 += "</div><div class=\"line\"></div>";
+                        //选项开始
+                        tem5 += "<div class=\"ui-controlgroup shop clx\">";
+                        for (var j = 0; j < objItem.Option.length; j++) {
+                            var OptionItem = objItem.Option[j];
+                            tem5 += "<div class=\"ui-checkbox\">";
+                            tem5 += "<div class=\"shop-img\">";
+                            tem5 += "<img src=\"" + OptionItem.OImgUrl + "\" />";
+                            tem5 += "</div>";
+                            tem5 += "<p class=\"shop-name\">" + OptionItem.OTitle + "</p>";
+                            tem5 += "<p class=\"shop-price\">" + OptionItem.OPrice + "</p>";
+                            tem5 += "<div class=\"shop-count\">";
+                            tem5 += "<span class=\"minus\">-</span>";
+                            tem5 += " <span OID='" + OptionItem.OID + "' QuestionnaireItemInfo_QIID='" + OptionItem.QuestionnaireItemInfo_QIID + "' class=\"shop-num\">0</span>";
+                            tem5 += "<span class=\"plus\">+</span>";
+                            tem5 += "</div>";
+                            tem5 += " </div>";
+                        }
+                        tem5 += "</div>";
+                        tem5 += "<div class=\"errorMessage\"></div>";
+                        tem5 += "</div>";
+                        html += tem5;
+                        break;
+                }
+            }
+            return html;
+        }
+
+        ///初始化
+        function cilckInt() {
+            //单选
+            $(".ui-radio").each(function () {
+                $(this).click(function () {
+                    //获取单选的状态
+                    $(this).find("input[type=\"radio\"]")[0].checked = true;
+                    var selid = $(this).find("input[type=\"radio\"]")[0].id;
+                    //把其它的取消
+                    $(this).parent().find("input[type=\"radio\"]").each(function () {
+                        if (this.id != selid) {
+                            this.checked = false;
+                            $(this).next().removeClass("jqchecked");
+                        }
+                    });
+                    //获取单选
+                    if ($(this).find("input[type=\"radio\"]")[0].checked) {
+                        //选中
+                        $(this).find("input[type=\"radio\"]").next().addClass("jqchecked");
+                        if ($(this).hasClass('ui-radio')) {
+                            var html = "";
+                            $(this).siblings().find(".ui-text").find("input[type=\"text\"]").val(html);
+                        }
+                    } else {
+                        //没有选中
+                        $(this).find("input[type=\"radio\"]").next().removeClass("jqchecked");
+                    }
+                });
+            });
+            //多选
+            $(".ui-checkbox").each(function () {
+                //获取多选
+                $(this).click(function () {
+                    if ($(this).find("input[type=\"checkbox\"]")[0].checked) {
+                        $(this).find("input[type=\"checkbox\"]")[0].checked = false;
+                    } else {
+                        $(this).find("input[type=\"checkbox\"]")[0].checked = true;
+                    }
+                    //获取多选
+                    if ($(this).find("input[type=\"checkbox\"]")[0].checked) {
+                        //选中
+                        $(this).find("input[type=\"checkbox\"]").next().addClass("jqchecked");
+                    } else {
+                        //alert($(this).find("input[type=\"checkbox\"]").next().class());
+                        //没有选中
+                        $(this).find("input[type=\"checkbox\"]").next().removeClass("jqchecked");
+                        if ($(this).hasClass('ui-checkbox')) {
+                            var html = "";
+                            $(this).find(".ui-text").find("input[type=\"text\"]").val(html);
+                        }
+                    }
+                });
+            });
+            //选择带填空
+            $(".ui-text").each(function () {
+                $(this).click(function () {
+                    if ($(this).parent().find('span').find("input")[0].checked) {
+                        //$(this).find("input")[0].checked = false;
+                        //alert($($(this).parent().find('span').find("input")[0]).attr('checked'));
+                    } else {
+                        $(this).parent().find('span').find("input")[0].checked = true;
+                        //alert($($(this).parent().find('span').find("input")[0]).attr('checked'));
+                        //alert(1);
+                    }
+
+                    if ($(this).parent().find('span').find("input")[0].checked = true) {
+                        //选中
+                        $(this).parent().find('span').find("a").addClass("jqchecked");
+                        if ($(this).parent().hasClass('ui-radio')) {
+                            $(this).parent().siblings().find('span').find(".jqradio").removeClass("jqchecked");
+                            var html = "";
+                            $(this).parent().siblings().find(".ui-text").find("input[type=\"text\"]").val(html);
+                        }
+                    } else {
+                        //没有选中
+                        $(this).parent().find('span').find(".jqcheck").removeClass("jqchecked");
+                        if ($(this).parent().hasClass('ui-radio')) {
+                            var html = "";
+                            $(this).parent().siblings().find(".ui-text").find("input[type=\"text\"]").val(html);
+                        }
+
+                    }
+                    if (event && event.stopPropagation) {
+                        event.stopPropagation();
+                    }
+                    else {
+                        event.cancelBubble = true;
+                    }
+                    //stopEventBubble();
+                });
+                $(this).find("input[type=\"text\"]").blur(function () {
+                    var val = $(this).val();
+                    //alert(val);
+                });
+            });
+        }
+
+        ///获取用户填的信息
+        function getUserJson() {
+            var jsonModel = "[";
+            var itemObj = $("div[sel=\"item\"]");
+            for (var i = 0; i < itemObj.length; i++) {
+                switch ($(itemObj[i]).attr("type")) {
+                    case "1":
+                        //单选  有选择
+                        if ($(itemObj[i]).find("input[type='radio']:checked").length > 0) {
+                            var QuestionnaireItemInfo_QIID = $(itemObj[i]).attr("itemid");
+                            var OptionInfo_OID = $(itemObj[i]).find("input[type='radio']:checked").attr("oid");
+                            var UserValue = "";//选择投票都为空
+                            if ($(itemObj[i]).find("input[type='radio']:checked").parent().parent().find('.ui-text')) {
+                                UserValue = $(itemObj[i]).find("input[type='radio']:checked").parent().parent().find('.ui-text').find("input[type = 'text']").val();
+                            } else {
+                                UserValue = "";
+                            }
+                            jsonModel += "{\"QuestionnaireItemInfo_QIID\":" + QuestionnaireItemInfo_QIID + ",\"OptionInfo_OID\":" + OptionInfo_OID + ",\"UserValue\":\"" + UserValue + "\"},";
+                        }
+                        break;
+                    case "2":
+                        //多选
+                        var checkboxList = $(itemObj[i]).find("input[type='checkbox']:checked");
+                        if (checkboxList.length > 0) {
+                            for (var j = 0; j < checkboxList.length; j++) {
+                                var QuestionnaireItemInfo_QIID = $(itemObj[i]).attr("itemid");
+                                var OptionInfo_OID = $(checkboxList[j]).attr("oid");
+                                var UserValue = "";//选择投票都为空
+                                if ($(checkboxList[j]).parent().parent().find('.ui-text')) {
+                                    UserValue = $(checkboxList[j]).parent().parent().find('.ui-text').find("input[type = 'text']").val();
+                                } else {
+                                    UserValue = "";
+                                }
+                                jsonModel += "{\"QuestionnaireItemInfo_QIID\":" + QuestionnaireItemInfo_QIID + ",\"OptionInfo_OID\":" + OptionInfo_OID + ",\"UserValue\":\"" + UserValue + "\"},";
+                            }
+                        }
+                        break;
+                    case "3":
+                        // 填空
+                        var valstr = $(itemObj[i]).find("input[type=\"text\"]").val();
+                        if (valstr.length > 0) {
+                            var QuestionnaireItemInfo_QIID = $(itemObj[i]).attr("itemid");
+                            var OptionInfo_OID = -1;
+                            var UserValue = "\"" + valstr + "\"";
+                            jsonModel += "{\"QuestionnaireItemInfo_QIID\":" + QuestionnaireItemInfo_QIID + ",\"OptionInfo_OID\":" + OptionInfo_OID + ",\"UserValue\":" + UserValue + "},";
+                        }
+                        break;
+                    case "4":
+                        //投票
+                        if ($(itemObj[i]).find("input[type='radio']:checked").length > 0) {
+                            var QuestionnaireItemInfo_QIID = $(itemObj[i]).attr("itemid");
+                            var OptionInfo_OID = $(itemObj[i]).find("input[type='radio']:checked").attr("oid");
+                            var UserValue = "\"\"";//选择投票都为空
+                            jsonModel += "{\"QuestionnaireItemInfo_QIID\":" + QuestionnaireItemInfo_QIID + ",\"OptionInfo_OID\":" + OptionInfo_OID + ",\"UserValue\":" + UserValue + "},";
+                        }
+                        //投票
+                        break;
+                    case "5":
+                        //商品题
+                        var goodlist = $(itemObj[i]).find(".shop-num");
+                        var UserValue = "";
+                        var QuestionnaireItemInfo_QIID = "";
+                        var OptionInfo_OID = "";
+                        for (var j = 0; j < goodlist.length; j++) {
+                            UserValue = $(goodlist[j]).text();
+                            OptionInfo_OID = $(goodlist[j]).attr("OID");
+                            QuestionnaireItemInfo_QIID = $(goodlist[j]).attr("QuestionnaireItemInfo_QIID");
+                            jsonModel += "{\"QuestionnaireItemInfo_QIID\":" + QuestionnaireItemInfo_QIID + ",\"OptionInfo_OID\":" + OptionInfo_OID + ",\"UserValue\":" + UserValue + "},";
+                        }
+                        //商品题
+                        break;
+                }
+            }
+
+            if (jsonModel.length > 2) {
+                jsonModel = jsonModel.substring(0, jsonModel.length - 1);
+            }
+            jsonModel += "]";
+            if (jsonModel == "[]" || jsonModel.length == 2) {
+                alert("你没有填写任何题目呢");
+                return;
+            }
+            else {
+                //必答的是否全答了
+                var jsonObj = eval("(" + jsonModel + ")");
+                var aQitem = $('.field');
+                var ayida = new Array();
+                for (var i = 0; i < jsonObj.length; i++) {
+                    ayida.push(jsonObj[i].QuestionnaireItemInfo_QIID);
+                }
+                ayida = JSON.stringify(ayida);
+                for (var i = 0; i < QitemCount; i++) {
+                    var req = $(aQitem[i]).attr('requir');
+                    var qid = $(aQitem[i]).attr('itemid');
+                    var yida = !(ayida.indexOf(qid) == -1);
+                    if (req == 2 && !yida) {
+                        //必答的没有全答
+                        if (confirm("您好，第" + (i + 1) + "题为必答题，请回答!")) {
+                            //
+                        }
+                        var top = $(aQitem[i]).offset().top - 50;
+                        document.getElementsByTagName('body')[0].scrollTop = top;
+                        return;
+
+                    }
+                }
+                //判断必答结束
+                if (true) {//ydcount >= QitemCount) {
+                    $("#showloding").show();
+                    $("#divQuestion").hide();
+                    //提交代码
+                     debugger;
+                    $.ajax({
+                        url: "../controller/pagecontroller.ashx/SetUserToVal",
+                        data: "jsonMode=" + jsonModel + "&QKey=" + QKey + "&OpenId=&Expand=",
+                        dataType: "JSON",
+                        type: "POST",
+                        success: function (obj) {
+                            $("#showloding").hide();
+                            $("#divQuestion").show();
+                            obj = eval("(" + obj + ")");
+                            if (obj.ErrCode == "2002") {
+                                var UrlLink = "wenjuanTJ.aspx?txt=提交成功，感谢您的建议！&QKey=" + QKey + "&Expand=";
+                                location.replace(UrlLink);
+                                event.returnValue = false;
+                            } else {
+                                var UrlLink = "wenjuanTJ.aspx?txt=" + obj.ErrMsg + "&QKey=" + QKey + "&Expand=";
+                                location.replace(UrlLink);
+                                event.returnValue = false;
+                            }
+                        },
+                        error: function () {
+                            alert("请求错误！");
+                        }
+                    });
+                } else {
+                    alert("只有填写所有的问题才能提交！");
+                }
+
+            }
+        }
+
+        function GetIsShow(SID) {
+            return;
+            $.get("../controller/checkisshow.ashx/CheckIsShow", "SID=" + SID + "", function (data) {
+                if (data == "2002") {
+                    //显示
+                    $("#divPowerBy").show();
+                }
+            });
+        }
+
+        //隐藏微信功能按钮
+        function onBridgeReady() {
+            WeixinJSBridge.call('hideOptionMenu');
+        }
+
+        if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+            } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+            }
+        } else {
+            onBridgeReady();
+        }
+
+        //点击触发input（file）
+        function clickFile() {
+            return $("#file").click();
+        }
+
+        //检查是否定位
+        var RangeLimit = [];
+        var IsLocation = "false";
+
+        function CheckLocation(brk) {
+            if (IsLocation == "true") {
+                //需要定位
+                $("#showmsg").text("正在定位");
+                HTMLLocation(brk);
+            } else {
+                //不需要定位
+                $("#showmsg").text("正在加载");
+                if (brk != undefined && brk != null) {
+                    brk();
+                }
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div style="display:none;"></div>
+<div id="showloding" class="Pop" style="display: none;">
+    <div class="mask" onclick="">
+    </div>
+    <div class="PopDiv">
+        <div class="loadDiv">
+            <div class="loader">
+                <div class="loader1">
+                    <span></span>
+                </div>
+                <div class="loader2">
+                    <span></span>
+                </div>
+            </div>
+        </div>
+        <div id="showmsg" style="width: 100%;text-align: center;">正在加载</div>
+    </div>
+</div>
+<div id="showerrcode" class="Pop" style="display: block;display:none;">
+    <div class="mask" style="opacity:1;background:#b3afaf;">
+    </div>
+    <div class="PopDiv" style="width:100%;text-align:center;color:rgba(0, 252, 237,1);">
+
+    </div>
+</div>
+<div id="toptitle">
+    <h1 class="htitle" id="toptitleStr">问卷的题目a1</h1>
+</div>
+<div class="tDesc" id="tDesc" style="display: block;">问卷的题目a问卷的题目a</div>
+<div id="divContent">
+    <div id="divQuestion">
+        <fieldset class="fieldset" style="" id="fieldset1">
+            <div sel="item" itemid="21879" class="field ui-field-contain" type="2" requir="2">
+                <div class="field-label">1.jjj<span class="qtypetip">&nbsp;[多选]</span><span class="req">*</span></div>
+                <div class="ui-controlgroup">
+                    <div optionid="64721" class="ui-checkbox"><span class="jqcheckwrapper"><input oid="64721"
+                                                                                                  type="checkbox"
+                                                                                                  value="A" id="q1_1"
+                                                                                                  name="q1"
+                                                                                                  style="display: none;"><a
+                            class="jqcheck" href="javascript:;"></a></span><label for="q1_1">kk</label></div>
+                    <div optionid="64722" class="ui-checkbox"><span class="jqcheckwrapper"><input oid="64722"
+                                                                                                  type="checkbox"
+                                                                                                  value="B" id="q1_2"
+                                                                                                  name="q1"
+                                                                                                  style="display: none;"><a
+                            class="jqcheck" href="javascript:;"></a></span><label for="q1_2">ll</label></div>
+                </div>
+                <div class="errorMessage"></div>
+            </div>
+            <div sel="item" itemid="21880" class="field ui-field-contain" type="1" requir="2">
+                <div class="field-label">2.yyyyy<span class="req">*</span></div>
+                <div class="ui-controlgroup">
+                    <div optionid="64723" class="ui-radio"><span class="jqradiowrapper"><input oid="64723" type="radio"
+                                                                                               value="A" id="q2_1"
+                                                                                               name="q2"
+                                                                                               style="display: none;"><a
+                            class="jqradio" href="javascript:;"></a></span><label for="q2_1">uuu</label></div>
+                    <div optionid="64724" class="ui-radio"><span class="jqradiowrapper"><input oid="64724" type="radio"
+                                                                                               value="B" id="q2_2"
+                                                                                               name="q2"
+                                                                                               style="display: none;"><a
+                            class="jqradio" href="javascript:;"></a></span><label for="q2_2">iii</label></div>
+                </div>
+                <div class="errorMessage"></div>
+            </div>
+            <div sel="item" itemid="21881" class="field ui-field-contain" type="3" requir="0">
+                <div class="field-label">3.请输入你的建议</div>
+                <div class="ui-input-text"><input type="text" id="q3_3" value="" name="q3"></div>
+                <div class="errorMessage"></div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="footer">
+        <div class="ValError"></div>
+        <div id="divSubmit" style="padding: 10px;">
+            <a id="ctlNext" href="javascript:getUserJson();" class="button blue">提交</a>
+        </div>
+    </div>
+</div>
+<div id="divPowerBy" style="margin: 0 auto; display: none;" class="logofooter">
+    <div class="wjfooter">
+        <a href="http://www.4ajf.cn/WebServer/webphone/questionnaire.aspx?QKey=946f4d9e12554d1ab3b49be539d8f162&amp;code=021joldn1iJksl0pu3dn1zL2dn1joldG&amp;state="
+           target="_blank" title="简方互联 技术支持">简方互联</a>&nbsp;技术支持
+    </div>
+</div>
+<div id="divWeiXin">
+    <style>
+        .tDesc {
+            padding: 10px 8px 4px;
+            font-size: 14px;
+            color: #5E5E5E;
+            line-height: 20px;
+            /*max-height: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;*/
+            border-bottom: 1px dashed #CCCCCC;
+        }
+
+        .ui-radio, .ui-checkbox {
+            clear: both;
+        }
+
+        .wximg {
+            background: url(source/wxicon1.png) no-repeat;
+            width: 38px;
+            text-align: left;
+            display: inline-table;
+            font-size: 14px;
+            height: 31px;
+            background-size: cover;
+            float: left;
+            margin: 2px 8px 0 0;
+        }
+
+        .wxtxt {
+            text-align: left;
+            display: block;
+            font-size: 14px;
+            height: 31px;
+            padding-left: 5px;
+        }
+
+        .pop-content {
+            padding: 0 25px;
+            margin: auto;
+        }
+
+        .pop-content1 {
+            padding: 0 10px;
+            position: relative;
+        }
+
+        .pop-title {
+            padding: 15px 0;
+            font-size: 18px;
+            color: #222222;
+            text-align: center;
+            font-family: 'Microsoft Yahei';
+        }
+
+        .con_p {
+            color: #666666;
+            margin: 0;
+            padding: 0 18px;
+        }
+
+        .popup {
+            width: 300px;
+            background-color: #fff;
+            border-radius: 4px;
+            margin: auto;
+            position: absolute;
+            z-index: 9999;
+            overflow: hidden;
+            padding-bottom: 20px;
+        }
+
+        .login {
+            text-align: center;
+            background-color: #42B917;
+            border-radius: 3px;
+            font-size: 18px;
+            line-height: 24px;
+            padding: 11px 0;
+            display: block;
+            width: 100%;
+            text-decoration: none;
+            position: relative;
+            z-index: 9999;
+            vertical-align: middle;
+        }
+
+        .login p {
+            margin: auto;
+            width: 150px;
+            display: block;
+        }
+
+        .login i {
+            width: 31px;
+            height: 25px;
+            background: url(source/wxicon.png) 0 0 no-repeat;
+            display: inline-table;
+            background-size: cover;
+            margin-right: 5px;
+            float: left;
+        }
+
+        .login span {
+            height: 24px;
+            display: block;
+            color: #fff !important;
+        }
+
+        .jump {
+            text-decoration: none;
+            color: #666666;
+            text-align: right;
+            display: block;
+            font-size: 16px;
+            padding: 20px 0 0 0;
+            cursor: pointer;
+        }
+
+        .zhezhao {
+            z-index: 999;
+            top: 0px;
+            left: 0px;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+
+        .zhezhao div {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            opacity: 0.5;
+            background-color: #000;
+        }
+    </style>
+    <style type="text/css" rel="stylesheet">
+        .Pop {
+            display: none;
+        }
+
+        .Pop .mask {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: #000000;
+            opacity: 0.7;
+            filter: alpha(opacity=70);
+        }
+
+        .PopDiv {
+            width: 80px;
+            height: 80px;
+            color: #404040;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            opacity: 1;
+            filter: alpha(opacity=100);
+        }
+
+        .PopDiv div {
+            float: left;
+            height: 80px;
+            line-height: 80px;
+            color: rgba(0, 252, 237, 1);
+            font-size: 14px;
+        }
+
+        .PopDiv div.loaderTxt {
+            margin-left: 4px;
+        }
+
+        .PopDiv div.loadDiv {
+            width: 80px;
+            height: 80px;
+        }
+
+        .loader {
+            width: 80px;
+            height: 80px;
+            display: inline-block;
+            padding: 0;
+            text-align: left;
+            position: relative;
+        }
+
+        .loader div.loader1, .loader div.loader2 {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+        }
+
+        .loader div.loader2 {
+            width: 16px;
+            height: 16px;
+        }
+
+        .loader div span {
+            background: rgba(0, 252, 237, 1);
+        }
+
+        .loader div.loader1 span {
+            display: block;
+            width: 80px;
+            height: 80px;
+            border-radius: 100%;
+            -webkit-animation: loader1 1.5s linear infinite;
+            animation: loader1 1.5s linear infinite;
+        }
+
+        .loader div.loader2 span {
+            display: block;
+            width: 16px;
+            height: 16px;
+            border-radius: 100%;
+            -webkit-animation: loader2 1.5s linear infinite;
+            animation: loader2 1.5s linear infinite;
+        }
+
+        @keyframes loader1 {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.2;
+            }
+
+            20% {
+                transform: scale(0.2, 0.2);
+                opacity: 0.8;
+            }
+
+            90% {
+                -webkit-transform: scale(1, 1);
+                opacity: 0;
+            }
+
+            100% {
+                -webkit-transform: scale(1, 1);
+                opacity: 0;
+            }
+        }
+
+        @-webkit-keyframes loader1 {
+            0% {
+                -webkit-transform: scale(0, 0);
+                opacity: 0.2;
+            }
+
+            20% {
+                -webkit-transform: scale(0.2, 0.2);
+                opacity: 0.8;
+            }
+
+            90% {
+                -webkit-transform: scale(1, 1);
+                opacity: 0;
+            }
+
+            100% {
+                -webkit-transform: scale(1, 1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes loader2 {
+            0% {
+                transform: scale(1, 1);
+                opacity: 0.3;
+            }
+
+            20% {
+                transform: scale(1, 1);
+                opacity: 0.8;
+            }
+
+            80% {
+                -webkit-transform: scale(1, 1);
+                opacity: 0.4;
+            }
+
+            90% {
+                -webkit-transform: scale(1, 1);
+                opacity: 0;
+            }
+
+            100% {
+                -webkit-transform: scale(1, 1);
+                opacity: 0;
+            }
+        }
+
+        @-webkit-keyframes loader2 {
+            0% {
+                -webkit-transform: scale(1, 1);
+                opacity: 0.3;
+            }
+
+            20% {
+                -webkit-transform: scale(1, 1);
+                opacity: 0.8;
+            }
+
+            80% {
+                -webkit-transform: scale(1, 1);
+                opacity: 0.4;
+            }
+
+            90% {
+                -webkit-transform: scale(1, 1);
+                opacity: 0;
+            }
+
+            100% {
+                -webkit-transform: scale(1, 1);
+                opacity: 0;
+            }
+        }
+    </style>
+</div>
+<script type="text/javascript" src="js/getscript"></script>
+<script src="js/BMapLib_GeoUtils.js"></script>
+<script src="js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+    var cccc = false;
+
+    function HTMLLocation(brk) {
+        var WXConfig = {
+            "appId": "wxb0d0a8d2be44e9f6",
+            "timestamp": "1508430503",
+            "nonceStr": "9b3a140905bf401cb1d61833899bbdc0",
+            "signature": "461511f1281c9d4d3546b1674bdbea95cbe8243f",
+            "jsApiList": ["getLocation", "hideOptionMenu", "showOptionMenu", "hideMenuItems", "showMenuItems", "hideAllNonBaseMenuItem", "showAllNonBaseMenuItem", "closeWindow"]
+        };
+        WXConfig.debug = false;
+        //使用父级页面的方法
+        wx.config(WXConfig);
+        //微信验证
+        wx.ready(function () {
+            wx.getLocation({
+                type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                success: function (res) {
+                    var oldLat = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                    var oldLng = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                    var speed = res.speed; // 速度，以米/每秒计
+                    var accuracy = res.accuracy; // 位置精度
+                    var customerPoint = new BMap.Point(oldLng, oldLat);
+                    var convertor = new BMap.Convertor();
+                    var pointArr = [];//创建一个数组
+                    pointArr.push(customerPoint);//将刚才的点放进去
+                    convertor.translate(pointArr, 1, 5, initMap); //转换坐标
+                    function initMap(data) {
+                        if (data.status === 0) {//转换成功
+                            var point = data.points[0];//得到后的点
+                            //创建一个圆(坐标自己填)
+                            var IsYes = false;
+                            for (var i = 0; i < RangeLimit.length; i++) {
+                                var circle = new BMap.Circle(new BMap.Point(RangeLimit[i].Lng, RangeLimit[i].Lat), RangeLimit[i].Radius, {
+                                    fillColor: "blue",
+                                    strokeWeight: 1,
+                                    fillOpacity: 0.3,
+                                    strokeOpacity: 0.3
+                                });
+                                //判断点是否在圆形区域内
+                                if (BMapLib.GeoUtils.isPointInCircle(point, circle)) {
+                                    //存在
+                                    IsYes = true;
+                                    break;
+                                }
+                            }
+                            if (IsYes) {
+                                //定位成功
+                                if (brk != undefined && brk != null) {
+                                    brk();
+                                }
+                            } else {
+                                $("#showerrcode").show();
+                                $("#showerrcode .PopDiv").text("您不在有效范围内，因此您无法打开该问卷");
+                            }
+                        } else {
+                            //下面两行是默认定位到西湖的经纬度
+                            $("#showerrcode").show();
+                            $("#showerrcode .PopDiv").text("定位失败，您不能打开问卷。");
+                        }
+                    }
+
+                },
+                cancel: function () {
+                    $("#showerrcode").show();
+                    $("#showerrcode .PopDiv").text("定位失败，您不能打开问卷。");
+                },
+                //定位失败
+                fail: function () {
+                    //下面两行是默认定位到西湖的经纬度
+                    $("#showerrcode").show();
+                    $("#showerrcode .PopDiv").text("定位失败，您不能打开问卷。");
+                }
+            });
+        });
+        wx.error(function (res) {
+            $("#showerrcode").show();
+            $("#showerrcode .PopDiv").text("定位失败，您不能打开问卷。");
+        });
+        //var geolocation = new BMap.Geolocation();
+        //geolocation.getCurrentPosition(function(r){
+        //    if(this.getStatus() == BMAP_STATUS_SUCCESS){
+        //        //创建一个圆(坐标自己填)
+        //        var IsYes=false;
+        //        for(var i=0;i<RangeLimit.length;i++){
+        //            var circle = new BMap.Circle(new BMap.Point(RangeLimit[i].Lng,RangeLimit[i].Lat),RangeLimit[i].Radius,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.3, strokeOpacity: 0.3});
+        //            //判断点是否在圆形区域内
+        //            if(BMapLib.GeoUtils.isPointInCircle(r.point,circle)){
+        //                //存在
+        //                IsYes=true;
+        //                break;
+        //            }
+        //        }
+        //        if(IsYes){
+        //            //定位成功
+        //            if(brk!=undefined&&brk!=null){
+        //                brk();
+        //            }
+        //        }else{
+        //            $("#showerrcode").show();
+        //            $("#showerrcode .PopDiv").text("您不在有效范围内，因此您无法打开该问卷");
+        //        }
+        //    }
+        //    else {
+        //        if(confirm("定位失败，是否重试？")){
+        //            HTMLLocation(brk);
+        //        }else{
+        //            $("#showerrcode").show();
+        //            $("#showerrcode .PopDiv").text("定位失败，您不能打开问卷。");
+        //        }
+        //    }        
+        //},{enableHighAccuracy: true})
+    }
+</script>
+
+
+</body>
+</html>
