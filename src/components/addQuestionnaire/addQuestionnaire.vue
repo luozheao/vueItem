@@ -71,7 +71,7 @@
             </article>
         </div>
         <!--创建空白问卷-->
-        <add-space-questionnaire  :QName="QName" :tqid="tqid" :bodyVal="bodyVal" v-if="!isShow"  @goBack="goBack"></add-space-questionnaire>
+        <add-space-questionnaire  :QName="QName" :tqid="tqid"  :QKey="QKey" :bodyVal="bodyVal" v-if="!isShow"  @goBack="goBack"></add-space-questionnaire>
     </div>
 </template>
 
@@ -80,18 +80,19 @@
     import addSpaceQuestionnaire from './addSpaceQuestionnaire.vue'
     export default {
         components: {addSpaceQuestionnaire},
-        props:['updateTqid'],
+        props:['updateQKey'],
         data() {
             return {
                 isShow:true,
                 QName:'',
                 tqid:0,//查询问卷数据的id
+                QKey:null,
                 bodyVal:"",//批量导入的数据
             }
         },
         watcher:{
-            updateTqid(){
-                this.tqid=this.updateTqid;
+            updateQKey(){
+                this.QKey=this.updateQKey;
                 this.isok();
             }
         },
@@ -108,16 +109,16 @@
                   this.QName=QName;
               },
             //返回
-            goBack(){
+            goBack(updateStr){
                 this.isShow=true;
                 this.setGoBackBtnHide(false);
+                 if(updateStr=='update'){
+                     this.$emit('goBack');//返回到列表
+                 }
             },
 
         },
         mounted() {
-
-
-
 
                 var self=this;
                 $(function () {
@@ -314,9 +315,8 @@
                 window.location = "questionnaireManager.aspx?TQID=" + $(obj).attr("TQID");
             }
 
-            if(this.updateTqid){
-                this.tqid=this.updateTqid;
-
+            if(this.updateQKey){
+                this.QKey=this.updateQKey;
                 this.isok();
             }
 

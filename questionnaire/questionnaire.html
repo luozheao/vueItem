@@ -22,8 +22,6 @@
     </style>
     <script src="questionnaire/jquery-1.4.1.min.js" type="text/javascript"></script>
     <script type="text/javascript" rel="script">
-        let token = localStorage.getItem('XSRF-TOKEN');
-
 
         //去顶部
         function gotop() {
@@ -442,10 +440,14 @@
     $(function () {
         createQList($('#txtContent').val());
         var TQID = 0;
+        var QKey=null;
         if(parent.tqid!==0){
             TQID=parent.tqid;
         }
-        LodTQmodel(TQID);
+        if(parent.QKey){
+            QKey=parent.QKey;
+        }
+        LodTQmodel(TQID,QKey);
 
         //
         if(parent.bodyVal){
@@ -466,90 +468,111 @@
     });
 
     //加载
-    function LodTQmodel(TQID) {
+    function LodTQmodel(TQID,QKey) {
+
+        if(QKey){
+            //修改
+            var url= document.domain=='localhost'?'/api/question/content':'/question/content';
+            $.get(url,{QKey:QKey},function(data1){
+                if(data1.code==200){
+                    var data=data1.data[0];
+                    var SubListVal=data.SubbranchInfo_SID;
+                    $("#SubList").find("option[value='"+SubListVal+"']").attr("selected",true);
+                    //改变data的option成Option
+                    data.item.map(function (p) {
+                        if(!p.Option){
+                            p.Option=p.option;
+                        }
+                    })
+                    renderQuestionnaire(data);
+                }
+            })
+            return;
+        }
+
         if (TQID != 0) {
+            //添加模板,作为新增
             var url= document.domain=='localhost'?'/api/answer_template/detail':'/answer_template/detail';
+
             $.get(url,{id:TQID},function(data1){
                 if(data1.code==200){
                     var data=data1.data;
                     renderQuestionnaire(data);
                 }
             })
-
-            function renderQuestionnaire(dataObj){
-                        var title = dataObj.QName;
-                        $('#pater_title').text(title);
-                        $("#pater_title_input").val(title);
-                        var data = dataObj.item;
-                        for (var i = 0; i < data.length; i++) {
-                            var typeCode = data[i].QIType;
-                            var qe, qb, type;
-                            //必答
-                            var requir = false;
-                            if (data[i].QValNull == 2) {
-                                requir = true;
-                            }
-                            switch (typeCode) {
-                                case 1:
-                                    type = 'radio';
-                                    qe = type + "§1§" + data[i].QITitle + "〒〒〒§0§1〒§false§false§0§" + requir + "§§§0§§";
-                                    for (var j = 0; j < data[i].Option.length; j++) {
-                                        if (data[i].Option[j].OPType == 1) {
-                                            qe += "§" + data[i].Option[j].OTitle + "〒false〒" + (j + 1) + "〒0〒true〒〒〒〒〒";
-                                        } else {
-                                            qe += "§" + data[i].Option[j].OTitle + "〒false〒" + (j + 1) + "〒0〒〒〒〒〒〒";
-                                        }
-
-                                    }
-                                    break;
-                                case 2:
-                                    type = 'check';
-                                    qe = type + "§1§" + data[i].QITitle + "〒〒〒§0§1〒§false§false§0§" + requir + ",,§§§0§§";
-                                    for (var j = 0; j < data[i].Option.length; j++) {
-                                        if (data[i].Option[j].OPType == 1) {
-                                            qe += "§" + data[i].Option[j].OTitle + "〒false〒" + (j + 1) + "〒0〒true〒〒〒〒〒〒";
-                                        } else {
-                                            qe += "§" + data[i].Option[j].OTitle + "〒false〒" + (j + 1) + "〒0〒〒〒〒〒〒〒";
-                                        }
-                                    }
-                                    break;
-                                case 3:
-                                    type = 'question';
-                                    qe = type + "§1§" + data[i].QITitle + "〒〒§0§1§§" + requir + "§false§§§false§§§§false§-1§§false§";
-                                    break;
-                                case 4:
-                                    type = 'radio';
-                                    qe = type + "§1§" + data[i].QITitle + "〒〒〒§0§1〒§false§false§0§" + requir + "§true〒50〒〒true〒true§§0§§";
-                                    for (var j = 0; j < data[i].Option.length; j++) {
-                                        qe += "§" + data[i].Option[j].OTitle + "〒false〒0〒0〒〒〒〒〒〒";
-                                    }
-                                    break;
-                                case 5:
-                                    type = 'shop';
-                                    qe = type + "§1§" + data[i].QITitle + "〒〒〒§0§1〒§false§false§0§" + requir + ",shop§§§0§§";
-                                    for (var j = 0; j < data[i].Option.length; j++) {
-                                        qe += "§" + data[i].Option[j].OTitle + "〒false〒" + data[i].Option[j].OPrice + "〒〒true〒〒" + data[i].Option[j].OImgUrl + "〒〒〒〒";
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
-                            qb = set_string_to_dataNode(qe);
-                            createQ(qb);
-                            qb._QIid = data[i].QIID;
-                            if (qb._select != null && qb._select != undefined) {
-                                for (var n = 1; n < qb._select.length; n++) {
-                                    qb._select[n].Oid = data[i].Option[n - 1].OID;
-                                }
-                            }
-                        }
-                    }
-
         }
         else{
             var title = parent.QName;
             $('#pater_title').text(title);
             $("#pater_title_input").val(title);
+        }
+        function renderQuestionnaire(dataObj){
+            var title = dataObj.QName;
+            $('#pater_title').text(title);
+            $("#pater_title_input").val(title);
+            var data = dataObj.item;
+            for (var i = 0; i < data.length; i++) {
+                var typeCode = data[i].QIType;
+                var qe, qb, type;
+                //必答
+                var requir = false;
+                if (data[i].QValNull == 2) {
+                    requir = true;
+                }
+                switch (typeCode) {
+                    case 1:
+                        type = 'radio';
+                        qe = type + "§1§" + data[i].QITitle + "〒〒〒§0§1〒§false§false§0§" + requir + "§§§0§§";
+                        for (var j = 0; j < data[i].Option.length; j++) {
+                            if (data[i].Option[j].OPType == 1) {
+                                qe += "§" + data[i].Option[j].OTitle + "〒false〒" + (j + 1) + "〒0〒true〒〒〒〒〒";
+                            } else {
+                                qe += "§" + data[i].Option[j].OTitle + "〒false〒" + (j + 1) + "〒0〒〒〒〒〒〒";
+                            }
+
+                        }
+                        break;
+                    case 2:
+                        type = 'check';
+                        qe = type + "§1§" + data[i].QITitle + "〒〒〒§0§1〒§false§false§0§" + requir + ",,§§§0§§";
+                        for (var j = 0; j < data[i].Option.length; j++) {
+                            if (data[i].Option[j].OPType == 1) {
+                                qe += "§" + data[i].Option[j].OTitle + "〒false〒" + (j + 1) + "〒0〒true〒〒〒〒〒〒";
+                            } else {
+                                qe += "§" + data[i].Option[j].OTitle + "〒false〒" + (j + 1) + "〒0〒〒〒〒〒〒〒";
+                            }
+                        }
+                        break;
+                    case 3:
+                        type = 'question';
+                        qe = type + "§1§" + data[i].QITitle + "〒〒§0§1§§" + requir + "§false§§§false§§§§false§-1§§false§";
+                        break;
+                    case 4:
+                        type = 'radio';
+                        qe = type + "§1§" + data[i].QITitle + "〒〒〒§0§1〒§false§false§0§" + requir + "§true〒50〒〒true〒true§§0§§";
+                        for (var j = 0; j < data[i].Option.length; j++) {
+                            qe += "§" + data[i].Option[j].OTitle + "〒false〒0〒0〒〒〒〒〒〒";
+                        }
+                        break;
+                    case 5:
+                        type = 'shop';
+                        qe = type + "§1§" + data[i].QITitle + "〒〒〒§0§1〒§false§false§0§" + requir + ",shop§§§0§§";
+                        for (var j = 0; j < data[i].Option.length; j++) {
+                            qe += "§" + data[i].Option[j].OTitle + "〒false〒" + data[i].Option[j].OPrice + "〒〒true〒〒" + data[i].Option[j].OImgUrl + "〒〒〒〒";
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                qb = set_string_to_dataNode(qe);
+                createQ(qb);
+                qb._QIid = data[i].QIID;
+                if (qb._select != null && qb._select != undefined) {
+                    for (var n = 1; n < qb._select.length; n++) {
+                        qb._select[n].Oid = data[i].Option[n - 1].OID;
+                    }
+                }
+            }
         }
     }
 

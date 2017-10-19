@@ -20,7 +20,7 @@
 <script>
     import $ from 'jquery';
     export default {
-        props:['QName','tqid','bodyVal'],
+        props:['QName','tqid','bodyVal','QKey'],
         components: {},
         data() {
             return {}
@@ -28,7 +28,12 @@
         methods:{
             //返回上一页
             goBack(){
-                this.$emit('goBack');
+                if(this.QKey){
+                    //编辑状态下的返回
+                    this.$emit('goBack','update');
+                }else{
+                    this.$emit('goBack');
+                }
             }
         },
         created(){},
@@ -44,6 +49,7 @@
             window.QName=this.QName;
             //问卷数据id
             window.tqid=this.tqid;
+            window.QKey=this.QKey;
             //导入问卷文本
             window.bodyVal=this.bodyVal;
             //$http

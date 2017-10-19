@@ -223,7 +223,7 @@
             <el-row id="goBackRef">
                 <el-col :span="24" class="backWraper"><div class="back" :plain="true" size="small" @click="goBack">返回上一页</div></el-col>
             </el-row>
-            <add-questionnaire :updateTqid="tqid" ></add-questionnaire>
+            <add-questionnaire :updateQKey="QKey"  @goBack="goBack"  ></add-questionnaire>
         </div>
 
     </div>
@@ -238,6 +238,7 @@
         data() {
             return  {
                 tqid:null,
+                QKey:null,
                 formLabelWidth:'120px',
                 isShow:true,
                 inputSearch:'',
@@ -364,7 +365,7 @@
             //修改一项
             changeLi(val){
                 this.isShow=false;
-                this.tqid=val.QID;
+                this.QKey=val.QKey;
 
                 //进入添加问卷页面
                 this.addQuestionnaireEvent();

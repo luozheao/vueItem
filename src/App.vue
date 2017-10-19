@@ -217,7 +217,7 @@
                         <template slot="title">调查问卷</template>
                         <el-menu-item-group >
                             <el-menu-item index="questionnaireListManager">问卷管理</el-menu-item>
-                            <el-menu-item index="questionnaireListMerge">合并问卷管理</el-menu-item>
+                            <!--<el-menu-item index="questionnaireListMerge">合并问卷管理</el-menu-item>-->
                         </el-menu-item-group>
                     </el-submenu>
                     <el-menu-item index="complaintHandling">投诉处理进程</el-menu-item>
