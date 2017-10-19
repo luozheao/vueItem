@@ -19,7 +19,9 @@
     .img{
         background:url("../images/erweima.jpg") no-repeat;
         background-size:100% 100%;
-        height: 400px;
+        height: 220px;
+        margin: 5px;
+        margin-left: -10px;
     }
     .titleFont{
         font-size: 12px;
@@ -79,7 +81,24 @@
                         </el-form>
                     </el-col>
                     <el-col :span="12">
-                        <div class='img'></div>
+                        <el-col :span="24">
+                        <div>二维码【{{codeNum}}】地址：</div>
+                        <div>{{codeAddress}}</div>
+                        </el-col>
+                        <el-col :span="24">
+                            <el-col :span="12">
+                                <div class='img'></div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class='img'></div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class='img'></div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class='img'></div>
+                            </el-col>
+                        </el-col>
                     </el-col>
                 </el-row>
             </div>
@@ -91,6 +110,8 @@
     export default {
         data() {
             return {
+                codeNum:1,
+                codeAddress:'http://element.eleme.io/#/zh-CN/component/form',
                 textarea:'',
                 stater:'',
                 ender:'',
@@ -104,7 +125,30 @@
 
             },
             onSubmit() {
-                console.log('submit!');
+                if(this.form.address!=""){
+                    var reg=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
+                    if(!reg.test(this.form.address)){
+                        this.$message('输入网址不正确')
+                    }else{
+                        this.$http.post('',{'id':row.id}).then(
+                            function(response) {
+                                let isSuccess= response.data.code=='200';
+                                if(isSuccess){
+                                    this.initTable()
+                                }
+                                this.$message({
+                                    message: response.data.data,
+                                    type:isSuccess?'success':'error'
+                                });
+                            },
+                            function(response) {
+                                this.$message({
+                                    message: response.data.data,
+                                    type: 'error'
+                                });
+                            });
+                    }
+                }
             },
             getNum(){
                 if(this.stater>this.ender){
