@@ -87,16 +87,16 @@
                         </el-col>
                         <el-col :span="24">
                             <el-col :span="12">
-                                <div class='img'></div>
+                                <div class='img' @mouseenter="hoverChangeAddress(1)"></div>
                             </el-col>
                             <el-col :span="12">
-                                <div class='img'></div>
+                                <div class='img'  @mouseenter="hoverChangeAddress(2)"></div>
                             </el-col>
                             <el-col :span="12">
-                                <div class='img'></div>
+                                <div class='img'  @mouseenter="hoverChangeAddress(3)"></div>
                             </el-col>
                             <el-col :span="12">
-                                <div class='img'></div>
+                                <div class='img'  @mouseenter="hoverChangeAddress(4)"></div>
                             </el-col>
                         </el-col>
                     </el-col>
@@ -160,8 +160,10 @@
                     }
                    this.textarea=html
                 }
+            },
+            hoverChangeAddress(num){
+                this.codeNum=num
             }
-
         },
         created() {
             this.init();
