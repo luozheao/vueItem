@@ -216,7 +216,7 @@
                         });
                     }
                     //添加问卷模板
-                    $('#mubanUl').on('click','.preview',function(){
+                    $('body').on('click','#mubanUl .preview',function(){
                         preview(this);
                     });
                    //添加问卷模板
