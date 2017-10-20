@@ -96,6 +96,34 @@
                             </div>
 
                         </el-dialog>
+                        <el-dialog title="自定义页面" :visible.sync="customPage" size="small">
+                            <el-form :model="customPageForm">
+                                <el-form-item label="内容" :label-width="formLabelWidth">
+                                    <el-input type="textarea" v-model="customPageForm.content" auto-complete="off"></el-input>
+                                </el-form-item>
+                                <el-form-item label="地址" :label-width="formLabelWidth">
+                                    <el-input v-model="customPageForm.url"></el-input>
+                                </el-form-item>
+                                <el-form-item label="封面" :label-width="formLabelWidth">
+                                    <el-upload
+                                            class="avatar-uploader"
+                                            action="https://jsonplaceholder.typicode.com/posts/"
+                                            :show-file-list="false"
+                                            :on-success="handleAvatarSuccess"
+                                            :before-upload="beforeAvatarUpload">
+                                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                    </el-upload>
+                                    <el-button type="success" @click="deleteImg">删除</el-button>
+                                </el-form-item>
+
+                            </el-form>
+                            <div slot="footer" class="dialog-footer">
+                                <el-button @click="customPage = false">取 消</el-button>
+                                <el-button type="primary" @click="customPageFn">确 定</el-button>
+                            </div>
+
+                        </el-dialog>
                         <el-select v-model="form.area_id" placeholder="请选择区域">
                             <el-option
                                     v-for="item in options"
@@ -164,11 +192,10 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                            prop="setCustomPage"
                             label="设置自定义页面"
                     >
                         <template scope="scope">
-                            <el-button type="primary" size="small" @click="setCustomPageFn(scope)">自定义页面</el-button>
+                            <el-button type="primary" size="small" @click="setCustomPageFn(scope.row)">自定义页面</el-button>
                         </template>
                     </el-table-column>
                     <el-table-column
@@ -247,6 +274,7 @@
                 weixin:'src/images/tsxxt.jpg',
                 dialogFormVisible:false,
                 changeNameAndMsg:false,
+                customPage:false,
                 tableData:{
                     "current_page": 0,
                     "data": [
@@ -286,6 +314,12 @@
                   name:'',
                     msg:'',
                     id:''
+                },
+                customPageForm:{
+                    qid:'',
+                    content:'',
+                    url:'',
+                    cover:''
                 },
                 options:[{
                     areaValue: '',
@@ -369,6 +403,37 @@
 
                 //进入添加问卷页面
                 this.addQuestionnaireEvent();
+            },
+            //自定义页面
+            setCustomPageFn(row){
+                this.customPage=true;
+                this.customPageForm.qid=row.QID
+            },
+            //自定义页面的确定按钮
+            customPageFn(){
+                this.$http.post('/question/custom_page',this.customPageForm).then(
+                    function(response){
+                        response=response.body;
+                        let isSuccess= response.code==200;
+                        if(isSuccess){
+                            this.initTable();
+                            this.customPage=false;
+                        }
+                        this.$message({
+                            message: response.data,
+                            type:isSuccess?'success':'error'
+                        });
+                    },
+                    function(response){
+                        this.$message({
+                            message: response.data,
+                            type: 'error'
+                        });
+                    });
+            },
+            //删除封面图片
+            deleteImg(){
+                debugger
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
