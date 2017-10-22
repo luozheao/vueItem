@@ -219,7 +219,7 @@
                             label="定位限制"
                     >
                         <template scope="scope">
-                            <el-button type="primary" size="small" @click="managementPositionFn(scope)">管理位置</el-button>
+                            <el-button type="primary" size="small" @click="managementPositionFn(scope.row)">管理位置</el-button>
                         </template>
                     </el-table-column>
                     <el-table-column
@@ -250,7 +250,12 @@
             <el-row id="goBackRef">
                 <el-col :span="24" class="backWraper"><div class="back" :plain="true" size="small" @click="goBack">返回上一页</div></el-col>
             </el-row>
-            <add-questionnaire :updateQKey="QKey"  @goBack="goBack"  ></add-questionnaire>
+            <div v-if="!isShowQuestion">
+                <add-questionnaire :updateQKey="QKey"  @goBack="goBack"  ></add-questionnaire>
+            </div>
+            <div v-if="!isShowPosition">
+                <limit-positioning-range></limit-positioning-range>
+            </div>
         </div>
 
     </div>
@@ -258,10 +263,11 @@
 
 <script type="es6">
     import addQuestionnaire from './addQuestionnaire/addQuestionnaire.vue'
+    import limitPositioningRange from './limitPositioningRange.vue'
     import $ from 'jquery'
 
     export default {
-        components: {addQuestionnaire},
+        components: {addQuestionnaire,limitPositioningRange},
         data() {
             return  {
                 imageUrl:'',
@@ -269,6 +275,8 @@
                 QKey:null,
                 formLabelWidth:'120px',
                 isShow:true,
+                isShowQuestion:true,
+                isShowPosition:true,
                 inputSearch:'',
                 currentPageNum:1,
                 erweima:'src/images/smdpfwh.jpg',
@@ -484,14 +492,23 @@
             getNum(){
 
             },
+            //点击管理位置
+            managementPositionFn(row){
+                window.QID=row.QID
+                this.isShow=false;
+                this.isShowPosition=false
+            },
             //添加问卷
             addQuestionnaireEvent(){
+                this.isShowQuestion=false;
                 this.isShow=false;
                 window.QKey=null
             },
             //返回上一页
             goBack(){
               this.isShow=true;
+              this.isShowPosition=true;
+              this.isShowQuestion=true;
             },
 
         },
