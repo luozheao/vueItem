@@ -1,0 +1,71 @@
+*{ margin:0px;padding:0px;}
+body{font-size:16px;-webkit-user-select:none;-webkit-text-size-adjust:none;font-family:"Microsoft Yahei",helvetica;background:#f7f7f7;color:#333;position: relative;word-break:break-all;word-wrap: break-word;}
+*, *:after, *:before{-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+ul,li{list-style:none;}
+a,button,label,textarea,div,select,option{-webkit-tap-highlight-color: rgba(0, 0, 0, 0);}
+input{outline:none;}
+a,a:visited,a:active{text-decoration:none;color:#45AFE3;}
+.clear:after{clear: both;content: ".";display: block;height: 0;visibility: hidden;}
+/*---------------------*/
+.button{width:100%;display:block;margin:10px 0px;outline: none;cursor: pointer;text-align: center;text-decoration: none;box-sizing: border-box;font-size:1.2em;padding:9px 0px 9px;border-radius:.2em;box-shadow: 0 1px 1px rgba(0,0,0,0.6);}
+.button:hover{text-decoration: none;}
+.button:active{position: relative;top: 1px;}
+.blue,.blue:visited{color: #F7F7F7;background: #2695D0; }
+.blue:hover{background: #007ead;}
+
+.logofooter {background-color: #4b4b4b;float: left;width: 100%; }
+.wjfooter { height: 30px;line-height: 30px; margin:5px 0;text-align: center;color:#fff;font-size:14px;}
+.logofooter a{color: #fff;font-size: 14px;text-decoration:none;}
+fieldset {border:none; }
+.ui-controlgroup{border: 1px solid #d5d5d5;border-radius:3px;margin: 5px 0;padding: 0;}
+.ui-controlgroup .ui-radio,.ui-controlgroup .ui-checkbox,.ui-controlgroup .ui-li-static{background: none repeat scroll 0 0 #fff;border-bottom: 1px solid #ebebeb;border-color: #fff #fff #ebebeb;font-size: 16px;min-height: 43px;position:relative;}
+.ui-li-static {padding:11px 0;}
+.ui-controlgroup .ui-radio:first-child,.ui-controlgroup .ui-checkbox:first-child{border-radius: 4px 4px 0 0;}
+.ui-controlgroup .ui-radio:last-child,.ui-controlgroup .ui-checkbox:last-child{border-bottom:none;}
+.focuschoice{background-color: #f4f9fe !important;}
+.ui-controlgroup .ui-radio label,.ui-controlgroup .ui-checkbox label{display: block;margin-left: 40px;padding: 12px 10px 10px 0;cursor:pointer;}
+.ui-input-text{border-style: solid;border-width: 1px;margin: 0.5em 0;background-color: #f9f9f9;border-color: #aaa;color: #333;text-shadow: 0 1px 0 #fff;background-clip:padding-box;box-shadow:0 1px 3px rgba(0, 0, 0, 0.2) inset;line-height:2;}
+.ui-input-text input{background:#fff;border: 0 none;margin: 0;min-height: 2.4em;display: block;line-height: 1.6em;outline: 0 none;padding: 0.6em;width: 100%;}
+
+.ui-controlgroup .ui-radio .jqradiowrapper input{display:none;}
+.ui-radio .jqcheckwrapper input{display:none;}
+.jqradio {-webkit-appearance: none;background-color: #fafafa;border: 1px solid #cacece;box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);padding: 9px;border-radius: 50px;display: inline-block;position: relative;}
+a.jqcheck{background-color: #fafafa;border: 1px solid #cacece;box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);padding: 9px;border-radius: 3px;display: inline-block;position: relative;}
+.jqradiowrapper a.jqchecked:after{content: ' ';width: 12px;height: 12px;border-radius: 50px;position: absolute;top: 3px;background: #52adf9;box-shadow: inset 0px 0px 10px rgba(0,0,0,0.3);text-shadow: 0px;left: 3px;font-size: 32px;}
+.jqcheckwrapper a.jqchecked {background: url("hook.png") no-repeat scroll center top transparent;background-size:cover;display: block;height: 20px;vertical-align: middle;width: 20px;border:none;}
+.jqradiowrapper,.jqcheckwrapper{display: block;float: left;margin: 10px 4px 10px 10px;}
+#divQuestion {padding-top:0px;}
+div.field {clear: both;margin:4px 5px;padding: 0 7px;border:2px solid #f7f7f7;}
+
+span.req {color: red !important;margin: 2px 0 0 2px;}
+div.field-label {font-size: 16px !important;font-weight: bold !important;margin: 10px 0 10px 0 !important;display: block;word-wrap: break-word;overflow: hidden;}
+div.ValError {color: Red;display: block;font-size:20px;text-align: center;}
+h1 {text-shadow: none;font-weight: 700;font-size: 20px;}
+.errorMessage {color: Red;min-height: 20px;line-height: 20px;font-size: 12px;}
+#toptitle {background-color:#2695D0;padding: 12px 10px;width: 100%;color:#ffffff;}
+#toptitle .htitle {font-size: 20px;font-weight: bold;margin: 0;padding: 0;text-align: center;}
+.qtypetip {color: #0066FF;}
+.hideInput{display:none;}
+.tpSpan{color: #ff6600;float:right;display: none;}
+#divSubmit{padding: 10px;}
+.logofooter{margin: 0 auto;position: fixed;left: 0;bottom:0;right:0;}
+#divContent{padding-bottom:40px;}
+/*绑定*/
+.bindingDiv{padding-top:40px;}
+.bindingDiv .bindingImg{width:80%;margin:32px auto;}
+.bindingDiv .bindingImg img{width:100%;height:100%;margin:0 auto;}
+.bindingDiv .bindingCont{width:80%;margin:0 auto;padding:16px 0;}
+.bindingDiv .bindingCont .bindingSJH{display:block;width:100%;height:32px;padding:2px 4px;border:1px solid #CCC;border-radius: 4px;text-align: center;}
+.bindingDiv .bindingCont .bindingSJH:focus{outline:none;border:1px solid #9ABEF7;box-shadow:0 0 2px #9ABEF7; text-align: left;}
+.bindingDiv .bindingCont .bindingTxt{height:32px;line-height:32px;font-size:14px;color:#5E5E5E;}
+.bindingDiv .bindingCont .bindingBtn{height:40px;line-height:40px;width:180px;margin:16px auto;background:#216CDE;color:#EEEEEE;box-shadow:inset 0 0 12px #0043FA;text-align:center;border-radius:6px;}
+.bindingDiv .bindingCont .bindingBtn.cancel{background:#EA3939;box-shadow:inset 0 0 12px #8E0505;}
+/*提交后*/
+.referDiv{}
+.referDiv .referCont{padding:160px 32px 32px}
+.referDiv .referCont .referTxt{font-size: 20px;text-align: center;line-height:32px;color:#3E3E3E;text-shadow: 0 0 1px #5E5E5E;}
+
+.tDesc{padding:10px 4px 4px;font-size:12px;color:#5E5E5E;line-height:20px;max-height:100px;overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 4;-webkit-box-orient: vertical;border-bottom:1px dashed #CCCCCC; }
+
+.ui-text {border: 1px solid #e5e5e5;margin: 0 10px 0 40px;}
+.ui-text input {border: 0 solid #e5e5e5;border-radius: 2px;font-size: 16px; margin: 0;padding: 8px 5px;width: 100%;background: #fff;}

@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -1494,6 +1494,7 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
+    <script src="js/jquery-1.4.1.min.js"></script>
     <script type="text/javascript">
         var QKey = "946f4d9e12554d1ab3b49be539d8f162";
         var QitemCount = 0;
@@ -1506,170 +1507,78 @@
         });
 
         function LoadData() {
+            /***************获取数据,luozheao****************************/
             setLodaData();
             function setLodaData(data) {
-                data={
-                    "Method":"POST",
-                    "Action":"http://www.4ajf.cn/WebServer/controller/pagecontroller.ashx/GetQuestionnaire",
-                    "ParametersString":"QKey=946f4d9e12554d1ab3b49be539d8f162&OpenId=",
-                    "ErrCode":"2002",
-                    "ErrMsg":"ok！",
-                    "Data":{
-                        "QID":2862,
-                        "QKey":"946f4d9e12554d1ab3b49be539d8f162",
-                        "StudioInfo_SID":145,
-                        "SubbranchInfo_SID":205,
-                        "AdminUserInfo_AUID":0,
-                        "QName":"问卷的题目a1",
-                        "QRem":"问卷的题目a问卷的题目a",
-                        "IsOpen":2,
-                        "IsDelete":2,
-                        "SCount":11,
-                        "CrTime":"2017-10-19T00:56:38.837",
-                        "Item":[
-                            {
-                                "QIID":21879,
-                                "QuestionnaireInfo_QID":2862,
-                                "QITitle":"jjj",
-                                "QIType":2,
-                                "QValNull":2,
-                                "CrTime":"2017-10-19T00:56:38.837",
-                                "InertCount":0,
-                                "Option":[
-                                    {
-                                        "OID":64721,
-                                        "QuestionnaireItemInfo_QIID":21879,
-                                        "OKey":"A",
-                                        "OTitle":"luozheao",
-                                        "OImgUrl":"",
-                                        "OPrice":"undefined",
-                                        "UserValue":"",
-                                        "PCount":0,
-                                        "SUMPCount":0,
-                                        "OPType":0,
-                                        "CrTime":"2017-10-19T00:56:38.837"
-                                    },
-                                    {
-                                        "OID":64722,
-                                        "QuestionnaireItemInfo_QIID":21879,
-                                        "OKey":"B",
-                                        "OTitle":"ll",
-                                        "OImgUrl":"",
-                                        "OPrice":"undefined",
-                                        "UserValue":"",
-                                        "PCount":0,
-                                        "SUMPCount":0,
-                                        "OPType":0,
-                                        "CrTime":"2017-10-19T00:56:38.84"
-                                    }
-                                ]
-                            },
-                            {
-                                "QIID":21880,
-                                "QuestionnaireInfo_QID":2862,
-                                "QITitle":"yyyyy",
-                                "QIType":1,
-                                "QValNull":2,
-                                "CrTime":"2017-10-19T00:56:38.84",
-                                "InertCount":0,
-                                "Option":[
-                                    {
-                                        "OID":64723,
-                                        "QuestionnaireItemInfo_QIID":21880,
-                                        "OKey":"A",
-                                        "OTitle":"uuu",
-                                        "OImgUrl":"",
-                                        "OPrice":"",
-                                        "UserValue":"",
-                                        "PCount":0,
-                                        "SUMPCount":0,
-                                        "OPType":0,
-                                        "CrTime":"2017-10-19T00:56:38.84"
-                                    },
-                                    {
-                                        "OID":64724,
-                                        "QuestionnaireItemInfo_QIID":21880,
-                                        "OKey":"B",
-                                        "OTitle":"iii",
-                                        "OImgUrl":"",
-                                        "OPrice":"",
-                                        "UserValue":"",
-                                        "PCount":0,
-                                        "SUMPCount":0,
-                                        "OPType":0,
-                                        "CrTime":"2017-10-19T00:56:38.84"
-                                    }
-                                ]
-                            },
-                            {
-                                "QIID":21881,
-                                "QuestionnaireInfo_QID":2862,
-                                "QITitle":"请输入你的建议",
-                                "QIType":3,
-                                "QValNull":0,
-                                "CrTime":"2017-10-19T00:56:38.843",
-                                "InertCount":0,
-                                "Option":[
+                traveller_id=getCookie('traveller_id');
+                if(traveller_id==null){
+                    url = encodeURI('http://scan.luampm.com/wx/author?url='+window.location.href);
+                    window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc77c4c606c14f537&redirect_uri='+url+'&response_type=code&scope=snsapi_userinfo&state=0f6f23e1b9b8dffee1069d5ec08ad6dc&connect_redirect=1#wechat_redirect'
+                }else{
+                    var arr=window.location.href.split('=');
+                    var url="http://scan.luampm.com/wx/content";
+                    var key=arr[1];
+                    $.get(url,{QKey:key},function(data){
+                        $("#showloding").hide();
+                        if (data.code == 200) {
+                            var objData = data.data[0];
+                            console.log(objData);
+                            //转换option
 
-                                ]
+                            objData.item.map(function(p){
+                                if(!p.Option){
+                                    p.Option=p.option;
+                                }
+                            });
+
+                            $("#ttxt").text(objData.QName);
+                            $("#toptitleStr").text(objData.QName);
+                            if (objData.QRem != '' && objData.QRem != undefined && objData.QRem != null) {
+                                $("#tDesc").html(objData.QRem);
+                                $("#tDesc").css('display', 'block');
+                            } else {
+                                $("#tDesc").css('display', 'none');
                             }
-                        ]
-                    }
+                            $("#fieldset1").html(logItem(objData));
+                            //初始化事件
+                            $("#fieldset1 .minus").click(function () {
+                                var count = 0;
+                                count = parseInt($(this).next().text());
+                                if (isNaN(count)) {
+                                    count = 0;
+                                }
+                                if (count - 1 >= 0) {
+                                    $(this).next().text(count - 1);
+                                }
+                            });
+                            $("#fieldset1 .plus").click(function () {
+                                var count = 0;
+                                count = parseInt($(this).prev().text());
+                                if (isNaN(count)) {
+                                    count = 0;
+                                }
+                                $(this).prev().text(count + 1);
+                            });
+                            cilckInt();
+                            //检查是否显示
+                            GetIsShow(objData.StudioInfo_SID);
+                        }
+                    });
+                }
+                function getCookie(name)
+                {
+                    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+                    if(arr=document.cookie.match(reg))
+                        return unescape(arr[2]);
+                    else
+                        return null;
                 }
 
-                $.get("http://101.200.39.173/question/content",{QKey:'5f00755cbea2721a6fdfeb83e2dc6ccc'},function(data1){
 
-                });
-               data={"code":200,"data":[{"QID":39,"QKey":"5f00755cbea2721a6fdfeb83e2dc6ccc","StudioInfo_SID":11,"SubbranchInfo_SID":18,"AdminUserInfo_AUID":11,"QName":"\u5efa\u534e\u6d4b\u8bd51","QRem":null,"IsOpen":0,"IsDelete":0,"item":[{"QIID":363,"QuestionnaireInfo_QID":39,"QITitle":"aaaaa","QIType":1,"QValNull":2,"sequence":1,"CrTime":"1508429498","updated_at":"1508429498","deleted_at":null,"option":[{"OID":1228,"QuestionnaireItemInfo_QIID":363,"OKey":"A","OTitle":"111","OImgUrl":"","OPrice":"undefined","UserValue":null,"PCount":null,"SUMPCount":null,"OPType":0,"sequence":1,"CrTime":"1508429498","updated_at":"1508429498","deleted_at":null},{"OID":1229,"QuestionnaireItemInfo_QIID":363,"OKey":"B","OTitle":"22222","OImgUrl":"","OPrice":"undefined","UserValue":null,"PCount":null,"SUMPCount":null,"OPType":0,"sequence":2,"CrTime":"1508429498","updated_at":"1508429498","deleted_at":null}]}],"CrTime":"1508429498","updated_at":"1508429847","qc_src":"http:\/\/101.200.39.173\/question\/get_question_qrc"}]}
-                $("#showloding").hide();
 
-                if (data.code == 200) {
-                    var objData = data.data[0];
 
-                    //转换option
-
-                    objData.item.map(function(p){
-                        if(!p.Option){
-                            p.Option=p.option;
-                        }
-                    });
-
-                    $("#ttxt").text(objData.QName);
-                    $("#toptitleStr").text(objData.QName);
-                    if (objData.QRem != '' && objData.QRem != undefined && objData.QRem != null) {
-                        $("#tDesc").html(objData.QRem);
-                        $("#tDesc").css('display', 'block');
-                    } else {
-                        $("#tDesc").css('display', 'none');
-                    }
-                    $("#fieldset1").html(logItem(objData));
-                    //初始化事件
-                    $("#fieldset1 .minus").click(function () {
-                        var count = 0;
-                        count = parseInt($(this).next().text());
-                        if (isNaN(count)) {
-                            count = 0;
-                        }
-                        if (count - 1 >= 0) {
-                            $(this).next().text(count - 1);
-                        }
-                    });
-                    $("#fieldset1 .plus").click(function () {
-                        var count = 0;
-                        count = parseInt($(this).prev().text());
-                        if (isNaN(count)) {
-                            count = 0;
-                        }
-                        $(this).prev().text(count + 1);
-                    });
-                    cilckInt();
-                    //检查是否显示
-                    GetIsShow(objData.StudioInfo_SID);
-                }
             }
-
         }
-
         //组合题目信息
         function logItem(obj) {
             var html = "";
@@ -2014,21 +1923,25 @@
                         var top = $(aQitem[i]).offset().top - 50;
                         document.getElementsByTagName('body')[0].scrollTop = top;
                         return;
-
                     }
                 }
                 //判断必答结束
                 if (true) {//ydcount >= QitemCount) {
                     $("#showloding").show();
                     $("#divQuestion").hide();
-                    //提交代码
-                     debugger;
+                    /***********提交代码,luozheao***************/
+                    var url='http://scan.luampm.com/wx/submit_question';
+                    var data={
+                        QKey:QKey,
+                        jsonMode:jsonModel
+                    }
                     $.ajax({
-                        url: "../controller/pagecontroller.ashx/SetUserToVal",
-                        data: "jsonMode=" + jsonModel + "&QKey=" + QKey + "&OpenId=&Expand=",
+                        url: url,
+                        data:data,
                         dataType: "JSON",
                         type: "POST",
                         success: function (obj) {
+                            debugger;
                             $("#showloding").hide();
                             $("#divQuestion").show();
                             obj = eval("(" + obj + ")");
@@ -2101,7 +2014,6 @@
                 }
             }
         }
-
     </script>
 </head>
 <body>
@@ -2635,7 +2547,7 @@
         //            $("#showerrcode").show();
         //            $("#showerrcode .PopDiv").text("定位失败，您不能打开问卷。");
         //        }
-        //    }        
+        //    }
         //},{enableHighAccuracy: true})
     }
 </script>
