@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <title>绑定</title>
+    <script src="js/hm.js"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?06c8aba55920f25824f4ec5384724956";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <script type="text/javascript">
+        if (window.location.hash) {
+            window.location.hash = "";
+            window.location.href = window.location.href.replace("#", "");
+        }
+    </script>
+    <link rel="stylesheet" href="bind/jqmobo.css">
+    <script src="js/jquery-1.4.1.min.js"></script>
+    <script type="text/javascript">
+        var openid = "";
+
+        function bindopenid(obj) {
+            if ($(obj).text() != "确认绑定") {
+                return;
+            }
+            $(obj).text("正在绑定..");
+            /********绑定号码,luozheao***********/
+
+            function getCookie(name)
+            {
+                var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+                if(arr=document.cookie.match(reg))
+                    return unescape(arr[2]);
+                else
+                    return null;
+            }
+
+            leader_id=getCookie('leader_id');
+            console.log(leader_id);
+            debugger;
+            if(leader_id==null){
+                debugger;
+                url = encodeURI('http://scan.luampm.com/wx/leader_author?url='+window.location.href);
+                window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc77c4c606c14f537&redirect_uri='+url+'&response_type=code&scope=snsapi_userinfo&state=0f6f23e1b9b8dffee1069d5ec08ad6dc&connect_redirect=1#wechat_redirect'
+            }else{
+
+                var data={
+                    bind_number:$("#phone").val()
+                }
+                debugger
+                $.ajax({
+                    type: "post",
+                    url: "http://scan.luampm.com/wx/bind_leader",
+                    dataType: "JSON",
+                    data: data,
+                    success: function (data) {
+                        debugger;
+                        var data = eval("(" + data + ")");
+                        $(obj).text("确认绑定");
+                        if (data.ErrCode == "2002") {
+                            //成功
+                            $("#imgurl").attr("src", "../../AdminWeb/PublicResource/UserImg/success.png");
+                            alert(data.ErrMsg);
+                            setTimeout(function () {
+                                WeixinJSBridge.call('closeWindow');
+                            }, 3000);
+                        } else {
+                            alert(data.ErrMsg);
+                            setTimeout(function () {
+                                WeixinJSBridge.call('closeWindow');
+                            }, 3000);
+                        }
+
+                    }
+                });
+            }
+        }
+
+        //隐藏微信功能按钮
+        function onBridgeReady() {
+            WeixinJSBridge.call('hideOptionMenu');
+        }
+
+        if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+            } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+            }
+        } else {
+            onBridgeReady();
+        }
+        $(function () {
+            $("#isokbut").click();
+        });
+    </script>
+</head>
+<body>
+<header></header>
+<article>
+    <div class="bindingDiv">
+        <div class="bindingImg">
+            <img id="imgurl" src="bind/connect.png">
+        </div>
+        <div class="bindingCont">
+            <input type="text" id="phone" class="bindingSJH" value="e70d5f842e20428f8440ac0d3d240dd2"
+                   placeholder="绑定号码">
+            <p class="bindingTxt">请输绑定号码进行绑定</p>
+            <div onclick="bindopenid(this)" id="isokbut" class="bindingBtn">确认绑定</div>
+            <div class="bindingBtn cancel" style="display:none;">取消</div>
+        </div>
+    </div>
+</article>
+<footer></footer>
+
+</body>
+</html>
