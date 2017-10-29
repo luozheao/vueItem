@@ -42,7 +42,7 @@
             if(document.domain=='localhost'){
                 document.getElementById('MainBody').src="/questionnaire/questionnaire.html";
             }else {
-                document.getElementById('MainBody').src="http://101.200.39.173/lza/questionnaire/questionnaire.html";
+                document.getElementById('MainBody').src="http://scan.luampm.com/lza/questionnaire/questionnaire.html";
             }
 
             //赋值问卷名

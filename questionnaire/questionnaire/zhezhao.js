@@ -77,12 +77,12 @@ function PDF_launch(ob, zzw, zzh, callback, titlestr) {
     }
     var titleHeight = 0;
     if (!titlestr) {
-        PDF_c.innerHTML = "<a style='background:url(http://101.200.39.173/lza/questionnaire/images/bt_closed.gif) no-repeat;width:30px;height:30px;margin:-10px -18px 0 0;display:inline;position:relative;float:right;cursor:pointer;' onclick='PDF_close();'></a>";
+        PDF_c.innerHTML = "<a style='background:url(http://scan.luampm.com/lza/questionnaire/images/bt_closed.gif) no-repeat;width:30px;height:30px;margin:-10px -18px 0 0;display:inline;position:relative;float:right;cursor:pointer;' onclick='PDF_close();'></a>";
     } else {
         if (titlestr == "no") {
             PDF_c.innerHTML = "";
         } else {
-            PDF_c.innerHTML = '<div style="background:#e7e7e7;padding:0 20px;height:38px;line-height:38px;border-radius:10px 10px 0 0;"><span style="color:#222;float:left; font-weight:bold;font-size:14px;">' + titlestr + '</span><a href="javascript:void(0);" onclick="PDF_close();" style="background:url(http://101.200.39.173/lza/questionnaire/images/icon_popup_close.png) no-repeat;float:right;width:27px; height:27px;margin-top:5px;overflow:hidden;" title="关闭"></a></div>';
+            PDF_c.innerHTML = '<div style="background:#e7e7e7;padding:0 20px;height:38px;line-height:38px;border-radius:10px 10px 0 0;"><span style="color:#222;float:left; font-weight:bold;font-size:14px;">' + titlestr + '</span><a href="javascript:void(0);" onclick="PDF_close();" style="background:url(http://scan.luampm.com/lza/questionnaire/images/icon_popup_close.png) no-repeat;float:right;width:27px; height:27px;margin-top:5px;overflow:hidden;" title="关闭"></a></div>';
             titleHeight = 14;
         }
     }

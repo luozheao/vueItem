@@ -1496,7 +1496,7 @@
     </script>
     <script src="js/jquery-1.4.1.min.js"></script>
     <script type="text/javascript">
-        var QKey = "946f4d9e12554d1ab3b49be539d8f162";
+        var QKey = "";
         var QitemCount = 0;
         var requirCount = 0;
 
@@ -1518,6 +1518,7 @@
                     var arr=window.location.href.split('=');
                     var url="http://scan.luampm.com/wx/content";
                     var key=arr[1];
+                    QKey=key;
                     $.get(url,{QKey:key},function(data){
                         $("#showloding").hide();
                         if (data.code == 200) {
@@ -1941,18 +1942,15 @@
                         dataType: "JSON",
                         type: "POST",
                         success: function (obj) {
+                            console.log(obj);
                             debugger;
                             $("#showloding").hide();
                             $("#divQuestion").show();
                             obj = eval("(" + obj + ")");
-                            if (obj.ErrCode == "2002") {
-                                var UrlLink = "wenjuanTJ.aspx?txt=提交成功，感谢您的建议！&QKey=" + QKey + "&Expand=";
-                                location.replace(UrlLink);
-                                event.returnValue = false;
+                            if (obj.code == 200) {
+                                alert('提交成功!');
                             } else {
-                                var UrlLink = "wenjuanTJ.aspx?txt=" + obj.ErrMsg + "&QKey=" + QKey + "&Expand=";
-                                location.replace(UrlLink);
-                                event.returnValue = false;
+                                alert('提交失败!');
                             }
                         },
                         error: function () {
@@ -2099,7 +2097,7 @@
 </div>
 <div id="divPowerBy" style="margin: 0 auto; display: none;" class="logofooter">
     <div class="wjfooter">
-        <a href="http://www.4ajf.cn/WebServer/webphone/questionnaire.aspx?QKey=946f4d9e12554d1ab3b49be539d8f162&amp;code=021joldn1iJksl0pu3dn1zL2dn1joldG&amp;state="
+        <a href=""
            target="_blank" title="简方互联 技术支持">简方互联</a>&nbsp;技术支持
     </div>
 </div>
