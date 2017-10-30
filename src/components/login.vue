@@ -115,7 +115,7 @@
             return {
 
                 activeName:'login',
-                captcahImg:'<img src="http://101.200.39.173/system/get_captcha" />',
+                captcahImg:'<img src="http://scan.luampm.com/system/get_captcha" />',
                 loading:false,
                 /******model层******/
                 ruleForm:{
@@ -154,7 +154,7 @@
             },
             //切换图形验证码
             changecaptchaImgEvent(){
-                this.captcahImg='<img src="http://101.200.39.173/system/get_captcha?'+Math.random().toString(32).sub(2)+'" />';
+                this.captcahImg='<img src="http://scan.luampm.com/system/get_captcha?'+Math.random().toString(32).sub(2)+'" />';
             },
             //获取短信验证码
             getCode(){

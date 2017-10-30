@@ -530,7 +530,7 @@ function setBatchA() {
         if(document.domain=='localhost'){
             PDF_launch("addbatchq.html", 620, 480, null, "批量添加题目");
         }else {
-            PDF_launch("http://101.200.39.173/lza/questionnaire/addbatchq.html", 620, 480, null, "批量添加题目");
+            PDF_launch("http://scan.luampm.com/lza/questionnaire/addbatchq.html", 620, 480, null, "批量添加题目");
         }
 
     };

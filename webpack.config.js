@@ -63,7 +63,7 @@ module.exports = (options = {}) => ({
     proxy: {
       '/api/': {
         // target: 'http://127.0.0.1:8080'
-        target: 'http://101.200.39.173',
+        target: 'http://scan.luampm.com',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

@@ -105,16 +105,18 @@
                                     <el-input v-model="customPageForm.url"></el-input>
                                 </el-form-item>
                                 <el-form-item label="封面" :label-width="formLabelWidth">
+                                    <!--<input type="file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">-->
                                     <el-upload
                                             class="avatar-uploader"
-                                            action="https://jsonplaceholder.typicode.com/posts/"
+                                            action="http://localhost:8010/src"
                                             :show-file-list="false"
-
+                                            :on-success="handleAvatarSuccess"
+                                            :before-upload="beforeAvatarUpload"
                                           >
                                         <img v-if="imageUrl" :src="imageUrl" class="avatar">
                                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                                     </el-upload>
-                                    <el-button type="success" @click="deleteImg">删除</el-button>
+                                    <!--<el-button type="success" @click="deleteImg">清除</el-button>-->
                                 </el-form-item>
 
                             </el-form>
@@ -337,11 +339,31 @@
             }
         },
         methods: {
+
+            /*****图片上传,start******/
+            handleAvatarSuccess(res, file) {
+                this.imageUrl = URL.createObjectURL(file.raw);
+                debugger;
+            },
+            beforeAvatarUpload(file) {
+//                const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+                const isJPG=true;
+
+//                if (!isJPG) {
+//                    this.$message.error('上传头像图片只能是 JPG 格式!');
+//                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                }
+                return isJPG && isLt2M;
+            },
+            /*****图片上传,end******/
             getCodeImg(data){
-                return '<img src="http://101.200.39.173/question/get_question_qrc?url=http://101.200.39.173/question/detail?QKey='+data.QKey+'" style="width:100%;height: 100%"/>'
+                return '<img src="http://scan.luampm.com/question/get_question_qrc?url=http://scan.luampm.com/lza/weixinQuestionnaire/index.html?QKey='+data.QKey+'" style="width:100%;height: 100%"/>'
             },
             getCodeImgUrl(data){
-                return "http://101.200.39.173/question/detail?QKey="+data.QKey;
+                return "http://scan.luampm.com/lza/weixinQuestionnaire/index.html?QKey="+data.QKey;
             },
             init(){
                 //获取列表数据

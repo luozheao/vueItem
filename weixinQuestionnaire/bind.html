@@ -10,7 +10,8 @@
         var _hmt = _hmt || [];
         (function () {
             var hm = document.createElement("script");
-            hm.src = "//hm.baidu.com/hm.js?06c8aba55920f25824f4ec5384724956";
+            var random=Math.random();
+            hm.src = "//hm.baidu.com/hm.js?"+random;
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
         })();
@@ -22,86 +23,7 @@
         }
     </script>
     <link rel="stylesheet" href="bind/jqmobo.css">
-    <script src="js/jquery-1.4.1.min.js"></script>
-    <script type="text/javascript">
-        var openid = "";
 
-        function bindopenid(obj) {
-            if ($(obj).text() != "确认绑定") {
-                return;
-            }
-            $(obj).text("正在绑定..");
-            /********绑定号码,luozheao***********/
-
-            function getCookie(name)
-            {
-                var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-                if(arr=document.cookie.match(reg))
-                    return unescape(arr[2]);
-                else
-                    return null;
-            }
-
-            leader_id=getCookie('leader_id');
-            console.log(leader_id);
-            debugger;
-            if(leader_id==null){
-                debugger;
-                url = encodeURI('http://scan.luampm.com/wx/leader_author?url='+window.location.href);
-                window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc77c4c606c14f537&redirect_uri='+url+'&response_type=code&scope=snsapi_userinfo&state=0f6f23e1b9b8dffee1069d5ec08ad6dc&connect_redirect=1#wechat_redirect'
-            }else{
-
-                var data={
-                    bind_number:$("#phone").val()
-                }
-                debugger
-                $.ajax({
-                    type: "post",
-                    url: "http://scan.luampm.com/wx/bind_leader",
-                    dataType: "JSON",
-                    data: data,
-                    success: function (data) {
-                        debugger;
-                        var data = eval("(" + data + ")");
-                        $(obj).text("确认绑定");
-                        if (data.ErrCode == "2002") {
-                            //成功
-                            $("#imgurl").attr("src", "../../AdminWeb/PublicResource/UserImg/success.png");
-                            alert(data.ErrMsg);
-                            setTimeout(function () {
-                                WeixinJSBridge.call('closeWindow');
-                            }, 3000);
-                        } else {
-                            alert(data.ErrMsg);
-                            setTimeout(function () {
-                                WeixinJSBridge.call('closeWindow');
-                            }, 3000);
-                        }
-
-                    }
-                });
-            }
-        }
-
-        //隐藏微信功能按钮
-        function onBridgeReady() {
-            WeixinJSBridge.call('hideOptionMenu');
-        }
-
-        if (typeof WeixinJSBridge == "undefined") {
-            if (document.addEventListener) {
-                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-            } else if (document.attachEvent) {
-                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
-                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-            }
-        } else {
-            onBridgeReady();
-        }
-        $(function () {
-            $("#isokbut").click();
-        });
-    </script>
 </head>
 <body>
 <header></header>
@@ -111,7 +33,7 @@
             <img id="imgurl" src="bind/connect.png">
         </div>
         <div class="bindingCont">
-            <input type="text" id="phone" class="bindingSJH" value="e70d5f842e20428f8440ac0d3d240dd2"
+            <input type="text" id="phone" class="bindingSJH" value=""
                    placeholder="绑定号码">
             <p class="bindingTxt">请输绑定号码进行绑定</p>
             <div onclick="bindopenid(this)" id="isokbut" class="bindingBtn">确认绑定</div>
@@ -120,6 +42,78 @@
     </div>
 </article>
 <footer></footer>
+<script src="js/jquery-1.4.1.min.js"></script>
+<script type="text/javascript">
 
+    var arr=window.location.href.split('=');
+    var bind_number=arr[1].split('?')[0];
+    $('#phone').val(bind_number);
+
+    var openid = "";
+
+    function bindopenid(obj) {
+        if ($(obj).text() != "确认绑定") {
+            return;
+        }
+        $(obj).text("正在绑定..");
+        /********绑定号码,luozheao***********/
+
+        function getCookie(name)
+        {
+            var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+            if(arr=document.cookie.match(reg))
+                return unescape(arr[2]);
+            else
+                return null;
+        }
+        leader_id=getCookie('leader_id');
+        console.log(leader_id);
+        if(leader_id==null){
+            url = encodeURI('http://scan.luampm.com/wx/leader_author?url='+window.location.href);
+            window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc77c4c606c14f537&redirect_uri='+url+'&response_type=code&scope=snsapi_userinfo&state=0f6f23e1b9b8dffee1069d5ec08ad6dc&connect_redirect=1#wechat_redirect'
+        }else{
+
+            var data={
+                bind_number:$("#phone").val()
+            }
+
+            $.ajax({
+                type: "post",
+                url: "http://scan.luampm.com/wx/bind_leader",
+                dataType: "JSON",
+                data: data,
+                success: function (data) {
+                    var data = eval("(" + data + ")");
+                    $(obj).text("确认绑定");
+                    if (data.code == 200) {
+                        alert('绑定成功!');
+                    } else {
+                        alert(data.message);
+                    }
+
+                }
+            });
+        }
+    }
+
+    //隐藏微信功能按钮
+    function onBridgeReady() {
+        WeixinJSBridge.call('hideOptionMenu');
+    }
+
+    if (typeof WeixinJSBridge == "undefined") {
+        if (document.addEventListener) {
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        } else if (document.attachEvent) {
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        }
+    } else {
+        onBridgeReady();
+    }
+    $(function () {
+        $("#isokbut").click();
+    });
+</script>
 </body>
 </html>
