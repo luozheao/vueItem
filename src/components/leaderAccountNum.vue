@@ -212,7 +212,7 @@
                 inputSearch:'',
                 currentPageNum:1,
                 currentListId:{'isChange':false,'id':''},//修改一项的当前id
-                erweima:'src/images/smdpfwh.jpg',
+                erweima:'src/images/erweima2.jpg',
                 weixin:'src/images/tsxxt.jpg',
                 dialogFormVisible:false,
                 tableData:{
@@ -491,8 +491,9 @@
             getNum(){
                 this.$http.get('/leader/generate_code').then(
                     function(response) {
-                        let isSuccess= response.data.code=='200';
-                        this.form.bind_number=response.body.data
+//                        let isSuccess= response.data.code=='200';
+                        let isSuccess= response.data?true:false;
+                        this.form.bind_number=response.data
                         this.$message({
                             message: '生成成功',
                             type:isSuccess?'success':'error'
