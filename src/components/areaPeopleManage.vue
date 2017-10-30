@@ -16,6 +16,12 @@
     .bodyBox{
         padding:10px;
     }
+    .alarm{
+        display: block;
+    }
+    .el-checkbox+.el-checkbox{
+        margin: 0;
+    }
 </style>
 
 <template>
@@ -63,6 +69,18 @@
                                 <el-button type="primary" @click="addarea">确 定</el-button>
                             </div>
                         </el-dialog>
+                        <el-dialog title="权限查看" :visible.sync="lookAlarmBox">
+                            <div  v-for="item in alarmList" @click="changeAlarm(item.id)">
+                                <el-checkbox checked='checked' class="alarm">{{item.name}}</el-checkbox>
+                            </div>
+                            <div  v-for="val in oldAlarm" @click="changeAlarm(val.id)">
+                                <el-checkbox class="alarm" >{{val.name}}</el-checkbox>
+                            </div>
+                            <!--<div slot="footer" class="dialog-footer">-->
+                                <!--<el-button @click="lookAlarmBox = false">取 消</el-button>-->
+                                <!--<el-button type="primary"  @click="changeAlarm">确 定</el-button>-->
+                            <!--</div>-->
+                        </el-dialog>
                         <el-select v-model="id" placeholder="请选择区域">
                             <el-option
                                     v-for="item in options"
@@ -98,14 +116,16 @@
                             label="是否开启"
                     >
                         <template scope='scope'>
-                            <span v-show='scope.row.status==0'>未开启</span>
-                            <span v-show='scope.row.status==1'>开启</span>
+                            <el-button type="primary" size="small" @click="isCommentMsgFn(scope.row)" v-show="scope.row.status==1">已开启</el-button>
+                            <el-button type="primary" size="small" @click="isCommentMsgFn(scope.row)" v-show="scope.row.status==0">未开启</el-button>
                         </template>
                     </el-table-column>
                     <el-table-column
-                            prop="rights"
                             label="查看权限"
                     >
+                        <template scope='scope'>
+                            <el-button type="info" size="mini" @click="lookAlarm(scope.row)">查看</el-button>
+                        </template>
                     </el-table-column>
                     <el-table-column
                             prop="created_at"
@@ -143,6 +163,7 @@
                 currentPageNum:1,
                 currentListId:{'isChange':false,'id':''},//修改一项的当前id
                 dialogFormVisible:false,
+                lookAlarmBox:false,
                 tableData:{
                     "current_page": 0,
                     "data": [
@@ -177,6 +198,11 @@
                     name: ''
                 }],
                 id:'',
+                alarmId:'',
+                alarmList:'',
+                oldAlarm:[],
+                sendAlrm:[],
+                str:''
             }
         },
         methods: {
@@ -247,6 +273,80 @@
                this.form.account=row.phone;
                this.currentListId.isChange=true;
                 this.dialogFormVisible=true
+            },
+            //查看权限
+            lookAlarm(row){
+                let self=this;
+                this.lookAlarmBox=true;
+                this.alarmId=row.id;
+                this.$http.get('/area_admin/right_list',{}).then(function(response) {
+                    self.alarmList=response.data.data
+                    var arr=[{id:'1',name:'领导账号查看'},{id:'2',name:'领导账号操作'},{id:'2',name:'问卷模版列表查看'}
+                        ,{id:'4',name:'问卷模版列表操作'},{id:'5',name:'问卷列表查看'},{id:'6',name:'问卷列表操作'}
+                        ,{id:'7',name:'桌号房间号设置'}]
+                    self.str=''
+                    if(self.alarmList.length){
+                        for(var i=0;i<self.alarmList.length;i++){
+                           self.str+=self.alarmList[i].id
+                            self.sendAlrm.push(self.alarmList[i].id)
+                        }
+                    }
+                    self.oldAlarm=[];
+                    for(var i=1;i<8;i++){
+                        if(self.str.indexOf(i)==-1){
+                            self.oldAlarm.push(arr[i-1])
+                        }
+                    }
+                },function(response) {
+                });
+            },
+            //设置权限
+            changeAlarm(data){
+                let self=this
+               if(self.sendAlrm.length){
+                   for(var i=0;i<self.sendAlrm.length;i++){
+                       if(self.str.indexOf(data)==-1){
+                           self.sendAlrm.push(data)
+                       }else{
+                           var arr=[]
+                           if(self.sendAlrm.length==1){
+                               self.sendAlrm=[]
+                           }else{
+                               for(var l=0;l<self.sendAlrm.length;l++){
+                                   if(self.sendAlrm[l]!=data){
+                                       arr.push(self.sendAlrm[l])
+                                   }
+                               }
+                               self.sendAlrm= arr
+                           }
+                       }
+                   }
+               }else{
+                   self.sendAlrm.push(data)
+               }
+               var obj={
+                   id:self.alarmId,
+                   rights:'['+self.sendAlrm.toString()+']'
+               }
+                this.$http.post('/area_admin/set_rights',obj).then(
+                    (response) => {
+                        response=response.body;
+                        let isSuccess= response.code==200;
+                        if(isSuccess){
+                            //获取列表数据
+                            this.initTable();
+                        }
+                        this.$message({
+                            message: response.data||response.message,
+                            type:isSuccess?'success':'error'
+                        });
+                    },
+                    (response) => {
+                        this.$message({
+                            message: response.data,
+                            type: 'error'
+                        });
+                    });
             },
             handleSizeChange(val) {
                 debugger
@@ -321,7 +421,28 @@
                             });
                         });
                 }
-            }
+            },
+            //设置是否开启
+            isCommentMsgFn(data){
+                this.$http.post('/area_admin/set_status',{'id':data.id}).then(
+                    (response) => {
+                        response=response.body;
+                        let isSuccess= response.code==200;
+                        if(isSuccess){
+                            this.initTable();
+                        }
+                        this.$message({
+                            message: response.data,
+                            type:isSuccess?'success':'error'
+                        });
+                    },
+                    (response) => {
+                        this.$message({
+                            message: response.data,
+                            type: 'error'
+                        });
+                    });
+            },
         },
         created() {
             this.init();
