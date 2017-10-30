@@ -187,11 +187,10 @@
                     </el-table-column>
 
                     <el-table-column
-                            prop="lookAll"
                             label="查看统计"
                     >
                         <template scope="scope">
-                            <el-button type="primary" size="small" @click="lookAllFn(scope)">查看统计</el-button>
+                            <el-button type="primary" size="small" @click="lookAllFn(scope.row)">查看统计</el-button>
                         </template>
                     </el-table-column>
                     <el-table-column
@@ -481,6 +480,10 @@
             addarea(){
                 this.dialogFormVisible = false
                 console.log('加多一行')
+            },
+            //查看统计
+            lookAllFn(row){
+
             },
             isSendFn(data){
                 var isOpen=data.IsOpen==0?1:0;

@@ -16,6 +16,12 @@
     .bodyBox{
         padding:10px;
     }
+    #mapBox{
+        margin-left: 200px;
+        height: 400px;
+        width: 600px;
+        border: 1px solid #333;
+    }
 </style>
 
 <template>
@@ -26,23 +32,27 @@
                 <el-row>
                     <el-col :span="24">
                         <el-button type="primary" @click="addPositionFn">添加位置</el-button>
-                        <el-dialog title="添加位置" :visible.sync="dialogFormVisible">
+                        <el-dialog title="添加位置" :visible.sync="dialogFormVisible" size="large">
                             <el-form :model="form">
-                                <el-form-item label="所属项目" :label-width="formLabelWidth">
-                                    <el-select v-model="form.project_id" placeholder="请选择所属项目">
-                                        <el-option
-                                                v-for="item in form.region"
-                                                :key="item.id"
-                                                :label="item.project"
-                                                :value="item.id">
-                                        </el-option>
-                                    </el-select>
+                                <el-form-item label="范围名称" :label-width="formLabelWidth">
+                                    <el-input v-model="form.range_name" auto-complete="off"></el-input>
                                 </el-form-item>
-                                <el-form-item label="区域名称" :label-width="formLabelWidth">
-                                    <el-input v-model="form.name" auto-complete="off"></el-input>
+                                <el-form-item label="坐标" :label-width="formLabelWidth">
+                                    <el-input v-model="form.coordinate" auto-complete="off"></el-input>
                                 </el-form-item>
-                                <el-form-item label="区域备注" :label-width="formLabelWidth">
-                                    <el-input type="textarea" v-model="form.remark"></el-input>
+                                <el-form-item label="半径" :label-width="formLabelWidth">
+                                    <el-input v-model="form.radius" auto-complete="off"></el-input>
+                                </el-form-item>
+                            </el-form>
+                            <div id='mapBox' style="margin-bottom: 10px">
+
+                            </div>
+                            <el-form :inline="true">
+                                <el-form-item label="城市名称" :label-width="formLabelWidth">
+                                    <el-input v-model="cityName" auto-complete="off" ></el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button type="primary"  @click="searchCity">查询</el-button>
                                 </el-form-item>
                             </el-form>
                             <div slot="footer" class="dialog-footer">
@@ -110,6 +120,8 @@
 //        props: ['param', 'data'],
         data() {
             return  {
+                map:'',
+                cityName:'',
                 inputSearch:'',
                 isChange:false,
                 currentId:'',
@@ -136,18 +148,16 @@
                     total: 3
                 },
                 form:{
-                    region:[{
-                        id:'',
-                        project:''
-                    }],
-                    name:'',
-                    remark:'',
-                    project_id:'',
+                    qid:'',
+                    range_name:'',
+                    coordinate:'',
+                    radius:''
                 }
             }
         },
         methods: {
             init(){
+                this.form.qid=window.QID;
                 //获取列表数据
                 this.initTable();
 
@@ -157,7 +167,6 @@
                     console.log(this.form.region)
                 },function(response) {
                 });
-
             },
             initTable(){
                 //获取列表数据
@@ -167,12 +176,19 @@
 
                 });
             },
-            //点击添加区域
+            //点击添加位置
             addPositionFn(){
-                this.form.name='';
-                this.form.remark='';
+                let self=this;
+                    this.form.range_name='',
+                  this.form.coordinate='',
+                    this.form.radius=''
                 this.dialogFormVisible = true
                 this.isChange=false
+                setTimeout(function () {
+                    //生成百度地图
+                    self.showBaiduMap()
+                })
+
             },
             //搜索按钮
             inputSearchClick(val){
@@ -192,7 +208,7 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        this.$http.post('/area/delete',{'id':data.id}).then(
+                        this.$http.post('/question/del_range',{'id':data.id}).then(
                             function(response) {
                                 let isSuccess= response.data.code=='200';
                                 if(isSuccess){
@@ -224,11 +240,17 @@
             },
             //修改一项
             changeLi(index, rows){
+                let self =this
                 this.dialogFormVisible = true
                 this.isChange=true
-                this.currentId=this.tableData.data[index].id;
-                this.form.name=rows.name;
-                this.form.remark=rows.remark;
+                setTimeout(function () {
+                    //生成百度地图
+                    self.showBaiduMap()
+                })
+                this.form.id=window.QID
+                this.form.range_name=rows.name
+                    this.form.coordinate=rows.longitude+','+rows.latitude
+                    this.form.radius=rows.range
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
@@ -244,9 +266,7 @@
             //添加页面的确定按钮
             addarea(){
                 if(this.isChange){
-                    var data=JSON.parse(JSON.stringify(this.form));
-                    data.id= this.currentId;
-                    this.$http.post('/area/edit',data).then(function(response) {
+                    this.$http.post('/question/edit_range',this.form).then(function(response) {
                         this.form.region=response.data.data
                         let isSuccess= response.body.code=='200';
                         if(isSuccess){
@@ -269,7 +289,7 @@
                         });
                     });
                 }else{
-                    this.$http.post('/area/add',this.form).then(function(response) {
+                    this.$http.post('/question/add_range',this.form).then(function(response) {
                         this.form.region=response.data.data
                         let isSuccess= response.data.code=='200';
                         if(isSuccess){
@@ -293,6 +313,27 @@
                 }
 
                 this.dialogFormVisible = false
+            },
+            //生成百度地图
+            showBaiduMap(){
+                let self=this;
+                // 百度地图API功能
+                var map = new BMap.Map("mapBox");          // 创建地图实例
+                var point = new BMap.Point(116.404, 39.915);  // 创建点坐标
+                map.centerAndZoom(point, 15);                 // 初始化地图，设置中心点坐标和地图级别
+                map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+                map.addEventListener("click", function(e){
+                    self.form.coordinate=e.point.lng+','+e.point.lat
+
+                    var point = new BMap.Point(e.point.lng, e.point.lat);
+                    var infoWindow = new BMap.InfoWindow(self.form.coordinate);  // 创建信息窗口对象
+                    map.openInfoWindow(infoWindow,point);
+                });
+                self.map=map;
+            },
+            searchCity(){
+                let self=this;
+                this.map.centerAndZoom(self.cityName,11);
             }
         },
         created() {
