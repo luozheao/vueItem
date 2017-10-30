@@ -38,7 +38,7 @@
                         <el-dialog title="添加领导账号" :visible.sync="dialogFormVisible" size="large">
                             <el-form :model="form">
                                 <el-row>
-                                <el-col :span="12">
+                                <el-col :span="16">
                                     <el-form-item label="所属项目">
                                         <el-select v-model="form.project_id" placeholder="请选择所属项目">
                                             <el-option
@@ -62,7 +62,7 @@
                                     <el-form-item label="绑定号码">
                                         <el-row>
                                             <el-col :span="14">
-                                                <el-input v-model="form.bind_number" style="width: 320px"></el-input>
+                                                <el-input v-model="form.bind_number" style="width: 420px"></el-input>
                                                 <div style="font-size: 12px;color: red;">请将该号码发给对应的区域领导，在微信里绑定即可！</div>
                                             </el-col>
                                             <el-col :span="3">
@@ -77,14 +77,15 @@
                                         <el-input v-model="form.phone" style="width: 400px"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="12">
-                                    <el-col :span="12">
+                                <el-col :span="8">
+                                    <el-col :span="24">
                                         <img :src="erweima" style="width:78%">
                                         <div style="font-size: 12px;color: red;">
-                                            注意：首先领导用手机微信关注服务号或者查找添加 “扫码点评”微信公众号，并绑定刚生成的绑定号码就能在有投诉的时候接收到微信提醒。
+                                            <!--注意：首先领导用手机微信关注服务号或者查找添加 “扫码点评”微信公众号，并绑定刚生成的绑定号码就能在有投诉的时候接收到微信提醒。-->
+                                            扫描二维码
                                         </div>
                                     </el-col>
-                                    <el-col :span="12">
+                                    <el-col :span="12" style="display: none">
                                         <img :src="weixin" style="width:70%">
                                     </el-col>
                                 </el-col>
