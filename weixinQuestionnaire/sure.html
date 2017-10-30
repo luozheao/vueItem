@@ -84,7 +84,9 @@
             color: #F7F7F7;
             background: #2695D0;
         }
-
+       .gray{
+           background:gray !important;
+       }
         .blue:hover {
             background: #007ead;
         }
@@ -1500,6 +1502,7 @@
         var QKey = "";
         var QitemCount = 0;
         var requirCount = 0;
+        var traveller_id="";
 
         $(function () {
             CheckLocation(function () {
@@ -1508,23 +1511,39 @@
         });
 
         function LoadData() {
+
             /***************获取数据,luozheao****************************/
             setLodaData();
             function setLodaData(data) {
-                traveller_id=getCookie('traveller_id');
-                if(traveller_id==null){
-                    url = encodeURI('http://scan.luampm.com/wx/author?url='+window.location.href);
+                leader_id=getCookie('leader_id');
+
+                if(leader_id==null){
+                    url = encodeURI('http://scan.luampm.com/wx/leader_author?url='+window.location.href);
                     window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc77c4c606c14f537&redirect_uri='+url+'&response_type=code&scope=snsapi_userinfo&state=0f6f23e1b9b8dffee1069d5ec08ad6dc&connect_redirect=1#wechat_redirect'
+
                 }else{
-                    var arr=window.location.href.split('=');
-                    var url="http://scan.luampm.com/wx/content";
-                    var key=arr[1];
+
+                    var arr=window.location.href.split('?')[1].split('&');
+                    var url="http://scan.luampm.com/wx/leader_notify";
+                    var key=arr[0].split('=')[1];
+                    traveller_id=arr[1].split('=')[1];
                     QKey=key;
-                    $.get(url,{QKey:key},function(data){
+                    $.get(url,{QKey:key,traveller_id:traveller_id},function(data){
+
                         $("#showloding").hide();
                         if (data.code == 200) {
                             $('body').css({'display':'block'});
-                            var objData = data.data[0];
+
+
+                            //设置提交按钮
+                            if(data.data.reply.status==0){
+                                $('#ctlNext').removeClass('gray');
+                            }else{
+                                $('#ctlNext').addClass('gray');
+                            }
+                            QKey=data.data.question.QKey;
+                            //第一步,注入问卷数据
+                            var objData = data.data.question;
                             console.log(objData);
                             //转换option
 
@@ -1564,10 +1583,38 @@
                                 $(this).prev().text(count + 1);
                             });
                             cilckInt();
-
+                            //第二步,注入客户答题数据
+                            dataRender(data.data.reply.question_answer);
                         }
                     });
                 }
+                //客户数据解析
+                function dataRender(data){
+                    for(var i =0 ;i <data.length;i++){
+                        var obj=data[i];
+                        var id=obj.QuestionnaireItemInfo_QIID;
+                        var chooseId=obj.OptionInfo_OID;
+                         //单选和多选
+                        if(obj.OptionInfo_OID>-1&&obj.UserValue=='undefined'){
+                             $("div[itemid='"+id+"']").find("div[optionid='"+chooseId+"']").find('a').addClass('jqchecked');
+                        }
+                        //问答题
+                        else if(obj.OptionInfo_OID<0&&obj.UserValue!="undefined"){
+
+                            $("div[itemid='"+id+"']").find("input").val(obj.UserValue);
+                        }
+                        //投票
+                        else if(obj.OptionInfo_OID>-1&&!obj.UserValue){
+
+                            $("div[itemid='"+id+"']").find("div[optionid='"+chooseId+"']").find('a').addClass('jqchecked');
+                        }
+                        //商品
+                        else if(obj.OptionInfo_OID>-1&&(typeof obj.UserValue=='number') &&obj.UserValue>-1){
+                            $("div[itemid='"+id+"']").find("span[oid='"+chooseId+"']").html(obj.UserValue);
+                        }
+                    }
+                }
+
                 function getCookie(name)
                 {
                     var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
@@ -1823,6 +1870,40 @@
             });
         }
 
+
+        //确认数据
+        function sure(){
+
+            if($('#ctlNext').hasClass('gray')){return;};
+
+            var url='http://scan.luampm.com/wx/leader_confirm';
+            var data={
+                QKey:QKey,
+                traveller_id:traveller_id
+            }
+            $.ajax({
+                url: url,
+                data:data,
+                dataType: "JSON",
+                type: "POST",
+                success: function (obj) {
+                    console.log(obj);
+                    $("#showloding").hide();
+                    obj = eval("(" + obj + ")");
+                    if (obj.code == 200) {
+                        alert('确认成功!');
+                        $('#ctlNext').addClass('gray').html('已确认');
+                    } else {
+                        alert('确认失败!');
+                        $('#ctlNext').removeClass('gray').html('确认');
+                    }
+                },
+                error: function () {
+                    alert("请求错误！");
+                }
+            });
+        }
+
         ///获取用户填的信息
         function getUserJson() {
             var jsonModel = "[";
@@ -1945,7 +2026,7 @@
                         type: "POST",
                         success: function (obj) {
                             console.log(obj);
-                            debugger;
+
                             $("#showloding").hide();
                             $("#divQuestion").show();
                             obj = eval("(" + obj + ")");
@@ -2046,7 +2127,7 @@
     <div class="footer">
         <div class="ValError"></div>
         <div id="divSubmit" style="padding: 10px;">
-            <a id="ctlNext" href="javascript:getUserJson();" class="button blue">提交</a>
+            <a id="ctlNext" href="javascript:sure();" class="button blue">确认</a>
         </div>
     </div>
 </div>
