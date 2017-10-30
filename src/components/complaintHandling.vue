@@ -50,7 +50,7 @@
                         border
                         style="margin-top: 10px;">
                     <el-table-column
-                            prop="name"
+                            prop="WUName"
                             label="姓名"
                             width="100"
                     >
@@ -142,7 +142,7 @@
                 tableData:{
                     "current_page": 0,
                     "data":  [{
-                        name:'',
+                        WUName:'',
                         img:'',
                         area:'',
                         queationName: '',
@@ -192,45 +192,23 @@
                 //获取列表数据
                 this.initTable();
                 this.listOptions=[{
-                    label:'全部',
-                    value:0
+                    label:'所有',
+                    value:-1
                 },{
                     label:'未解决',
-                    value:1
+                    value:0
                 },{
                     label:'已解决',
                     value:2
                 },{
-                    label:'处理中',
-                    value:3
+                    label:'解决中',
+                    value:1
                 }]
             },
             initTable(){
                 //获取列表数据
-                this.$http.get('/area_admin/list',{params:{'page':1}}).then(function(response) {
+                this.$http.get('/handle/list',{params:{'page':1}}).then(function(response) {
                     this.tableData=response.data.data
-                    this.tableData.data=[{
-                        name: '风轻扬',
-                        img: 'src/images/0.jpg',
-                        area: '客房',
-                        queationName: '维多利亚酒店同济地铁店私人管家服务',
-                        time: '2017-09-18 20:30:04',
-                        doning: ''
-                    },{
-                        name:'大师傅',
-                        img:'src/images/1.jpg',
-                        area:'客房',
-                        queationName: '维多利亚酒店同济地铁店私人管家服务',
-                        time:'2017-09-18 20:30:04',
-                        doning: ''
-                    },{
-                        name:'大师傅',
-                        img:'src/images/1.jpg',
-                        area:'客房',
-                        queationName: '维多利亚酒店同济地铁店私人管家服务',
-                        time:'2017-09-18 20:30:04',
-                        doning: ''
-                    }];
                 },function(response) {
                 });
             },
