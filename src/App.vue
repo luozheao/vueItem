@@ -179,9 +179,7 @@
 </style>
 <template>
     <div style="width: 100%;height: 100%;">
-        <!--登录框-->
-        <login   v-if="!isHideLoginPop" @login="loginEvent"></login>
-        <div   v-else id="main">
+        <div    v-if="isHideLoginPop"  id="main">
             <!--顶部-->
             <div id="header">
                 <el-row class="white" >
@@ -189,7 +187,7 @@
                         &nbsp;
                     </el-col>
                     <el-col :span="12"  >
-                        <div style="text-align: right;">同济路地铁店</div>
+                        <div style="text-align: right;">欢迎</div>
                     </el-col>
                     <el-col :span="2"  >
                         <div class="pointer loginBtn" @click="signOutEvent">退出登录</div>
@@ -232,6 +230,9 @@
                 <router-view ></router-view>
             </div>
         </div>
+        <!--登录框-->
+        <login  v-else @login="loginEvent"></login>
+
     </div>
 </template>
 

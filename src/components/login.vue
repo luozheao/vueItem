@@ -87,7 +87,7 @@
                                     <el-input placeholder="验证码"  v-model="ruleForm.register.code"></el-input>
                                 </el-col>
                                 <el-col :span="8">
-                                    <el-button type="primary"   style="float: right" @click="getCode">点击获取</el-button>
+                                    <el-button type="primary"   style="float: right" @click="getCode">{{ruleForm.register.getCodeBtn}}</el-button>
                                 </el-col>
                             </el-row>
 
@@ -119,12 +119,14 @@
                 loading:false,
                 /******model层******/
                 ruleForm:{
+
                     login:{
                         phone:'17099913403',
                         password:'123',
                         captcha:'123',
                     },
                     register:{
+                        getCodeBtn:'点击获取',
                         phone:'',
                         company:'',
                         username:'',
@@ -158,7 +160,42 @@
             },
             //获取短信验证码
             getCode(){
+                let self=this;
+                let phone=self.ruleForm.register.phone;
+                if(!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test(phone))){
+                    self.$message({
+                        showClose: false,
+                        message: "请输入正确的手机号码",
+                        type:'error'
+                    });
+                    return;
+                }
+                this.$http.post('/system/sendSmsCode',{phone:phone}).then(
+                    function(response){
+                        if(response.body.code==200){
+                            //发送成功
+                            self.ruleForm.register.getCodeBtn="发送成功(9)";
+                            let i=9;
+                            let T=setInterval(function () {
+                                if(i==0){
+                                    clearInterval(T);
+                                    self.ruleForm.register.getCodeBtn="点击发送";
+                                }else{
+                                    self.ruleForm.register.getCodeBtn="发送成功("+(--i)+")";
+                                }
+                            },1000);
+                        }
+                        else{
 
+                            self.$message({
+                                showClose: false,
+                                message: response.body.message,
+                                type:'error'
+                            });
+                        }
+                    },function(response){
+
+                    });
             },
             //登录
             loginEvent(){

@@ -1537,9 +1537,9 @@
 
                             //设置提交按钮
                             if(data.data.reply.status==0){
-                                $('#ctlNext').removeClass('gray');
+                                $('#ctlNext').removeClass('gray').html('确认');
                             }else{
-                                $('#ctlNext').addClass('gray');
+                                $('#ctlNext').addClass('gray').html('已确认');
                             }
                             QKey=data.data.question.QKey;
                             //第一步,注入问卷数据
