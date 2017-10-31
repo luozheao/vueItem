@@ -35,7 +35,7 @@
                 <el-row>
                     <el-col :span="24">
                         <el-button type="primary" @click="addAdminNum">添加领导账号</el-button>
-                        <el-dialog :title="title" :visible.sync="dialogFormVisible" size="large">
+                        <el-dialog :title="title" :visible.sync="dialogFormVisible" size="small">
                             <el-form :model="form">
                                 <el-row>
                                 <el-col :span="16">
@@ -62,7 +62,7 @@
                                     <el-form-item label="绑定号码">
                                         <el-row>
                                             <el-col :span="14">
-                                                <el-input v-model="form.bind_number" style="width: 420px"></el-input>
+                                                <el-input v-model="form.bind_number" style="width: 240px"></el-input>
                                                 <div style="font-size: 12px;color: red;">请将该号码发给对应的区域领导，在微信里绑定即可！</div>
                                             </el-col>
                                             <el-col :span="3">
@@ -71,10 +71,10 @@
                                         </el-row>
                                     </el-form-item>
                                     <el-form-item label="领导姓名">
-                                        <el-input v-model="form.username" style="width: 400px"></el-input>
+                                        <el-input v-model="form.username" style="width: 300px"></el-input>
                                     </el-form-item>
                                     <el-form-item label="领导手机">
-                                        <el-input v-model="form.phone" style="width: 400px"></el-input>
+                                        <el-input v-model="form.phone" style="width: 300px"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="8">
