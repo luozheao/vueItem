@@ -269,10 +269,12 @@
             },
             //修改一项
             changeLi(index,data,row){
-                debugger
+
                 this.title="修改区域管理员"
                this.currentListId.id=row.id;
                this.form.username=row.username;
+               this.form.project_id=row.project_id;
+               this.form.area_id=row.area_id;
                this.form.account=row.phone;
                this.currentListId.isChange=true;
                 this.dialogFormVisible=true
@@ -371,6 +373,8 @@
                 this.form.username='';
                 this.form.password='';
                 this.form.account='';
+                this.form.project_id='';
+                this.form.area_id='';
             },
             //增加和修改一项的弹框确认
             addarea(){

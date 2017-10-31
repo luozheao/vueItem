@@ -163,6 +163,7 @@
                 this.dialogFormVisible = true
                 this.isChange=false
                 this.title='添加区域信息'
+                this.form.project_id=''
             },
             //搜索按钮
             inputSearchClick(val){
@@ -220,6 +221,7 @@
                 this.currentId=this.tableData.data[index].id;
                 this.form.name=rows.name;
                 this.form.remark=rows.remark;
+                this.form.project_id=rows.project_id
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
