@@ -327,6 +327,8 @@
                 this.form.username=row.username;
                 this.form.phone=row.phone;
                 this.form.bind_number=row.bind_number;
+                this.form.project_id=row.project_id;
+                this.form.area_id=row.area_id;
 
             },
             //添加领导账号

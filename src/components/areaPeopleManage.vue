@@ -71,15 +71,8 @@
                         </el-dialog>
                         <el-dialog title="权限查看" :visible.sync="lookAlarmBox">
                             <div  v-for="item in alarmList" @click="changeAlarm(item.id)">
-                                <el-checkbox checked='checked' class="alarm">{{item.name}}</el-checkbox>
+                                <el-checkbox :checked="item.isChange" class="alarm">{{item.name}}</el-checkbox>
                             </div>
-                            <div  v-for="val in oldAlarm" @click="changeAlarm(val.id)">
-                                <el-checkbox class="alarm" >{{val.name}}</el-checkbox>
-                            </div>
-                            <!--<div slot="footer" class="dialog-footer">-->
-                                <!--<el-button @click="lookAlarmBox = false">取 消</el-button>-->
-                                <!--<el-button type="primary"  @click="changeAlarm">确 定</el-button>-->
-                            <!--</div>-->
                         </el-dialog>
                         <el-select v-model="id" placeholder="请选择区域">
                             <el-option
@@ -201,9 +194,8 @@
                 id:'',
                 alarmId:'',
                 alarmList:'',
-                oldAlarm:[],
-                sendAlrm:[],
-                str:''
+                currentAlarm:[],
+                num:0,
             }
         },
         methods: {
@@ -282,24 +274,18 @@
             //查看权限
             lookAlarm(row){
                 let self=this;
+                this.time=new Date().getTime();
                 this.lookAlarmBox=true;
                 this.alarmId=row.id;
+                this.currentAlarm=row.rights
                 this.$http.get('/area_admin/right_list',{}).then(function(response) {
                     self.alarmList=response.data.data
-                    var arr=[{id:'1',name:'领导账号查看'},{id:'2',name:'领导账号操作'},{id:'2',name:'问卷模版列表查看'}
-                        ,{id:'4',name:'问卷模版列表操作'},{id:'5',name:'问卷列表查看'},{id:'6',name:'问卷列表操作'}
-                        ,{id:'7',name:'桌号房间号设置'}]
-                    self.str=''
-                    if(self.alarmList.length){
-                        for(var i=0;i<self.alarmList.length;i++){
-                           self.str+=self.alarmList[i].id
-                            self.sendAlrm.push(self.alarmList[i].id)
-                        }
-                    }
-                    self.oldAlarm=[];
-                    for(var i=1;i<8;i++){
-                        if(self.str.indexOf(i)==-1){
-                            self.oldAlarm.push(arr[i-1])
+                    var str=self.currentAlarm.toString();
+                    for(var i=0;i<self.alarmList.length;i++){
+                        if(str.indexOf(self.alarmList[i].id)>-1){
+                            self.alarmList[i].isChange=true
+                        }else{
+                            self.alarmList[i].isChange=false
                         }
                     }
                 },function(response) {
@@ -308,30 +294,61 @@
             //设置权限
             changeAlarm(data){
                 let self=this
-               if(self.sendAlrm.length){
-                   for(var i=0;i<self.sendAlrm.length;i++){
-                       if(self.str.indexOf(data)==-1){
-                           self.sendAlrm.push(data)
-                       }else{
-                           var arr=[]
-                           if(self.sendAlrm.length==1){
-                               self.sendAlrm=[]
-                           }else{
-                               for(var l=0;l<self.sendAlrm.length;l++){
-                                   if(self.sendAlrm[l]!=data){
-                                       arr.push(self.sendAlrm[l])
-                                   }
-                               }
-                               self.sendAlrm= arr
-                           }
-                       }
-                   }
-               }else{
-                   self.sendAlrm.push(data)
-               }
+                var currentArr=[]
+                if(self.num==1){
+                    self.num=0
+                    return false
+                }
+                if(self.currentAlarm.length){
+                    var arrA=[]
+                    for(var l=0;l<self.currentAlarm.length;l++){
+                            arrA.push(self.currentAlarm[l])
+                    }
+                    var str=self.currentAlarm.toString();
+                    for(var i=0;i<self.currentAlarm.length;i++){
+                        if(str.indexOf(data)==-1){
+                            arrA.push(data)
+                        }else{
+                            if(self.currentAlarm.length==1){
+                                currentArr='nothing'
+                            }else{
+                                var arr=[]
+                                for(var l=0;l<self.currentAlarm.length;l++){
+                                    if(self.currentAlarm[l]!=data){
+                                        arr.push(self.currentAlarm[l])
+                                    }
+                                }
+                                self.currentAlarm= arr
+                                currentArr= arr
+                            }
+                        }
+                    }
+                    if(arrA.length){
+                        self.currentAlarm=arrA
+                    }
+                }else{
+                    self.currentAlarm.push(data)
+                }
+                Array.prototype.unique3 = function(){
+                    var res = [];
+                    var json = {};
+                    for(var i = 0; i < this.length; i++){
+                        if(!json[this[i]]){
+                            res.push(this[i]);
+                            json[this[i]] = 1;
+                        }
+                    }
+                    return res;
+                }
+                if(currentArr.length&&currentArr!='nothing'){
+                    self.currentAlarm=currentArr
+                }else if(currentArr=='nothing'){
+                    self.currentAlarm=[]
+                }
+                self.currentAlarm=self.currentAlarm.unique3()
                var obj={
                    id:self.alarmId,
-                   rights:'['+self.sendAlrm.toString()+']'
+                   rights:'['+self.currentAlarm.toString()+']'
                }
                 this.$http.post('/area_admin/set_rights',obj).then(
                     (response) => {
@@ -352,9 +369,10 @@
                             type: 'error'
                         });
                     });
+                self.num=1;
             },
             handleSizeChange(val) {
-                debugger
+                return false
             },
             //翻页
             handleCurrentChange(val) {
