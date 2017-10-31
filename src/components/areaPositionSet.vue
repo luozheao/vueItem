@@ -17,11 +17,11 @@
         padding:10px;
     }
     .img{
-        background:url("../images/erweima.jpg") no-repeat;
+        background:no-repeat;
         background-size:100% 100%;
-        height: 220px;
-        margin: 5px;
-        margin-left: -10px;
+        height: 100px;
+        width: 100px;
+        float: left;
     }
     .titleFont{
         font-size: 12px;
@@ -80,25 +80,16 @@
                             </el-form-item>
                         </el-form>
                     </el-col>
-                    <el-col :span="12">
+                    <el-col :span="12" style="height:450px;overflow: auto;">
                         <el-col :span="24">
-                        <div>二维码【{{codeNum}}】地址：</div>
-                        <div>{{codeAddress}}</div>
+                        <div>地址：{{codeNum}}</div>
+
                         </el-col>
-                        <el-col :span="24">
-                            <el-col :span="12">
-                                <div class='img' @mouseenter="hoverChangeAddress(1)"></div>
-                            </el-col>
-                            <el-col :span="12">
-                                <div class='img'  @mouseenter="hoverChangeAddress(2)"></div>
-                            </el-col>
-                            <el-col :span="12">
-                                <div class='img'  @mouseenter="hoverChangeAddress(3)"></div>
-                            </el-col>
-                            <el-col :span="12">
-                                <div class='img'  @mouseenter="hoverChangeAddress(4)"></div>
-                            </el-col>
-                        </el-col>
+                        <el-row :span="24">
+
+                                <div  v-for="item in imgList" class='img' @mouseenter="hoverChangeAddress(item.codeUrl)" v-html="item.imgStr"></div>
+
+                        </el-row>
                     </el-col>
                 </el-row>
             </div>
@@ -110,11 +101,11 @@
     export default {
         data() {
             return {
-                codeNum:1,
-                codeAddress:'http://element.eleme.io/#/zh-CN/component/form',
+                codeNum:"",
                 textarea:'',
                 stater:'',
                 ender:'',
+                imgList:[],
                 form: {
                     address:''
                 }
@@ -130,13 +121,31 @@
                     if(!reg.test(this.form.address)){
                         this.$message('输入网址不正确')
                     }else{
-                        //生成二维码;
+                       let arr=this.textarea.split('\n');
+                       let arr2=[];
+                       for(var i=0;i<arr.length;i++){
+                           let val=arr[i];
+                           if(val){
+                               arr2.push({
+                                   codeUrl:this.getCodeImgUrl(val),
+                                   imgStr:this.getCodeImg(val),
+                               })
+                           }
+                       }
 
+                       //注入
+                       this.imgList=arr2;
                     }
                 }
                 else{
                     this.$message.error('请输入问卷地址!');
                 }
+            },
+            getCodeImg(data){
+                return '<img src="http://scan.luampm.com/question/get_question_qrc?url=http://scan.luampm.com/lza/weixinQuestionnaire/index.html?QKey='+data+'" style="width:100%;height: 100%"/>'
+            },
+            getCodeImgUrl(data){
+                return "http://scan.luampm.com/lza/weixinQuestionnaire/index.html?QKey="+data;
             },
             getNum(){
                 if(this.stater>this.ender){
