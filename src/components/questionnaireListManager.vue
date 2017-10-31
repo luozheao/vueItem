@@ -157,9 +157,10 @@
                     </el-table-column>
                     <el-table-column
                             label="二维码"
+                            width="170"
                     >
                         <template scope="scope">
-                            <div v-html="getCodeImg(scope.row)"></div>
+                            <div v-html="getCodeImg(scope.row)" style="width:150px;height:150px;margin-left: -10px;"></div>
                         </template>
                     </el-table-column>
                     <el-table-column
