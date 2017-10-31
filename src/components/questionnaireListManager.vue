@@ -360,6 +360,7 @@
                 return isJPG && isLt2M;
             },
             /*****图片上传,end******/
+
             getCodeImg(data){
                 return '<img src="http://scan.luampm.com/question/get_question_qrc?url=http://scan.luampm.com/lza/weixinQuestionnaire/index.html?QKey='+data.QKey+'" style="width:100%;height: 100%"/>'
             },
