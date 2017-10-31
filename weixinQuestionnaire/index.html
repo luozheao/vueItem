@@ -1945,12 +1945,11 @@
                         type: "POST",
                         success: function (obj) {
                             console.log(obj);
-                            debugger;
                             $("#showloding").hide();
                             $("#divQuestion").show();
                             obj = eval("(" + obj + ")");
                             if (obj.code == 200) {
-                                alert('提交成功!');
+                                alert('您的信息已成功提交，我们将尽快处理，谢谢!');
                             } else {
                                 alert('提交失败!');
                             }
