@@ -26,7 +26,7 @@
                 <el-row>
                     <el-col :span="24">
                         <el-button type="primary" @click="addAreaMsg">添加区域信息</el-button>
-                        <el-dialog title="添加区域信息" :visible.sync="dialogFormVisible">
+                        <el-dialog :title="title" :visible.sync="dialogFormVisible">
                             <el-form :model="form">
                                 <el-form-item label="所属项目" :label-width="formLabelWidth">
                                     <el-select v-model="form.project_id" placeholder="请选择所属项目">
@@ -101,6 +101,7 @@
         data() {
             return  {
                 inputSearch:'',
+                title:'添加区域信息',
                 isChange:false,
                 currentId:'',
                 formLabelWidth:'120px',
@@ -161,6 +162,7 @@
                 this.form.remark='';
                 this.dialogFormVisible = true
                 this.isChange=false
+                this.title='添加区域信息'
             },
             //搜索按钮
             inputSearchClick(val){
@@ -214,6 +216,7 @@
             changeLi(index, rows){
                this.dialogFormVisible = true
                 this.isChange=true
+                this.title='修改区域信息'
                 this.currentId=this.tableData.data[index].id;
                 this.form.name=rows.name;
                 this.form.remark=rows.remark;

@@ -207,7 +207,8 @@
             },
             initTable(){
                 //获取列表数据
-                this.$http.get('/handle/list',{params:{'page':1}}).then(function(response) {
+                this.$http.get('/handle/list').then(function(response) {
+                    debugger
                     this.tableData=response.data.data
                 },function(response) {
                 });

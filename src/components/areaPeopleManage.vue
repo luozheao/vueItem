@@ -32,7 +32,7 @@
                 <el-row>
                     <el-col :span="24">
                         <el-button type="primary" @click="addAdmin">添加区域管理员</el-button>
-                        <el-dialog title="区域管理员信息" :visible.sync="dialogFormVisible">
+                        <el-dialog :title="title" :visible.sync="dialogFormVisible">
                             <el-form :model="form">
                                 <el-form-item label="所属项目" :label-width="formLabelWidth">
                                     <el-select v-model="form.project_id" placeholder="请选择所属项目">
@@ -159,6 +159,7 @@
         data() {
             return  {
                 inputSearch:'',
+                title:"添加区域管理员",
                 formLabelWidth:'120px',
                 currentPageNum:1,
                 currentListId:{'isChange':false,'id':''},//修改一项的当前id
@@ -268,6 +269,8 @@
             },
             //修改一项
             changeLi(index,data,row){
+                debugger
+                this.title="修改区域管理员"
                this.currentListId.id=row.id;
                this.form.username=row.username;
                this.form.account=row.phone;
@@ -361,6 +364,7 @@
             },
             //添加管理员的按钮
             addAdmin(){
+                this.title="添加区域管理员"
                 this.dialogFormVisible = true
                 this.currentListId.isChange=false;
                 this.currentListId.id='';

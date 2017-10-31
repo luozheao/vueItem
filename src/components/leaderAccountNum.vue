@@ -35,7 +35,7 @@
                 <el-row>
                     <el-col :span="24">
                         <el-button type="primary" @click="addAdminNum">添加领导账号</el-button>
-                        <el-dialog title="添加领导账号" :visible.sync="dialogFormVisible" size="large">
+                        <el-dialog :title="title" :visible.sync="dialogFormVisible" size="large">
                             <el-form :model="form">
                                 <el-row>
                                 <el-col :span="16">
@@ -210,6 +210,7 @@
     export default {
         data() {
             return  {
+                title:"添加领导账号",
                 inputSearch:'',
                 currentPageNum:1,
                 currentListId:{'isChange':false,'id':''},//修改一项的当前id
@@ -319,6 +320,7 @@
             },
             //修改一项
             changeLi(index,data,row){
+                this.title="修改领导账号"
                 this.currentListId.id=row.id;
                 this.currentListId.isChange=true;
                 this.dialogFormVisible=true
@@ -329,6 +331,7 @@
             },
             //添加领导账号
             addAdminNum(){
+                this.title="添加领导账号"
                 this.dialogFormVisible = true
                 this.currentListId.isChange=false;
                 this.form.project_id='';
