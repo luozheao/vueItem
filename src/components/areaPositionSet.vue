@@ -130,24 +130,12 @@
                     if(!reg.test(this.form.address)){
                         this.$message('输入网址不正确')
                     }else{
-                        this.$http.post('',{'id':row.id}).then(
-                            function(response) {
-                                let isSuccess= response.data.code=='200';
-                                if(isSuccess){
-                                    this.initTable()
-                                }
-                                this.$message({
-                                    message: response.data.data,
-                                    type:isSuccess?'success':'error'
-                                });
-                            },
-                            function(response) {
-                                this.$message({
-                                    message: response.data.data,
-                                    type: 'error'
-                                });
-                            });
+                        //生成二维码;
+
                     }
+                }
+                else{
+                    this.$message.error('请输入问卷地址!');
                 }
             },
             getNum(){
