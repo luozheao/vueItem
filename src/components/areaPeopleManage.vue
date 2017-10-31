@@ -70,7 +70,7 @@
                             </div>
                         </el-dialog>
                         <el-dialog title="权限查看" :visible.sync="lookAlarmBox">
-                            <div  v-for="item in alarmList" @click="changeAlarm(item.id)">
+                            <div  v-for="item in alarmList" :key="item.id" @click="changeAlarm(item.id)">
                                 <el-checkbox :checked="item.isChange" class="alarm">{{item.name}}</el-checkbox>
                             </div>
                         </el-dialog>
@@ -193,7 +193,7 @@
                 }],
                 id:'',
                 alarmId:'',
-                alarmList:'',
+                alarmList:[],
                 currentAlarm:[],
                 num:0,
             }
@@ -277,26 +277,26 @@
                 this.lookAlarmBox=true;
                 this.alarmId=row.id;
                 this.currentAlarm=row.rights
+                self.alarmList=[];
                 this.$http.get('/area_admin/right_list',{}).then(function(response) {
-                    self.alarmList=response.data.data
+                    let alarmList=response.data.data;
                     var str=self.currentAlarm.toString();
-                    let arr=[]
-                    for(var i=0;i<self.alarmList.length;i++){
+                    let arr=[];
+                    for(var i=0;i<alarmList.length;i++){
                         var obj={}
-                        if(str.indexOf(self.alarmList[i].id)>-1){
-                            obj.id=self.alarmList[i].id
-                            obj.name=self.alarmList[i].name
+                        if(str.indexOf(alarmList[i].id)>-1){
+                            obj.id=alarmList[i].id
+                            obj.name=alarmList[i].name
                             obj.isChange=true
                         }else{
-                            obj.id=self.alarmList[i].id
-                            obj.name=self.alarmList[i].name
+                            obj.id=alarmList[i].id
+                            obj.name=alarmList[i].name
                             obj.isChange=false
                         }
                         arr.push(obj)
                     }
-                    self.alarmList.length=0
-                    console.log(arr)
-                        self.alarmList=arr
+                        self.alarmList=arr;
+
                 },function(response) {
                 });
             },
