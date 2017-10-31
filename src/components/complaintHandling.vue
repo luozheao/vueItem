@@ -50,18 +50,17 @@
                         border
                         style="margin-top: 10px;">
                     <el-table-column
-                            prop="WUName"
+                            prop="username"
                             label="姓名"
                             width="100"
                     >
                     </el-table-column>
                     <el-table-column
-                            prop="img"
                             label="头像"
                             width="100"
                             header-align="center">
                         <template scope="scope">
-                            <img :src="scope.row.img" style="width:100%;height: 100%"/>
+                            <img :src="scope.row.user.icon" style="width:100%;height: 100%"/>
                         </template>
                     </el-table-column>
                     <el-table-column
@@ -71,13 +70,13 @@
                     >
                     </el-table-column>
                     <el-table-column
-                            prop="queationName"
+                            prop="question.Qname"
                             label="问卷名称"
                             width="300"
                     >
                     </el-table-column>
                     <el-table-column
-                            prop="time"
+                            prop="created_at"
                             label="提交时间"
                     >
                     </el-table-column>
@@ -142,12 +141,22 @@
                 tableData:{
                     "current_page": 0,
                     "data":  [{
-                        WUName:'',
-                        img:'',
-                        area:'',
-                        queationName: '',
-                        time:'',
-                        doning: ''
+                        username:'',
+                        StudioInfo_SID:'',
+                        created_at:'',
+                        deal_result:'',
+                        deleted_at:'',
+                        expand:'',
+                        id:'',
+                        leader_id:'',
+                        progress:'',
+                        question:'',
+                        question_answer:'',
+                        question_id:'',
+                        status:'',
+                        updated_at:"",
+                        user:'',
+                        user_id:''
                     }],
                     "from": '',
                     "last_page": '',
@@ -208,7 +217,6 @@
             initTable(){
                 //获取列表数据
                 this.$http.get('/handle/list').then(function(response) {
-                    debugger
                     this.tableData=response.data.data
                 },function(response) {
                 });
@@ -220,7 +228,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(function () {
-                    this.$http.post('/area_admin/delete',{'id':row.id}).then(
+                    this.$http.post('/handle/delete_answer',{'id':row.question_id}).then(
                         function(response) {
                             let isSuccess= response.data.code=='200';
                             if(isSuccess){
@@ -238,10 +246,10 @@
                             });
                         });
                 }).catch(function () {
-                    this.$message({
-                        type: 'info',
-                        message: '已取消删除'
-                    });
+//                    this.$message({
+//                        type: 'info',
+//                        message: '已取消删除'
+//                    });
                 })
             },
             //下载
@@ -299,14 +307,14 @@
             //翻页
             handleCurrentChange(val) {
                 //获取翻页列表数据
-                this.$http.get('/area_admin/list',{params:{'page':val}}).then(function(response) {
+                this.$http.get('/handle/list',{params:{'page':val}}).then(function(response) {
                     this.tableData=response.data.data
                 },function(response) {
                 });
             },
             //点击搜素
             searchList(){
-                this.$http.get('/area_admin/search',{params:{'keyword':this.inputSearch,'area_id':this.id}}).then(function(response) {
+                this.$http.get('',{params:{'keyword':this.inputSearch,'area_id':this.id}}).then(function(response) {
                     this.tableData=response.data.data
                 },function(response) {
                 });

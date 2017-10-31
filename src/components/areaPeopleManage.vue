@@ -274,20 +274,29 @@
             //查看权限
             lookAlarm(row){
                 let self=this;
-                this.time=new Date().getTime();
                 this.lookAlarmBox=true;
                 this.alarmId=row.id;
                 this.currentAlarm=row.rights
                 this.$http.get('/area_admin/right_list',{}).then(function(response) {
                     self.alarmList=response.data.data
                     var str=self.currentAlarm.toString();
+                    let arr=[]
                     for(var i=0;i<self.alarmList.length;i++){
+                        var obj={}
                         if(str.indexOf(self.alarmList[i].id)>-1){
-                            self.alarmList[i].isChange=true
+                            obj.id=self.alarmList[i].id
+                            obj.name=self.alarmList[i].name
+                            obj.isChange=true
                         }else{
-                            self.alarmList[i].isChange=false
+                            obj.id=self.alarmList[i].id
+                            obj.name=self.alarmList[i].name
+                            obj.isChange=false
                         }
+                        arr.push(obj)
                     }
+                    self.alarmList.length=0
+                    console.log(arr)
+                        self.alarmList=arr
                 },function(response) {
                 });
             },
