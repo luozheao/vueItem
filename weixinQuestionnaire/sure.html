@@ -87,6 +87,9 @@
        .gray{
            background:gray !important;
        }
+       .hide{
+           display:none !important;
+       }
         .blue:hover {
             background: #007ead;
         }
@@ -1535,11 +1538,20 @@
                             $('body').css({'display':'block'});
 
 
-                            //设置提交按钮
+                            //设置提交按钮,初始化
                             if(data.data.reply.status==0){
-                                $('#ctlNext').removeClass('gray').html('确认');
-                            }else{
-                                $('#ctlNext').addClass('gray').html('已确认');
+                                $('#ctlNext').addClass('hide').html('已解决');
+                                $('#ctlNextNo').removeClass('gray').removeClass('hide').html('我要接单');
+                                $('#ctlNextSb').addClass('hide');
+                            }else if(data.data.reply.status==1){
+                                $('#ctlNext').removeClass('gray').removeClass('hide').html('已解决');
+                                $('#ctlNextNo').addClass('hide').html('解决中');
+                                $('#ctlNextSb').removeClass('hide');
+
+                            }else if(data.data.reply.status==2){
+                                $('#ctlNext').addClass('gray').html('已解决');
+                                $('#ctlNextNo').addClass('hide').html('解决中');
+                                $('#ctlNextSb').addClass('hide');
                             }
                             QKey=data.data.question.QKey;
                             //第一步,注入问卷数据
@@ -1564,25 +1576,25 @@
 
                             $("#fieldset1").html(logItem(objData));
                             //初始化事件
-                            $("#fieldset1 .minus").click(function () {
-                                var count = 0;
-                                count = parseInt($(this).next().text());
-                                if (isNaN(count)) {
-                                    count = 0;
-                                }
-                                if (count - 1 >= 0) {
-                                    $(this).next().text(count - 1);
-                                }
-                            });
-                            $("#fieldset1 .plus").click(function () {
-                                var count = 0;
-                                count = parseInt($(this).prev().text());
-                                if (isNaN(count)) {
-                                    count = 0;
-                                }
-                                $(this).prev().text(count + 1);
-                            });
-                            cilckInt();
+//                            $("#fieldset1 .minus").click(function () {
+//                                var count = 0;
+//                                count = parseInt($(this).next().text());
+//                                if (isNaN(count)) {
+//                                    count = 0;
+//                                }
+//                                if (count - 1 >= 0) {
+//                                    $(this).next().text(count - 1);
+//                                }
+//                            });
+//                            $("#fieldset1 .plus").click(function () {
+//                                var count = 0;
+//                                count = parseInt($(this).prev().text());
+//                                if (isNaN(count)) {
+//                                    count = 0;
+//                                }
+//                                $(this).prev().text(count + 1);
+//                            });
+//                            cilckInt();
                             //第二步,注入客户答题数据
                             dataRender(data.data.reply.question_answer);
                         }
@@ -1871,11 +1883,9 @@
         }
 
 
-        //确认数据
-        function sure(){
-
-            if($('#ctlNext').hasClass('gray')){return;};
-
+        //解决中
+        function sureNo(){
+            if($('#ctlNextNo').hasClass('gray')){return;};
             var url='http://scan.luampm.com/wx/leader_confirm';
             var data={
                 QKey:QKey,
@@ -1891,11 +1901,44 @@
                     $("#showloding").hide();
                     obj = eval("(" + obj + ")");
                     if (obj.code == 200) {
-                        alert('确认成功!');
-                        $('#ctlNext').addClass('gray').html('已确认');
+                        $('#ctlNext').removeClass('hide').removeClass('gray').html('已解决');
+                        $('#ctlNextNo').addClass('hide');
+                        $('#ctlNextSb').removeClass('hide');
                     } else {
-                        alert('确认失败!');
-                        $('#ctlNext').removeClass('gray').html('确认');
+                        alert('请求失败!');
+                    }
+                },
+                error: function () {
+                    alert("请求错误！");
+                }
+            });
+        }
+
+        //已解决
+        function sure(){
+
+            if($('#ctlNext').hasClass('gray')){return;};
+
+            var url='http://scan.luampm.com/wx/leader_finish';
+            var data={
+                QKey:QKey,
+                traveller_id:traveller_id
+            }
+            $.ajax({
+                url: url,
+                data:data,
+                dataType: "JSON",
+                type: "POST",
+                success: function (obj) {
+                    console.log(obj);
+                    $("#showloding").hide();
+                    obj = eval("(" + obj + ")");
+                    if (obj.code == 200) {
+                        $('#ctlNext').addClass('gray').removeClass('hide').html('已解决');
+                        $('#ctlNextNo').addClass('hide');
+                        $('#ctlNextSb').addClass('hide');
+                    } else {
+                        alert('请求失败!');
                     }
                 },
                 error: function () {
@@ -2127,7 +2170,9 @@
     <div class="footer">
         <div class="ValError"></div>
         <div id="divSubmit" style="padding: 10px;">
-            <a id="ctlNext" href="javascript:sure();" class="button blue">确认</a>
+            <div id="ctlNextSb" class="hide" style="text-align: center;">解决中...</div>
+            <a id="ctlNextNo" href="javascript:sureNo();" class="button blue">解决中</a>
+            <a id="ctlNext" href="javascript:sure();" class="button blue">已解决</a>
         </div>
     </div>
 </div>
