@@ -69,7 +69,7 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                            prop="area"
+                            prop="question.area.name"
                             label="区域"
                             width="100"
                     >
@@ -217,12 +217,14 @@
                     for(var i=0;i<arr.length;i++){
                         if(arr[i].progress.length){
                             for(var k=0;k<arr[i].progress.length;k++){
-                                if(arr[i].progress[k].status==0){
-                                    arr[i].question.QName
-                                }else if(arr[i].progress[k].status==1){
-                                    arr[i].question.QName+=' 解决中'
-                                }else if(arr[i].progress[k].status==2){
-                                    arr[i].question.QName+=' 已解决'
+                                if(k==arr[i].progress.length-1){
+                                    if(arr[i].progress[k].status==0){
+                                        arr[i].question.QName
+                                    }else if(arr[i].progress[k].status==1){
+                                        arr[i].question.QName+=' 解决中'
+                                    }else if(arr[i].progress[k].status==2){
+                                        arr[i].question.QName+=' 已解决'
+                                    }
                                 }
                             }
                         }
@@ -331,12 +333,14 @@
                     for(var i=0;i<arr.length;i++){
                         if(arr[i].progress.length){
                             for(var k=0;k<arr[i].progress.length;k++){
-                                if(arr[i].progress[k].status==0){
-                                    arr[i].question.QName
-                                }else if(arr[i].progress[k].status==1){
-                                    arr[i].question.QName+=' 解决中'
-                                }else if(arr[i].progress[k].status==2){
-                                    arr[i].question.QName+=' 已解决'
+                                if(k==arr[i].progress.length-1){
+                                    if(arr[i].progress[k].status==0){
+                                        arr[i].question.QName
+                                    }else if(arr[i].progress[k].status==1){
+                                        arr[i].question.QName+=' 解决中'
+                                    }else if(arr[i].progress[k].status==2){
+                                        arr[i].question.QName+=' 已解决'
+                                    }
                                 }
                             }
                         }
@@ -357,12 +361,14 @@
                     for(var i=0;i<arr.length;i++){
                         if(arr[i].progress.length){
                             for(var k=0;k<arr[i].progress.length;k++){
-                                if(arr[i].progress[k].status==0){
-                                    arr[i].question.QName
-                                }else if(arr[i].progress[k].status==1){
-                                    arr[i].question.QName+=' 解决中'
-                                }else if(arr[i].progress[k].status==2){
-                                    arr[i].question.QName+=' 已解决'
+                                if(k==arr[i].progress.length-1){
+                                    if(arr[i].progress[k].status==0){
+                                        arr[i].question.QName
+                                    }else if(arr[i].progress[k].status==1){
+                                        arr[i].question.QName+=' 解决中'
+                                    }else if(arr[i].progress[k].status==2){
+                                        arr[i].question.QName+=' 已解决'
+                                    }
                                 }
                             }
                         }
