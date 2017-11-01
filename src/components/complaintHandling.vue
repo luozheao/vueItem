@@ -92,10 +92,10 @@
                             width="270"
                     >
                         <template scope="scope">
-                            <el-button class="noMargin" type="primary" size="mini" @click="installLi(scope.row)">下载</el-button>
-                            <el-button class="noMargin" type="primary" size="mini" @click="writeLi(scope.row)">填写处理结果</el-button>
-                            <el-button class="noMargin" type="danger" size="mini" @click="deleteLi(scope.row)">删除</el-button>
-                            <el-button class="noMargin" type="primary" size="mini" @click="lookLi(scope.row)">查看</el-button>
+                            <el-button v-show="!scope.row.question.isShow" class="noMargin" type="primary" size="mini" @click="installLi(scope.row)">下载</el-button>
+                            <el-button  v-show="!scope.row.question.isShow" class="noMargin" type="primary" size="mini" @click="writeLi(scope.row)">填写处理结果</el-button>
+                            <el-button  class="noMargin" type="danger" size="mini" @click="deleteLi(scope.row)">删除</el-button>
+                            <el-button v-show="!scope.row.question.isShow" class="noMargin" type="primary" size="mini" @click="lookLi(scope.row)">查看</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -222,8 +222,10 @@
                                         arr[i].question.QName
                                     }else if(arr[i].progress[k].status==1){
                                         arr[i].question.QName+=' 解决中'
+                                        arr[i].question.isShow=true
                                     }else if(arr[i].progress[k].status==2){
                                         arr[i].question.QName+=' 已解决'
+                                        arr[i].question.isShow=true
                                     }
                                 }
                             }
@@ -338,8 +340,10 @@
                                         arr[i].question.QName
                                     }else if(arr[i].progress[k].status==1){
                                         arr[i].question.QName+=' 解决中'
+                                        arr[i].question.isShow=true
                                     }else if(arr[i].progress[k].status==2){
                                         arr[i].question.QName+=' 已解决'
+                                        arr[i].question.isShow=true
                                     }
                                 }
                             }
@@ -366,8 +370,10 @@
                                         arr[i].question.QName
                                     }else if(arr[i].progress[k].status==1){
                                         arr[i].question.QName+=' 解决中'
+                                        arr[i].question.isShow=true
                                     }else if(arr[i].progress[k].status==2){
                                         arr[i].question.QName+=' 已解决'
+                                        arr[i].question.isShow=true
                                     }
                                 }
                             }
