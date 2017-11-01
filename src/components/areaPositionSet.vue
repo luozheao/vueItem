@@ -105,6 +105,7 @@
                 textarea:'',
                 stater:'',
                 ender:'',
+                QKey:'',
                 imgList:[],
                 form: {
                     address:''
@@ -117,6 +118,9 @@
             },
             onSubmit() {
                 if(this.form.address!=""){
+
+                    this.Qkey=this.form.address.split('?')[1].split('&')[0].split('=')[1];
+
                     var reg=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
                     if(!reg.test(this.form.address)){
                         this.$message('输入网址不正确')
@@ -142,10 +146,10 @@
                 }
             },
             getCodeImg(data){
-                return '<img src="http://scan.luampm.com/question/get_question_qrc?url=http://scan.luampm.com/lza/weixinQuestionnaire/index.html?QKey='+data+'" style="width:100%;height: 100%"/>'
+                return '<img src="http://scan.luampm.com/question/get_question_qrc?url=http://scan.luampm.com/lza/weixinQuestionnaire/index.html?QKey='+this.Qkey+'&expand='+data+'" style="width:100%;height: 100%"/>'
             },
             getCodeImgUrl(data){
-                return "http://scan.luampm.com/lza/weixinQuestionnaire/index.html?QKey="+data;
+                return "http://scan.luampm.com/lza/weixinQuestionnaire/index.html?QKey="+this.Qkey+"&expand="+data;
             },
             getNum(){
                 if(this.stater>this.ender){
@@ -166,9 +170,7 @@
             this.init();
         },
         mounted() {
-            this.$nextTick(function () {
 
-            })
         }
 
     }

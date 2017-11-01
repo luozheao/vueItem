@@ -7,6 +7,27 @@
     <meta name="format-detection" content="telephone=no">
     <title id="ttxt"></title>
     <style type="text/css">
+        .addComment{
+            text-align: center;
+            background: #2695d0;
+            color: white;
+            height: 45px;
+            line-height: 45px;
+            font-size: 18px;
+        }
+        #comment textarea{
+            width: 95%;
+            margin: 50px auto 0;
+            display: block;
+            height: 150px;
+            border-radius: 5px;
+            padding: 10px;
+            border: 1px solid #d2d2d2;
+        }
+        #submitComment{
+            width: 95%;
+            margin: 50px auto;
+        }
         * {
             margin: 0px;
             padding: 0px;
@@ -1500,7 +1521,39 @@
         var QKey = "";
         var QitemCount = 0;
         var requirCount = 0;
+        var QID=null;
+        var traveller_id=null;
+        var expand;
 
+        function submitCommentEvent(){
+            var str=$('#comment textarea').val();
+            if(str){
+                var url="http://scan.luampm.com/wx/submit_comment";
+                var data={
+                    id:QID,
+                    traveller_id:traveller_id,
+                    comment:str,
+                }
+                $.ajax({
+                    url: url,
+                    data: data,
+                    dataType: "JSON",
+                    type: "POST",
+                    success: function (obj) {
+                        if(obj.code==200){
+                             alert('提交成功!');
+                             $('#submitComment').remove();
+                        }else{
+                            alert('提交失败!')
+                        }
+
+                    }
+                });
+
+            }else{
+                alert('请先填写评论!');
+            }
+        }
         $(function () {
             CheckLocation(function () {
                 LoadData();
@@ -1509,62 +1562,91 @@
 
         function LoadData() {
             /***************获取数据,luozheao****************************/
+
+            //handle_status,0可以提交,1处理中,2显示评论页面,3已评论
+
+
+
             setLodaData();
             function setLodaData(data) {
                 traveller_id=getCookie('traveller_id');
+
                 if(traveller_id==null){
                     url = encodeURI('http://scan.luampm.com/wx/author?url='+window.location.href);
                     window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc77c4c606c14f537&redirect_uri='+url+'&response_type=code&scope=snsapi_userinfo&state=0f6f23e1b9b8dffee1069d5ec08ad6dc&connect_redirect=1#wechat_redirect'
                 }else{
-                    var arr=window.location.href.split('=');
-                    var url="http://scan.luampm.com/wx/content";
-                    var key=arr[1];
+                    var href=window.location.href;
+                    var key;
+
+                    if(href.indexOf('expand=')>=0){
+                         key=   href.split('?')[1].split('&')[0].split('=')[1];
+                         expand=href.split('expand=')[1];
+                    }else{
+                        var arr=href.split('=');
+                        var url="http://scan.luampm.com/wx/content";
+                          key=arr[1];
+                    }
                     QKey=key;
                     $.get(url,{QKey:key},function(data){
                         $("#showloding").hide();
-                        if (data.code == 200) {
-                            $('body').css({'display':'block'});
+                        if (data.code == 200) {//修改
+                            //handle_status:0可以提交。1处理中(只显示处理中三个字)，2显示评论页面,3已评论过
+
                             var objData = data.data[0];
-                            console.log(objData);
-                            //转换option
+                            QID=objData.QID;
+                            var handle_status=data.data.handle_status;
 
-                            objData.item.map(function(p){
-                                if(!p.Option){
-                                    p.Option=p.option;
+                            if(handle_status==0){
+                                $('#qWrap').css({'display':'block'});
+                                console.log(objData);
+                                //转换option
+
+                                objData.item.map(function(p){
+                                    if(!p.Option){
+                                        p.Option=p.option;
+                                    }
+                                });
+
+                                $("#ttxt").text(objData.QName);
+                                $("#toptitleStr").text(objData.QName);
+                                if (objData.QRem != '' && objData.QRem != undefined && objData.QRem != null) {
+                                    $("#tDesc").html(objData.QRem);
+                                    $("#tDesc").css('display', 'block');
+                                } else {
+                                    $("#tDesc").css('display', 'none');
                                 }
-                            });
 
-                            $("#ttxt").text(objData.QName);
-                            $("#toptitleStr").text(objData.QName);
-                            if (objData.QRem != '' && objData.QRem != undefined && objData.QRem != null) {
-                                $("#tDesc").html(objData.QRem);
-                                $("#tDesc").css('display', 'block');
-                            } else {
-                                $("#tDesc").css('display', 'none');
+                                $("#fieldset1").html(logItem(objData));
+                                //初始化事件
+                                $("#fieldset1 .minus").click(function () {
+                                    var count = 0;
+                                    count = parseInt($(this).next().text());
+                                    if (isNaN(count)) {
+                                        count = 0;
+                                    }
+                                    if (count - 1 >= 0) {
+                                        $(this).next().text(count - 1);
+                                    }
+                                });
+                                $("#fieldset1 .plus").click(function () {
+                                    var count = 0;
+                                    count = parseInt($(this).prev().text());
+                                    if (isNaN(count)) {
+                                        count = 0;
+                                    }
+                                    $(this).prev().text(count + 1);
+                                });
+                                cilckInt();
                             }
-
-                            $("#fieldset1").html(logItem(objData));
-                            //初始化事件
-                            $("#fieldset1 .minus").click(function () {
-                                var count = 0;
-                                count = parseInt($(this).next().text());
-                                if (isNaN(count)) {
-                                    count = 0;
-                                }
-                                if (count - 1 >= 0) {
-                                    $(this).next().text(count - 1);
-                                }
-                            });
-                            $("#fieldset1 .plus").click(function () {
-                                var count = 0;
-                                count = parseInt($(this).prev().text());
-                                if (isNaN(count)) {
-                                    count = 0;
-                                }
-                                $(this).prev().text(count + 1);
-                            });
-                            cilckInt();
-
+                            else if(handle_status==1){
+                                $('#textWrap').css({'display':'block'}).html('处理中...');
+                            }
+                            else if(handle_status==2){
+                                $('#comment').css({'display':'block'});
+                            }
+                            else if(handle_status==3){
+                                $('#textWrap').css({'display':'block'}).html('已经评论...');
+                            }
                         }
                     });
                 }
@@ -1936,7 +2018,8 @@
                     var url='http://scan.luampm.com/wx/submit_question';
                     var data={
                         QKey:QKey,
-                        jsonMode:jsonModel
+                        jsonMode:jsonModel,
+                        expand:expand,
                     }
                     $.ajax({
                         url: url,
@@ -1950,6 +2033,8 @@
                             obj = eval("(" + obj + ")");
                             if (obj.code == 200) {
                                 alert('您的信息已成功提交，我们将尽快处理，谢谢!');
+
+                                $('#ctlNext').remove();
                             } else {
                                 alert('提交失败!');
                             }
@@ -2006,7 +2091,17 @@
         }
     </script>
 </head>
-<body style="display:none;">
+<body >
+
+<div id="textWrap" style="display:none;text-align: center;margin-top:40%;font-size: 38px;color:#2695D0;"></div>
+<!--评论页面-->
+<div id="comment" style="display:none">
+    <div class="addComment">追加评论</div>
+    <textarea placeholder="在此填写评论,必须大于五个字" minlength="6"></textarea>
+    <a id="submitComment" href="javascript:submitCommentEvent();" class="button blue">提交</a>
+</div>
+
+<div id="qWrap" style="display:none">
 <div style="display:none;"></div>
 <div id="showloding" class="Pop" style="display: none;">
     <div class="mask" onclick="">
@@ -2380,6 +2475,7 @@
         }
     </style>
 </div>
+</div>
 <script type="text/javascript" src="js/getscript"></script>
 <script src="js/BMapLib_GeoUtils.js"></script>
 <script src="js/jweixin-1.2.0.js"></script>
@@ -2497,4 +2593,5 @@
     }
 </script>
 </body>
+
 </html>

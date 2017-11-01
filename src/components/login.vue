@@ -53,7 +53,7 @@
                                   <el-input placeholder="手机号码"  v-model="ruleForm.login.phone"></el-input>
                               </el-form-item>
                               <el-form-item>
-                                  <el-input placeholder="密码" v-model="ruleForm.login.password"></el-input>
+                                  <el-input placeholder="密码"  type="password" v-model="ruleForm.login.password"></el-input>
                               </el-form-item>
                               <el-form-item>
                                   <el-row>
@@ -121,9 +121,9 @@
                 ruleForm:{
 
                     login:{
-                        phone:'17099913403',
-                        password:'123',
-                        captcha:'123',
+                        phone:'',
+                        password:'',
+                        captcha:'',
                     },
                     register:{
                         getCodeBtn:'点击获取',

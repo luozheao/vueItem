@@ -112,11 +112,11 @@
                     </div>
 
                 </el-dialog>
-                <el-dialog title="问卷查看" :visible.sync="lookLiVisible" size="large">
+                <el-dialog title="问卷查看" :visible.sync="lookLiVisible" size="mini">
+                    <iframe ref="MainBody" id="MainBody" width="100%" scrolling="auto" frameborder="0" src="" height="600"></iframe>
                     <div slot="footer" class="dialog-footer">
                         <el-button type="primary" @click="lookLiVisibleFn">确定</el-button>
                     </div>
-
                 </el-dialog>
                 <div class="block" style="text-align: right;margin-top: 5px;">
                     <el-pagination
@@ -277,11 +277,21 @@
             },
             //查看一项
             lookLi(row){
-                this.lookLiVisible=true
-                this.$http.get('/handle/question_info',{params:{'id':row.id}}).then(function(data) {
-                    debugger
-                },function (data) {
+                this.lookLiVisible=true;
+                let self=this;
+                window.isPc=true;
+                this.$nextTick(function () {
+                    if(document.domain=='localhost'){
+                        document.getElementById('MainBody').src="/weixinQuestionnaire/sure.html";
+                    }else {
+                        document.getElementById('MainBody').src="http://scan.luampm.com/lza/weixinQuestionnaire/sure.html";
+                    };
+                    self.$http.get('/handle/question_info',{params:{'id':row.id}}).then(function(data) {
 
+                        window.pcData=data.body;
+                    },function (data) {
+
+                    })
                 })
             },
             //查看一项的确定按钮
@@ -386,6 +396,9 @@
         },
         created() {
             this.init();
+        },
+        mounted(){
+
         },
 
     }

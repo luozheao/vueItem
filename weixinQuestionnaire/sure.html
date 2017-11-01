@@ -1509,10 +1509,98 @@
 
         $(function () {
             CheckLocation(function () {
-                LoadData();
+                if(parent.isPc==true){
+                     var T= setInterval(function(){
+                         if( parent.pcData){
+                             LoadDataPc();
+                             clearInterval(T);
+                         }
+                     },500);
+                }else{
+                    LoadData();
+                }
             });
         });
+        function LoadDataPc(){
+            var data= parent.pcData
+            $('body').css({'display':'block'});
+            //设置提交按钮,初始化
 
+                $('#ctlNext').addClass('hide').html('已解决');
+                $('#ctlNextNo').addClass('hide').html('我要接单');
+                $('#ctlNextSb').addClass('hide');
+
+            QKey=data.data.question.QKey;
+            //第一步,注入问卷数据
+            var objData = data.data.question;
+            console.log(objData);
+            //转换option
+
+            objData.item.map(function(p){
+                if(!p.Option){
+                    p.Option=p.option;
+                }
+            });
+
+            $("#ttxt").text(objData.QName);
+            $("#toptitleStr").text(objData.QName);
+            if (objData.QRem != '' && objData.QRem != undefined && objData.QRem != null) {
+                $("#tDesc").html(objData.QRem);
+                $("#tDesc").css('display', 'block');
+            } else {
+                $("#tDesc").css('display', 'none');
+            }
+
+            $("#fieldset1").html(logItem(objData));
+            //初始化事件
+//                            $("#fieldset1 .minus").click(function () {
+//                                var count = 0;
+//                                count = parseInt($(this).next().text());
+//                                if (isNaN(count)) {
+//                                    count = 0;
+//                                }
+//                                if (count - 1 >= 0) {
+//                                    $(this).next().text(count - 1);
+//                                }
+//                            });
+//                            $("#fieldset1 .plus").click(function () {
+//                                var count = 0;
+//                                count = parseInt($(this).prev().text());
+//                                if (isNaN(count)) {
+//                                    count = 0;
+//                                }
+//                                $(this).prev().text(count + 1);
+//                            });
+//                            cilckInt();
+            //第二步,注入客户答题数据
+            dataRender(data.data.reply.question_answer);
+            //客户数据解析
+            function dataRender(data){
+                for(var i =0 ;i <data.length;i++){
+                    var obj=data[i];
+                    var id=obj.QuestionnaireItemInfo_QIID;
+                    var chooseId=obj.OptionInfo_OID;
+                    //单选和多选
+                    if(obj.OptionInfo_OID>-1&&obj.UserValue=='undefined'){
+                        $("div[itemid='"+id+"']").find("div[optionid='"+chooseId+"']").find('a').addClass('jqchecked');
+                    }
+                    //问答题
+                    else if(obj.OptionInfo_OID<0&&obj.UserValue!="undefined"){
+
+                        $("div[itemid='"+id+"']").find("input").val(obj.UserValue);
+                    }
+                    //投票
+                    else if(obj.OptionInfo_OID>-1&&!obj.UserValue){
+
+                        $("div[itemid='"+id+"']").find("div[optionid='"+chooseId+"']").find('a').addClass('jqchecked');
+                    }
+                    //商品
+                    else if(obj.OptionInfo_OID>-1&&(typeof obj.UserValue=='number') &&obj.UserValue>-1){
+                        $("div[itemid='"+id+"']").find("span[oid='"+chooseId+"']").html(obj.UserValue);
+                    }
+                }
+            }
+        }
         function LoadData() {
 
             /***************获取数据,luozheao****************************/
@@ -1597,6 +1685,7 @@
 //                            cilckInt();
                             //第二步,注入客户答题数据
                             dataRender(data.data.reply.question_answer);
+
                         }
                     });
                 }
