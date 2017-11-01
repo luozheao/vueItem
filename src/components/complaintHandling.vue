@@ -75,10 +75,12 @@
                     >
                     </el-table-column>
                     <el-table-column
-                            prop="question.QName"
                             label="问卷名称"
                             width="300"
                     >
+                        <template scope="scope">
+                            {{scope.row.question.QName}}
+                        </template>
                     </el-table-column>
                     <el-table-column
                             prop="created_at"
@@ -211,6 +213,21 @@
                 //获取列表数据
                 this.$http.get('/handle/list').then(function(response) {
                     this.tableData=response.data.data
+                    let arr=this.tableData.data
+                    for(var i=0;i<arr.length;i++){
+                        if(arr[i].progress.length){
+                            for(var k=0;k<arr[i].progress.length;k++){
+                                if(arr[i].progress[k].status==0){
+                                    arr[i].question.QName
+                                }else if(arr[i].progress[k].status==1){
+                                    arr[i].question.QName+=' 解决中'
+                                }else if(arr[i].progress[k].status==2){
+                                    arr[i].question.QName+=' 已解决'
+                                }
+                            }
+                        }
+                    }
+                    this.tableData.data=arr
                 },function(response) {
                 });
             },
@@ -310,6 +327,21 @@
                 //获取翻页列表数据
                 this.$http.get('/handle/list',{params:{'page':val}}).then(function(response) {
                     this.tableData=response.data.data
+                    let arr=this.tableData.data
+                    for(var i=0;i<arr.length;i++){
+                        if(arr[i].progress.length){
+                            for(var k=0;k<arr[i].progress.length;k++){
+                                if(arr[i].progress[k].status==0){
+                                    arr[i].question.QName
+                                }else if(arr[i].progress[k].status==1){
+                                    arr[i].question.QName+=' 解决中'
+                                }else if(arr[i].progress[k].status==2){
+                                    arr[i].question.QName+=' 已解决'
+                                }
+                            }
+                        }
+                    }
+                    this.tableData.data=arr
                 },function(response) {
                 });
             },
@@ -321,6 +353,21 @@
                this.form.stopTime=new Date(parseInt(b)).toLocaleString().substr(0,10).replace(/\//g, "-");
                 this.$http.get('/handle/list',{params:this.form}).then(function(response) {
                     this.tableData=response.data.data
+                    let arr=this.tableData.data
+                    for(var i=0;i<arr.length;i++){
+                        if(arr[i].progress.length){
+                            for(var k=0;k<arr[i].progress.length;k++){
+                                if(arr[i].progress[k].status==0){
+                                    arr[i].question.QName
+                                }else if(arr[i].progress[k].status==1){
+                                    arr[i].question.QName+=' 解决中'
+                                }else if(arr[i].progress[k].status==2){
+                                    arr[i].question.QName+=' 已解决'
+                                }
+                            }
+                        }
+                    }
+                    this.tableData.data=arr
                 },function(response) {
                 });
             },
