@@ -26,8 +26,8 @@
         <div class="box">
             <p class="title">处理进程</p>
             <div class="bodyBox">
-                <el-input v-model="nameInput" placeholder="请输入昵称" style="width: 200px;"></el-input>
-                <el-select v-model="listValue">
+                <el-input v-model="form.WUName" placeholder="请输入昵称" style="width: 200px;"></el-input>
+                <el-select v-model="form.state">
                     <el-option
                             v-for="item in listOptions"
                             :key="item.value"
@@ -36,11 +36,16 @@
                     </el-option>
                 </el-select>
                 <el-date-picker
-                        v-model="dateValue"
-                        type="daterange"
-                        align="right"
-                        placeholder="选择日期范围"
-                        :picker-options="pickerOptions2">
+                        v-model="form.startTime"
+                        type="date"
+                        placeholder="选择开始日期"
+                        :picker-options="pickerOptions0">
+                </el-date-picker>
+                <el-date-picker
+                        v-model="form.stopTime"
+                        type="date"
+                        placeholder="选择结束日期"
+                        :picker-options="pickerOptions0">
                 </el-date-picker>
                 <el-button type="primary" @click="searchList">查询</el-button>
                 <el-button type="primary" @click="installList" style="margin-left: 5px;">导出</el-button>
@@ -70,7 +75,7 @@
                     >
                     </el-table-column>
                     <el-table-column
-                            prop="question.Qname"
+                            prop="question.QName"
                             label="问卷名称"
                             width="300"
                     >
@@ -95,7 +100,7 @@
                 <el-dialog title="填写处理结果" :visible.sync="writeLiVisible" size="small">
                     <el-form>
                         <el-form-item label="处理结果：">
-                            <el-input type="textarea" v-model="writeResult"></el-input>
+                            <el-input type="textarea" v-model="result"></el-input>
                         </el-form-item>
                     </el-form>
 
@@ -107,7 +112,7 @@
                 </el-dialog>
                 <el-dialog title="问卷查看" :visible.sync="lookLiVisible" size="large">
                     <div slot="footer" class="dialog-footer">
-                        <el-button type="primary" @click="lookLiVisibleFn">谁谁谁处理中...</el-button>
+                        <el-button type="primary" @click="lookLiVisibleFn">确定</el-button>
                     </div>
 
                 </el-dialog>
@@ -130,11 +135,16 @@
 //        props: ['param', 'data'],
         data() {
             return  {
-                nameInput:'',
-                listValue:0,
-                dateValue:'',
+                form:{
+                    WUName:'',
+                    state:-1,
+                    startTime:'',
+                    stopTime:'',
+                    SID:-1
+                },
                 listOptions:[],
-                writeResult:'',
+                result:'',
+                resultId:'',
                 currentPageNum:1,
                 writeLiVisible:false,
                 lookLiVisible:false,
@@ -167,32 +177,15 @@
                     "to": 1,
                     "total": 1
                 },
-                pickerOptions2: {
-                    shortcuts: [{
-                        text: '最近一周',
-                        onClick(picker) {
-                            const end = new Date();
-                            const start = new Date();
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-                            picker.$emit('pick', [start, end]);
-                        }
-                    }, {
-                        text: '最近一个月',
-                        onClick(picker) {
-                            const end = new Date();
-                            const start = new Date();
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-                            picker.$emit('pick', [start, end]);
-                        }
-                    }, {
-                        text: '最近三个月',
-                        onClick(picker) {
-                            const end = new Date();
-                            const start = new Date();
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-                            picker.$emit('pick', [start, end]);
-                        }
-                    }]
+                pickerOptions0: {
+                    disabledDate(time) {
+                        return time.getTime() < Date.now() - 8.64e7;
+                    }
+                },
+                pickerOptions1: {
+                    disabledDate(time) {
+                        return time.getTime() < Date.now() - 8.64e7;
+                    }
                 },
             }
         },
@@ -223,12 +216,13 @@
             },
             //删除一项
             deleteLi(row){
+                let self=this;
                 this.$confirm('是否删除'+row.username+'?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(function () {
-                    this.$http.post('/handle/delete_answer',{'id':row.question_id}).then(
+                    self.$http.post('/handle/delete_answer',{'id':row.id}).then(
                         function(response) {
                             let isSuccess= response.data.code=='200';
                             if(isSuccess){
@@ -261,8 +255,13 @@
                 })
             },
             //查看一项
-            lookLi(val){
+            lookLi(row){
                 this.lookLiVisible=true
+                this.$http.get('/handle/question_info',{params:{'id':row.id}}).then(function(data) {
+                    debugger
+                },function (data) {
+
+                })
             },
             //查看一项的确定按钮
             lookLiVisibleFn(){
@@ -279,15 +278,17 @@
             //填写处理结果
             writeLi(row){
                 this.writeLiVisible=true
+                this.resultId=row.id;
+                this.result=''
             },
             //确定填写处理结果
             addWriteResult(){
-                return false
-                this.$http.post('',{'id':row.id}).then(
+                this.$http.post('/handle/write_result',{'id':this.resultId,'result':this.result}).then(
                     function(response) {
                         let isSuccess= response.data.code=='200';
                         if(isSuccess){
                             this.initTable()
+                            this.writeLiVisible=false
                         }
                         this.$message({
                             message: response.data.data,
@@ -314,7 +315,11 @@
             },
             //点击搜素
             searchList(){
-                this.$http.get('',{params:{'keyword':this.inputSearch,'area_id':this.id}}).then(function(response) {
+                var a=this.form.startTime.getTime()
+               this.form.startTime=new Date(parseInt(a)).toLocaleString().substr(0,10).replace(/\//g, "-");
+                var b=this.form.stopTime.getTime()
+               this.form.stopTime=new Date(parseInt(b)).toLocaleString().substr(0,10).replace(/\//g, "-");
+                this.$http.get('/handle/list',{params:this.form}).then(function(response) {
                     this.tableData=response.data.data
                 },function(response) {
                 });
